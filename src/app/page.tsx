@@ -1,4 +1,10 @@
-export default function Home() {
+import Navbar from "@/components/Navbar";
+import Image from "next/image";
 
-	return <h1>HOME</h1>;
+export default function Home() {
+  return (
+   <>
+  <div className="text-white"> hello world</div>
+   </>
+  );
 }
