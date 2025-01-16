@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { CustomFooter } from "@/components/Footer";
 
 
 const workSans = localFont(
@@ -75,7 +76,7 @@ export default function RootLayout({
      
         <Navbar/>
          {children}
-      
+        <CustomFooter/>
 
       </body>
     </html>
