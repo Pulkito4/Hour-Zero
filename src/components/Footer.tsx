@@ -5,9 +5,9 @@ export function CustomFooter() {
   return (
     <footer className="bg-black text-white py-8 px-4 font-work-sans">
       <div className="container mx-auto">
-        <div className="flex flex-col sm:flex-row justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo Section */}
-          <Link href="/" className="flex items-center mb-3 sm:mb-0 ">
+          <Link href="/" className="flex items-center mb-3 md:mb-0 ">
             <Image
               src="/logo.png"
               alt="Hour Zero Logo"
