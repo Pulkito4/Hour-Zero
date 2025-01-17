@@ -14,7 +14,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-gradient-to-r from-black via-purple-900 to-black text-white px-6 py-4 font-work-sans">
+		<nav className="bg-gradient-to-r from-black via-purple-900 to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
 			<div className="max-w-7xl mx-auto">
 				<div className="flex items-center justify-between">
 					{/* Logo and Brand */}
