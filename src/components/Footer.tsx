@@ -17,7 +17,7 @@ export function CustomFooter() {
             />
             <div className="flex flex-col ">
               <span className="ml-3 text-lg font-semibold ">
-                Hour <span className="text-purple-700">Zero</span>
+                Hour <span className="text-purple-400">Zero</span>
               </span>
 
               <div className="text-gray-400 text-sm mt-2 text-center">
