@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export function CustomFooter() {
   return (
-    <footer className="bg-black text-white py-8 px-4 font-work-sans">
+    <footer className=" bg-gray-950 text-white py-8 px-4 font-work-sans">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo Section */}
