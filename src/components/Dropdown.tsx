@@ -19,9 +19,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export function CardWithForm() {
+export function Dropdown() {
   return (
-    <Card className="w-[350px] sm:w-[550px] lg:w-[480px] bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
+    <Card className=" w-[550px]  bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
       transition-shadow duration-300 
       hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
       <CardHeader>
