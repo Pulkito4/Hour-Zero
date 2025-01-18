@@ -13,6 +13,10 @@ const Navbar = () => {
 		alert("Link copied to clipboard!");
 	};
 
+	const redirectGithub = () => {
+		window.open("https://github.com/Pulkito4/Hour-Zero");
+	};
+
 	return (
 		<nav className="bg-gradient-to-r from-black via-purple-900 to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
 			<div className="max-w-7xl mx-auto">
@@ -44,13 +48,15 @@ const Navbar = () => {
 							About Us
 						</Link>
 						<Link
-							href="/services"
+							href="/contact-us"
 							className="hover:text-purple-200 transition-colors text-lg">
 							Contact Us
 						</Link>
 
 						<div className=" flex gap-3">
-							<Button className="border border-white size-7">
+							<Button
+								className="border border-white size-7"
+								onClick={redirectGithub}>
 								<Star size={16} />
 							</Button>
 							<Button
@@ -96,7 +102,7 @@ const Navbar = () => {
 							About Us
 						</Link>
 						<Link
-							href="/services"
+							href="/contact-us"
 							className="hover:text-purple-200 transition-colors"
 							onClick={() => setIsOpen(false)}>
 							Contact Us
@@ -104,7 +110,7 @@ const Navbar = () => {
 					</div>
 					<div className="p-4 mt-auto absolute bottom-0 w-full mb-2">
 						<Button className="hover:text-purple-200 transition-colors w-full mb-2">
-							<Link href="https://github.com/">
+							<Link href="https://github.com/Pulkito4/Hour-Zero">
 								Give us a star on Github !
 							</Link>
 						</Button>

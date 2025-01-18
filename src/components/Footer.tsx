@@ -34,7 +34,7 @@ export function CustomFooter() {
             <Link href="/privacy" className="hover:text-purple-300">
               Privacy Policy
             </Link>
-            <Link href="/contact" className="hover:text-purple-300">
+            <Link href="/contact-us" className="hover:text-purple-300">
               Contact
             </Link>
             <Link href="/admin" className="hover:text-purple-300">
