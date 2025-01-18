@@ -52,7 +52,7 @@ export function CustomFooter() {
 
         {/* Copyright */}
         <div className="text-center text-sm">
-          <p>© {new Date().getFullYear()} Hour Zero. All rights reserved.</p>
+          <p>Disclaimer : </p>
         </div>
       </div>
     </footer>

@@ -3,6 +3,7 @@ import React from 'react'
 import Link from 'next/link';
 interface CardProps {
   name: string;
+  
 }
 
 const Cards: React.FC<CardProps> = ({ name }) => {

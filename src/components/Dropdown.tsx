@@ -21,9 +21,13 @@ import {
 
 export function Dropdown() {
   return (
-    <Card className=" w-[550px]  bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
+    <div className="flex justify-center items-center w-full">
+    <Card className=" w-[300px] sm:w-[400px] md:w-[500px] lg:w-[550px] 
+      bg-black text-white 
+      shadow-[0_0_20px_rgba(139,92,246,0.5)] 
       transition-shadow duration-300 
-      hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
+      hover:shadow-[0_0_40px_rgba(139,92,246,1)]
+      p-4 sm:p-6">
       <CardHeader>
         <CardTitle>Select your Branch & Semester</CardTitle>
         {/* <CardDescription>Get Started in one-click.</CardDescription> */}
@@ -71,5 +75,6 @@ export function Dropdown() {
         <Button className="bg-purple-800">Get Started!</Button>
       </CardFooter>
     </Card>
+    </div>
   )
 }

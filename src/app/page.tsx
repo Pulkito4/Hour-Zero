@@ -26,20 +26,20 @@ export default function Home() {
           </div>
 
           {/* Dropdown Container */}
-          <div className="relative z-50 w-full max-w-xl mx-auto px-4">
+          <div className="relative z-50 w-full max-w-xl mx-auto px-4 ">
             <Dropdown />
           </div>
         </div>
 
         <div className="px-8 mt-15  mb-15  ">
-        <h1 className="text-white ml-4 mb-5 text-3xl ">
-            WHY HOUR ZERO ?
+        <h1 className="text-white ml-4 mb-5 text-3xl font-bold">
+            WHAT WE OFFER
           </h1>
           <Offer />
         </div>
 
         <div className="px-8 mt-15  mb-15 ">
-          <h1 className="text-white ml-4 mb-5 text-3xl ">
+          <h1 className="text-white ml-4 mb-9 text-3xl font-bold">
             MEET OUR TOP CONTRIBUTORS
           </h1>
           <CarousalSlider />
@@ -47,7 +47,7 @@ export default function Home() {
 
 
         <div className="px-8 mt-15  mb-15 ">
-          <h1 className="text-white ml-4 mb-5 text-3xl ">
+          <h1 className="text-white ml-4 mb-5 text-3xl font-bold">
             WHY HOUR ZERO ?
           </h1>
         <WhyUs/>
