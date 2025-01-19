@@ -51,8 +51,8 @@ export function CustomFooter() {
         <div className="border-t border-gray-800 my-6" />
 
         {/* Copyright */}
-        <div className="text-center text-sm">
-          <p>Disclaimer : </p>
+        <div className="text-center text-sm text-gray-500">
+          <p>Disclaimer: We do not claim ownership of any materials on this website. They are shared in good faith to assist students. If you own any content and wish to have it removed, please contact us.</p>
         </div>
       </div>
     </footer>
