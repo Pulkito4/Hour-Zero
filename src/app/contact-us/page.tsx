@@ -43,7 +43,6 @@ const page = () => {
 						ease: "easeInOut",
 					}}
 					className="max-w-md mx-auto  p-4">
-					{" "}
 					<form className="space-y-6">
 						<div>
 							<label
@@ -54,7 +53,7 @@ const page = () => {
 							<input
 								type="text"
 								id="name"
-								className="mt-1 block w-full rounded-md bg-gray-800 border-transparent focus:border-purple-500 focus:bg-gray-900 focus:ring-0 text-white"
+								className="mt-1 block w-full rounded-md bg-gray-800 border-transparent focus:border-primary-100 focus:bg-gray-900 focus:ring-0 text-white"
 								placeholder="Your name"
 							/>
 						</div>
@@ -89,7 +88,7 @@ const page = () => {
 
 						<button
 							type="submit"
-							className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+							className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-300 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
 							Send Message
 						</button>
 					</form>

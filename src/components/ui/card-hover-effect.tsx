@@ -48,7 +48,7 @@ export const HoverEffect = ({
 						<div className="relative z-10">
 							<div className="p-4 flex flex-col items-center justify-center">
 								<div className="flex items-center justify-center gap-4">
-									<div className=" text-purple-700">
+									<div className=" text-primary-100">
 										{item.icon}
 									</div>
 									<h4 className="text-2xl font-bold tracking-tight text-white">

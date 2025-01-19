@@ -16,7 +16,7 @@ const LeftSidebar = () => {
   return (
     <>
    
-    <nav className="w-72 min-h-screen bg-black p-6">
+    <nav className="w-72 min-h-screen bg-dark-2 p-6">
       <div className="flex flex-col gap-8">
       <div className="text-white text-center font-bold">SELECT A SUBJECT </div>
       <hr></hr>

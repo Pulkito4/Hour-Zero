@@ -18,7 +18,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-gradient-to-r from-black via-purple-900 to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
+		<nav className="bg-gradient-to-r from-black via-primary-dark to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
 			<div className="max-w-7xl mx-auto">
 				<div className="flex items-center justify-between">
 					{/* Logo and Brand */}
@@ -31,7 +31,7 @@ const Navbar = () => {
 							className="hover:opacity-90"
 						/>
 						<span className="text-xl font-semibold">
-							Hour <span className="text-purple-400">Zero</span>
+							Hour <span className="text-primary-100">Zero</span>
 						</span>
 					</Link>
 
@@ -82,7 +82,7 @@ const Navbar = () => {
 					} transition-transform duration-300 ease-in-out z-50`}>
 					<div className="flex items-center justify-between p-4">
 						<span className="text-xl font-semibold">
-							Hour <span className="text-purple-400">Zero</span>
+							Hour <span className="text-primary-100">Zero</span>
 						</span>
 						<button onClick={() => setIsOpen(false)}>
 							<X size={24} />

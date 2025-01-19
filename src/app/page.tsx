@@ -11,7 +11,7 @@ export default function Home() {
 				{/* tagline */}
 				<div className="mt-15  font-work-sans text-center font-semibold">
 					<span className="text-4xl  text-white">
-						HOUR <span className="text-purple-400">ZERO</span>
+						HOUR <span className="text-primary-100">ZERO</span>
 					</span>
 					<p className="text-gray-400  text-xl !font-normal">
 						Because Every Mark Counts
@@ -32,21 +32,21 @@ export default function Home() {
 
 				<div className="px-8 mt-15  mb-15  ">
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
-						WHAT WE OFFER
+						WHAT WE <span className="text-primary-100">OFFER</span>
 					</h1>
 					<Offer />
 				</div>
 
 				<div className="px-8 mt-15  mb-15 ">
 					<h1 className="text-white ml-4 mb-9 text-3xl font-bold text-center">
-						MEET OUR TOP CONTRIBUTORS
+						MEET OUR TOP <span className="text-primary-100">CONTRIBUTORS</span>
 					</h1>
 					<CarousalSlider />
 				</div>
 
 				<div className="px-8 mt-15  mb-15 flex flex-col items-center">
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
-						WHY HOUR ZERO ?
+					<span className="text-primary-100">WHY</span> HOUR ZERO ?
 					</h1>
 					<WhyUs />
 				</div>
