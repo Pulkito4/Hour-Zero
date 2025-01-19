@@ -21,10 +21,10 @@ import {
 
 export function Dropdown() {
   return (
-    <Card className=" w-[550px]  bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
+    <Card className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
       transition-shadow duration-300 
       hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
-      <CardHeader>
+      <CardHeader className="text-center md:text-xl">
         <CardTitle>Select your Branch & Semester</CardTitle>
         {/* <CardDescription>Get Started in one-click.</CardDescription> */}
       </CardHeader>
@@ -32,22 +32,18 @@ export function Dropdown() {
         <form>
           <div className="grid w-full items-center gap-4">
           <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Select Branch</Label>
+              <Label htmlFor="framework" className=" md:text-lg">Select Branch</Label>
               <Select>
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper" className="bg-black text-white">
                   <SelectItem value="cse">CSE</SelectItem>
-                  {/* <SelectItem value="aiml">AI-ML</SelectItem>
-                  <SelectItem value="aids">AI-DS</SelectItem>
-                  <SelectItem value="iiot">IIOT</SelectItem> */}
-                  
                 </SelectContent>
               </Select>
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="framework">Select Semester</Label>
+              <Label htmlFor="framework" className=" md:text-lg">Select Semester</Label>
               <Select>
                 <SelectTrigger id="framework">
                   <SelectValue placeholder="Select" />
