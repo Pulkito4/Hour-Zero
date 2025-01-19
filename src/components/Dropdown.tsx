@@ -67,6 +67,5 @@ export function Dropdown() {
         <Button className="bg-purple-800">Get Started!</Button>
       </CardFooter>
     </Card>
-    </div>
   )
 }
