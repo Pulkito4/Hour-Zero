@@ -32,7 +32,7 @@ export function Dropdown() {
   const router = useRouter();
 
 const handleClick = () => {
-  router.push('/subject'); // Replace with your target route
+  router.push('/subject'); 
 };
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
