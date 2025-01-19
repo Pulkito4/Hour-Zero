@@ -32,7 +32,7 @@ export default function Home() {
         </div>
 
         <div className="px-8 mt-15  mb-15  ">
-        <h1 className="text-white ml-4 mb-5 text-3xl font-bold">
+        <h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
             WHAT WE OFFER
           </h1>
           <Offer />
