@@ -1,4 +1,8 @@
+"use client";
 import * as React from "react"
+
+ 
+
 
 import { Button } from "@/components/ui/button"
 import {
@@ -18,8 +22,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useRouter } from "next/navigation";
+
+
 
 export function Dropdown() {
+
+
+  const router = useRouter();
+
+const handleClick = () => {
+  router.push('/subject'); // Replace with your target route
+};
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
       transition-shadow duration-300 
@@ -64,7 +78,7 @@ export function Dropdown() {
         </form>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Button className="bg-purple-800">Get Started!</Button>
+        <Button className="bg-purple-800" onClick={handleClick}>Get Started!</Button>
       </CardFooter>
     </Card>
   )
