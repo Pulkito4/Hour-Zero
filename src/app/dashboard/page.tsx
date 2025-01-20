@@ -1,9 +1,10 @@
 'use client';
 
 import { addSubject } from "@/firebase/firestore";
+
 import React, { useState } from "react";
 
-const page = () => {
+const dashboard = () => {
 	const [branch, setBranch] = useState("");
 	const [semester, setSemester] = useState(0);
 	const [subjectName, setSubjectName] = useState("");
@@ -93,4 +94,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default dashboard;

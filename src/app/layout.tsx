@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { CustomFooter } from "@/components/Footer";
 
 
+
 const workSans = localFont(
   {
     src:[
