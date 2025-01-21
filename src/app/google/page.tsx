@@ -42,7 +42,7 @@ export default function GoogleSignIn() {
       }
       const token = await result.user.getIdToken();
       document.cookie = `session=${token}; path=/; max-age=${60 * 60 * 24 * 5}; SameSite=Strict; Secure`;
-    
+      console.log("document cookie ",document.cookie);
       //cookieStore.set("session", token, { httpOnly: true });
 
       console.log("User signed in:", user);
