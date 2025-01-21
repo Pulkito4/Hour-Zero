@@ -18,6 +18,8 @@ export default function GoogleSignIn() {
       where("email", "==", email.toLowerCase())
     );
     const querySnapshot = await getDocs(q);
+    console.log(querySnapshot)
+
     return !querySnapshot.empty;
   };
 
@@ -33,6 +35,7 @@ export default function GoogleSignIn() {
         
       // Check if the user's email is in the authorized list
       const isAuthorized = await checkAuthorizedUser(user.email!);
+      console.log(user.email)
        
       if (!isAuthorized) {
         setError("Access denied. Your email is not authorized.");
@@ -42,7 +45,7 @@ export default function GoogleSignIn() {
       }
       const token = await result.user.getIdToken();
       document.cookie = `session=${token}; path=/; max-age=${60 * 60 * 24 * 5}; SameSite=Strict; Secure`;
-      console.log("document cookie ",document.cookie);
+      // console.log("document cookie ",document.cookie);
       //cookieStore.set("session", token, { httpOnly: true });
 
       console.log("User signed in:", user);
