@@ -1,25 +1,23 @@
 "use client";
 import { useState } from "react";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase.config"; // Ensure correct Firebase config import
 import { useRouter } from "next/navigation";
-import { cookies } from "next/dist/server/request/cookies";
+import Cookies from "js-cookie";
 
+import { auth, db } from "@/lib/firebase.config";
 
 export default function GoogleSignIn() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const checkAuthorizedUser = async (email: string) => {
+  const checkAuthorizedUser = async (email: string): Promise<boolean> => {
     const q = query(
       collection(db, "authorizedUsers"),
       where("email", "==", email.toLowerCase())
     );
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot)
-
     return !querySnapshot.empty;
   };
 
@@ -27,29 +25,33 @@ export default function GoogleSignIn() {
     const provider = new GoogleAuthProvider();
     setIsLoading(true);
     setError(null);
-   
+
     try {
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        //const cookieStore = await cookies();
-        
-      // Check if the user's email is in the authorized list
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Check if user is authorized
       const isAuthorized = await checkAuthorizedUser(user.email!);
-      console.log(user.email)
-       
       if (!isAuthorized) {
         setError("Access denied. Your email is not authorized.");
-        await auth.signOut(); // Sign the user out if not authorized
+        await auth.signOut(); // Sign the user out
         setIsLoading(false);
         return;
       }
-      const token = await result.user.getIdToken();
-      document.cookie = `session=${token}; path=/; max-age=${60 * 60 * 24 * 5}; SameSite=Strict; Secure`;
-      // console.log("document cookie ",document.cookie);
-      //cookieStore.set("session", token, { httpOnly: true });
 
-      console.log("User signed in:", user);
-      router.push("/dashboard"); // Redirect to dashboard or another route
+      // Get Firebase ID token
+      const token = await user.getIdToken();
+
+      // Set the session cookie (accessible by middleware)
+      Cookies.set("session", token, {
+        path: "/",
+        expires: 5, // 5 days
+        sameSite: "Strict",
+        secure: true,
+      });
+
+      console.log("User signed in and session set.");
+      router.push("/dashboard");
     } catch (err: any) {
       setError("Error: " + err.message);
     } finally {

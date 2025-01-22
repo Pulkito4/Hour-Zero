@@ -1,5 +1,7 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import AdminButton from "./AdminButton";
 
 export function CustomFooter() {
   return (
@@ -37,9 +39,10 @@ export function CustomFooter() {
             <Link href="/contact-us" className="hover:text-purple-300">
               Contact
             </Link>
-            <Link href="/google" className="hover:text-purple-300">
+            {/* <Link href="/google" className="hover:text-purple-300">
               Admin
-            </Link>
+            </Link> */}
+            <AdminButton/>
           </div>
         </div>
 
