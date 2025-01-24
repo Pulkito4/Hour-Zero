@@ -1,116 +1,127 @@
-"use client";
-import * as React from "react";
-
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
-
-const subjects =["operating system","DBMS","PSLP","CNS"]
+const subjects = ["Operating System", "DBMS", "PSLP", "CNS"];
 
 export function AddToSubject() {
-	const router = useRouter();
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    branch: "",
+    semester: "",
+    subject: "",
+  });
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-	const handleClick = () => {
-		router.push("/dashboard/addstuff");
-	};
-	return (
-		<Card
-			className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
-      transition-shadow duration-300 
-      hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
-			<CardHeader className="text-center md:text-xl">
-				<CardTitle>Select Branch, Semester & Subject</CardTitle>
-				{/* <CardDescription>Get Started in one-click.</CardDescription> */}
-			</CardHeader>
-			<CardContent>
-				<form>
-					<div className="grid w-full items-center gap-4">
-						<div className="flex flex-col space-y-1.5">
-							<Label htmlFor="framework" className=" md:text-lg">
-								Select Branch
-							</Label>
-							<Select>
-								<SelectTrigger id="framework">
-									<SelectValue placeholder="Select" />
-								</SelectTrigger>
-								<SelectContent
-									position="popper"
-									className="bg-black text-white ">
-									<SelectItem value="cse">CSE</SelectItem>
-								</SelectContent>
-							</Select>
-						</div>
-						<div className="flex flex-col space-y-1.5">
-							<Label htmlFor="framework" className=" md:text-lg">
-								Select Semester
-							</Label>
-							<Select>
-								<SelectTrigger id="framework">
-									<SelectValue placeholder="Select" />
-								</SelectTrigger>
-								<SelectContent
-									position="popper"
-									className="bg-black text-white">
-									{semesters.map((semester) => (
-										<SelectItem
-											key={semester}
-											value={semester}
-											defaultValue={semester}>
-											Semester {semester}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-                        <div className="flex flex-col space-y-1.5">
-							<Label htmlFor="framework" className=" md:text-lg">
-								Select Subject
-							</Label>
-							<Select>
-								<SelectTrigger id="framework">
-									<SelectValue placeholder="Select" />
-								</SelectTrigger>
-								<SelectContent
-									position="popper"
-									className="bg-black text-white">
-									{subjects.map((subjects) => (
-										<SelectItem
-										
-											key={subjects}
-											value={subjects}
-											defaultValue={subjects}>
-											 {subjects}
-										</SelectItem>
-									))}
-								</SelectContent>
-							</Select>
-						</div>
-					</div>
-				</form>
-			</CardContent>
-			<CardFooter className="flex justify-center">
-				<Button
-					className="bg-primary-300 hover:bg-primary-dark"
-					onClick={handleClick}>
-					Add Stuff
-				</Button>
-			</CardFooter>
-		</Card>
-	);
+  const handleInputChange = (field: string, value: string) => {
+    setFormData({ ...formData, [field]: value });
+    setError(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { branch, semester, subject } = formData;
+
+    if (!branch || !semester || !subject) {
+      setError(true);
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // Navigate to content upload page with query params
+     // router.push(`/dashboard/newdata?branch=${branch}&semester=${semester}&subject=${subject}`);
+	  router.push("/dashboard/addstuff");
+    } catch (error) {
+      console.error("Error:", error);
+      setError(true);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-2xl mx-auto bg-black text-white p-6 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.3)] border border-purple-500/20">
+      <div className="text-center mb-6">
+        <h2 className="text-xl md:text-2xl font-semibold">
+          Select Branch, Semester & Subject
+        </h2>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Select Branch
+          </label>
+          <select
+            value={formData.branch}
+            onChange={(e) => handleInputChange("branch", e.target.value)}
+            className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
+                     focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+            required
+          >
+            <option value="">Select</option>
+            <option value="CSE">CSE</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Select Semester
+          </label>
+          <select
+            value={formData.semester}
+            onChange={(e) => handleInputChange("semester", e.target.value)}
+            className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
+                     focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+            required
+          >
+            <option value="">Select</option>
+            {semesters.map((sem) => (
+              <option key={sem} value={sem}>Semester {sem}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Select Subject
+          </label>
+          <select
+            value={formData.subject}
+            onChange={(e) => handleInputChange("subject", e.target.value)}
+            className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
+                     focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
+            required
+          >
+            <option value="">Select</option>
+            {subjects.map((subject) => (
+              <option key={subject} value={subject}>{subject}</option>
+            ))}
+          </select>
+        </div>
+
+        {error && (
+          <p className="text-red-500 text-sm bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+            Please fill out all fields before proceeding.
+          </p>
+        )}
+
+        <div className="flex justify-center pt-4">
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-8 py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 
+                     text-white font-medium rounded-lg transform hover:scale-[1.02] 
+                     transition-all duration-200 focus:outline-none focus:ring-2 
+                     focus:ring-purple-500"
+          >
+            {loading ? "Processing..." : "Continue"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
+
+export default AddToSubject;
