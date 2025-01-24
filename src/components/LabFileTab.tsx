@@ -1,6 +1,6 @@
-import { NotesDocument } from "@/types/documents";
+import { LabDocument } from "@/types/documents";
 
-export const NotesTab = ({ documents }: { documents: NotesDocument[] }) => {
+export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
   return (
     <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-5">
       {documents.map((doc) => (
@@ -14,15 +14,6 @@ export const NotesTab = ({ documents }: { documents: NotesDocument[] }) => {
         >
           <div className="p-5 text-center">
             <h3 className="text-lg font-medium text-white mb-3">{doc.title}</h3>
-            {/* <a 
-              href={doc.pdfUrl}
-              className="mt-4 inline-block bg-purple-600 px-6 py-2 rounded-md 
-                         text-white hover:bg-purple-700 transition-colors duration-200"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Download PDF
-            </a> */}
           </div>
         </div>
       ))}

@@ -24,6 +24,7 @@ export interface AssignmentDocument extends BaseDocument {
 
 export interface LabDocument extends BaseDocument {
   pdfUrl: string;
+  
 }
 
 export interface PYQDocument extends BaseDocument {
