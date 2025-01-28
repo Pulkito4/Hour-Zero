@@ -1,4 +1,4 @@
-import { BookA, BookOpen, FileCode, FileQuestion, NotebookPen, TvMinimalPlay } from "lucide-react";
+import { BookA, BookOpen, FileCode, FileQuestion, LibraryBig, NotebookPen, TvMinimalPlay } from "lucide-react";
 
 interface SubjectTabsProps {
   children?: React.ReactNode;
@@ -19,12 +19,12 @@ const SubjectTabs: React.FC<SubjectTabsProps> = ({
   className,
 }) => {
   const tabItems: TabItem[] = [
-    { title: "Syllabus", icon: <NotebookPen size={20} /> },
+    { title: "Syllabus", icon: <LibraryBig size={20} /> },
     { title: "Notes", icon: <NotebookPen size={20} /> },
     { title: "Assignments", icon: <BookA size={20} /> },
     { title: "Lab File", icon: <FileCode size={20} /> },
     { title: "PYQs", icon: <FileQuestion size={20} /> },
-    { title: "Textbooks", icon: <BookOpen size={20} /> },
+    { title: "Others", icon: <BookOpen size={20} /> },
     { title: "Videos", icon: <TvMinimalPlay size={20} /> },
   ];
 

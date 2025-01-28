@@ -13,13 +13,13 @@ import { getDocumentsInSubjectSubCollection } from "@/firebase/firestore";
 import { NotesTab } from "@/components/NotesTab";
 import SubjectTabs from "@/components/SubjectTabs";
 import LeftSidebar from "@/components/LeftSidebar";
-import Accordion, { LabTab } from "@/components/LabCodesTab";
 import { AssignmentsTab } from "@/components/AssignmentsTab";
 import { PYQsTab } from "@/components/PYQs";
-import { OthersTab } from "@/components/TextBooks";
+import { OthersTab } from "@/components/Others";
 import { LabFileTab } from "@/components/LabFileTab";
 import { VideoTab } from "@/components/VideoTab";
-import SyllabusTab from "@/components/SyllabusTab";
+import { SyllabusTab } from "@/components/SyllabusTab";
+
 
 export default function SubjectPage() {
   const [documents, setDocuments] = useState<{
@@ -149,7 +149,7 @@ export default function SubjectPage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 0:
-        return <SyllabusTab />;
+        return <SyllabusTab documents={documents.syllabus} />;
       case 1:
         return <NotesTab documents={documents.notes} />;
 

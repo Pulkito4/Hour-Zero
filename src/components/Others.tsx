@@ -1,18 +1,16 @@
-"use client";
-
+import { OthersDocument } from "@/types/documents";
 import { useState } from "react";
-import { AssignmentDocument, } from "@/types/documents";
 import { DocumentPreviewer } from "./DocumentPreviewer";
 
-export const AssignmentsTab = ({ documents }: { documents: AssignmentDocument[] }) => {
-  const [selectedAssignment, setSelectedAssignment] = useState<AssignmentDocument | null>(null);
+export const OthersTab = ({ documents }: { documents: OthersDocument[] }) => {
+  const [selectedOther, setSelectedOther] = useState<OthersDocument | null>(null);
 
-  const handleOpenModal = (doc: AssignmentDocument) => {
-    setSelectedAssignment(doc);
+  const handleOpenModal = (doc: OthersDocument) => {
+    setSelectedOther(doc);
   };
 
   const handleCloseModal = () => {
-    setSelectedAssignment(null);
+    setSelectedOther(null);
   };
 
   return (
@@ -38,8 +36,8 @@ export const AssignmentsTab = ({ documents }: { documents: AssignmentDocument[] 
       </div>
 
       {/* Document Preview Modal */}
-      {selectedAssignment && (
-        <DocumentPreviewer document={selectedAssignment} onClose={handleCloseModal} />
+      {selectedOther && (
+        <DocumentPreviewer document={selectedOther} onClose={handleCloseModal} />
       )}
     </div>
   );
