@@ -86,7 +86,7 @@ export const VideoTab = ({ documents }: { documents: VideoDocument[] }) => {
             </div>
 
             {/* Video Details */}
-            <h3 className="text-xl font-medium text-white mb-3">{selectedVideo.title}</h3>
+            <h3 className="text-xl font-medium text-white">{selectedVideo.title}</h3>
             <p className="text-gray-400">{selectedVideo.description}</p>
           </div>
         </div>

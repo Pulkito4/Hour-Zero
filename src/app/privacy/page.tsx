@@ -10,12 +10,12 @@ const page = () => {
           PRIVACY <span className="text-primary-100">POLICY</span>
         </span>
       </div>
-
+{/* 
       <div className="mt-7 mb-5 font-work-sans text-center font-semibold ">
         <span className="text-xl  text-white">
           WELCOME TO HOUR <span className="text-primary-100">ZERO</span>
         </span>
-      </div>
+      </div> */}
 
       <div className="text-center mb-3 font-semibold text-gray-200">
         <h1>Your privacy is important to us. </h1>
@@ -31,7 +31,7 @@ const page = () => {
       </div>
 
       <div className=" p-5 ml-15 mr-15 font-work-sans">
-        <hr className="mb-5" />
+        <hr className="mb-15" />
         <div className="ppcontent">
           <h2 className="ppheading">1. INFORMATION WE COLLECT</h2>
           <p className="ml-5 m-1 p-2 ">
@@ -177,34 +177,15 @@ const page = () => {
             their services.
           </p>
         </div>
-        <hr className="ppcontent" />
+        <hr className="ppcontent !mt-15" />
         <div className="m-3 mb-5 text-center">
           <h2 className="ppheading">CONTACT US</h2>
           <p className="ml-5 m-1 p-2 text-gray-200">
             If you have any questions, concerns, or requests regarding this
-            Privacy Policy, feel free to reach out to us:
+            Privacy Policy, feel free to reach out to us
+            <Link href={`contact-us`} className="text-primary-light hover:text-purple-300 transition-colors"> here</Link>
           </p>
-          <ul className="list-none space-y-2 mt-4">
-            <li>
-              Email:{" "}
-              <a
-                href="mailto:contact@hourzero.com"
-                className="text-primary-light hover:text-purple-300 transition-colors"
-              >
-                contact@hourzero.com
-              </a>
-            </li>
-            <li>
-              Website:{" "}
-              <Link
-                href="https://www.hourzero.com"
-                target="_blank"
-                className="text-primary-light hover:text-purple-400 transition-colors"
-              >
-                coming soon
-              </Link>
-            </li>
-          </ul>
+          
         </div>
       </div>
     </div>

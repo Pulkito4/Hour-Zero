@@ -30,7 +30,7 @@ export const PYQsTab = ({ documents }: { documents: PYQDocument[] }) => {
             onClick={() => handleOpenModal(doc)}
           >
             <div className="p-5 text-center">
-              <h3 className="text-lg font-medium text-white mb-3">{doc.title}</h3>
+              <h3 className="text-lg font-medium text-white">{doc.title}</h3>
               {/* <p className="text-sm text-gray-400">{doc.}</p> */}
             </div>
           </div>
