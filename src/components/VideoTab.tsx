@@ -56,7 +56,7 @@ export const VideoTab = ({ documents }: { documents: VideoDocument[] }) => {
             onClick={() => handleOpenModal(doc)} // Open modal on click
           >
             <div className="p-5 text-center">
-              <h3 className="text-lg font-medium text-white mb-3">{doc.title}</h3>
+              <h3 className="text-lg font-medium text-white">{doc.title}</h3>
             </div>
           </div>
         ))}
