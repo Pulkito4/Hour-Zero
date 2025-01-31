@@ -1,6 +1,8 @@
 export interface BaseDocument {
   id: string;
   title: string;
+  // description: string;
+  // pdfUrl: string;
 }
 
 export interface NotesDocument extends BaseDocument {

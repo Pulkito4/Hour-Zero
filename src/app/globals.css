@@ -70,3 +70,17 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.ppheading{
+  @apply text-lg sm:text-xl text-white font-semibold
+         mb-2 sm:mb-4 
+         px-3 sm:px-4;
+}
+
+.ppcontent {
+  @apply m-2 sm:m-3 
+         mb-4 sm:mb-5 
+         text-sm sm:text-base 
+         text-gray-300
+         px-2 sm:px-4;
+}
