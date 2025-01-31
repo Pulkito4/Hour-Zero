@@ -20,6 +20,13 @@ import { LabFileTab } from "@/components/LabFileTab";
 import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
 
+const WelcomeMessage = () => (
+  <div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
+    <h2 className="text-2xl font-bold text-white">Welcome to Hour Zero</h2>
+    <p className="text-gray-400">Select a subject from the sidebar to get started</p>
+  </div>
+);
+
 
 export default function SubjectPage() {
   const [documents, setDocuments] = useState<{
@@ -175,13 +182,21 @@ export default function SubjectPage() {
 
 
   return (
-    <div className="flex">
+    <div className="flex min-h-screen">
       <LeftSidebar />
-      <div className="flex-1">
-        <SubjectTabs activeTab={activeTab} setActiveTab={setActiveTab}>
-          {renderTabContent()}
-        </SubjectTabs>
-      </div>
+      <main className="flex-1">
+        {activeTab === null ? (
+          <WelcomeMessage />
+        ) : (
+          <SubjectTabs 
+            activeTab={activeTab} 
+            setActiveTab={setActiveTab}
+            className="w-full"
+          >
+            {renderTabContent()}
+          </SubjectTabs>
+        )}
+      </main>
     </div>
   );
 }
