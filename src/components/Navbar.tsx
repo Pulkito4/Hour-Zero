@@ -2,20 +2,12 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Share2, Copy, Star } from "lucide-react";
+import { Menu, X, Share2, Star } from "lucide-react";
 import { Button } from "./ui/button"; // Assuming Button is imported like this
+import { handleCopy, redirectGithub } from "@/lib/utils";
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
-
-	const handleCopy = () => {
-		navigator.clipboard.writeText(window.location.href);
-		alert("Link copied to clipboard!");
-	};
-
-	const redirectGithub = () => {
-		window.open("https://github.com/Pulkito4/Hour-Zero");
-	};
 
 	return (
 		<nav className="bg-gradient-to-r from-black via-primary-dark to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
