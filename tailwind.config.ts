@@ -65,6 +65,10 @@ export default {
 				'light-2': '#EFEFEF',
 				'light-3': '#7878A3',
 				'light-4': '#5C5C7B',
+				'toast-bg': '#1a1a1a',
+				'toast-border': '#4a4a4a',
+				'toast-text': '#ffffff',
+				'toast-close': '#ff0000',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

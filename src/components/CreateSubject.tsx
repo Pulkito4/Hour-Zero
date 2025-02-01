@@ -1,97 +1,179 @@
-import React, { useState } from 'react'
-import { addSubject } from "@/firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { addSubject, getBranches } from "@/firebase/firestore";
+import { useToast } from "@/hooks/use-toast";
 
 const CreateSubject = () => {
-  const [branch, setBranch] = useState("");
-  const [semester, setSemester] = useState(0);
-  const [subjectName, setSubjectName] = useState("");
-  const [subjectCode, setSubjectCode] = useState("");
-  const [credits, setCredits] = useState(0);
+	const { toast } = useToast();
+	const [branch, setBranch] = useState("");
+	const [semester, setSemester] = useState(0);
+	const [subjectName, setSubjectName] = useState("");
+	const [subjectCode, setSubjectCode] = useState("");
+	const [credits, setCredits] = useState(0);
+	const [branches, setBranches] = useState<string[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-  const handleAddSubject = async () => {
-    if (!branch || !semester || !subjectName || !subjectCode || credits <= 0) {
-      alert("Please fill all fields.");
-      return;
-    }
+	const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-    await addSubject(branch, semester, subjectName, {
-      subjectCode,
-      credits,
-    });
+	useEffect(() => {
+		const fetchBranches = async () => {
+			try {
+				const branchList = await getBranches();
+				setBranches(branchList);
+			} catch (error) {
+				console.error("Failed to fetch branches:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
 
-    alert(`Subject ${subjectName} added successfully!`);
-  };
+		fetchBranches();
+	}, []);
 
-  return (
-    <div className="space-y-6 text-white">
-     
-      
-      <div className="space-y-4">
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Branch:</label>
-          <select
-            value={branch}
-            onChange={(e) => setBranch(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded-md"
-          >
-            <option value="">Select Branch</option>
-            <option value="CSE">CSE</option>
-            <option value="AIML">AI & ML</option>
-          </select>
-        </div>
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Semester:</label>
-          <select
-            value={semester}
-            onChange={(e) => setSemester(parseInt(e.target.value))}
-            className="w-full p-2 bg-gray-800 rounded-md"
-          >
-            <option value="">Select Semester</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-        </div>
+		if (
+			!branch ||
+			!semester ||
+			!subjectName ||
+			!subjectCode ||
+			credits <= 0
+		) {
+			toast({
+				variant: "destructive",
+				title: "Invalid Input",
+				description: "Please fill all fields with valid values.",
+			});
+			return;
+		}
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Subject Name:</label>
-          <input
-            type="text"
-            value={subjectName}
-            onChange={(e) => setSubjectName(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded-md"
-          />
-        </div>
+		try {
+			await addSubject(branch, semester, subjectName, {
+				subjectCode,
+				credits,
+			});
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Subject Code:</label>
-          <input
-            type="text"
-            value={subjectCode}
-            onChange={(e) => setSubjectCode(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded-md"
-          />
-        </div>
+			toast({
+				title: "Success!",
+				description: `Subject ${subjectName} was added successfully.`,
+			});
 
-        <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Credits:</label>
-          <input
-            type="number"
-            value={credits}
-            onChange={(e) => setCredits(Number(e.target.value))}
-            className="w-full p-2 bg-gray-800 rounded-md"
-          />
-        </div>
+			// Reset form
+			setBranch("");
+			setSemester(0);
+			setSubjectName("");
+			setSubjectCode("");
+			setCredits(0);
+		} catch (error) {
+			console.error("Error adding subject:", error);
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: "Failed to add subject. Please try again.",
+			});
+		}
+	};
 
-        <button
-          onClick={handleAddSubject}
-          className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700"
-        >
-          Add Subject
-        </button>
-      </div>
-    </div>
-  );
-}
+	if (isLoading) {
+		return <div className="text-white">Loading...</div>;
+	}
+
+	return (
+		<form onSubmit={handleSubmit} className="space-y-6 text-white">
+			<div className="space-y-4">
+				<div className="flex flex-col gap-2">
+					<label htmlFor="branch" className="text-sm font-medium">
+						Branch:
+					</label>
+					<select
+						id="branch"
+						value={branch}
+						onChange={(e) => setBranch(e.target.value)}
+						className="w-full p-2 bg-gray-800 rounded-md"
+						required>
+						<option value="">Select Branch</option>
+						{branches.map((branch) => (
+							<option key={branch} value={branch}>
+								{branch}
+							</option>
+						))}
+					</select>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<label htmlFor="semester" className="text-sm font-medium">
+						Semester:
+					</label>
+					<select
+						id="semester"
+						value={semester}
+						onChange={(e) => setSemester(parseInt(e.target.value))}
+						className="w-full p-2 bg-gray-800 rounded-md"
+						required>
+						<option value="">Select Semester</option>
+						{semesters.map((sem) => (
+							<option key={sem} value={sem}>
+								{sem}
+							</option>
+						))}
+					</select>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<label
+						htmlFor="subjectName"
+						className="text-sm font-medium">
+						Subject Name:
+					</label>
+					<input
+						id="subjectName"
+						type="text"
+						value={subjectName}
+						onChange={(e) => setSubjectName(e.target.value)}
+						className="w-full p-2 bg-gray-800 rounded-md"
+						required
+					/>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<label
+						htmlFor="subjectCode"
+						className="text-sm font-medium">
+						Subject Code:
+					</label>
+					<input
+						id="subjectCode"
+						type="text"
+						value={subjectCode}
+						onChange={(e) => setSubjectCode(e.target.value)}
+						className="w-full p-2 bg-gray-800 rounded-md"
+						required
+					/>
+				</div>
+
+				<div className="flex flex-col gap-2">
+					<label htmlFor="credits" className="text-sm font-medium">
+						Credits:
+					</label>
+					<input
+						id="credits"
+						type="number"
+						min="1"
+						value={credits}
+						onChange={(e) => setCredits(Number(e.target.value))}
+						className="w-full p-2 bg-gray-800 rounded-md"
+						required
+					/>
+				</div>
+
+				<button
+					type="submit"
+					className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700">
+					Add Subject
+				</button>
+			</div>
+		</form>
+	);
+};
 
 export default CreateSubject;

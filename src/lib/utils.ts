@@ -12,10 +12,10 @@ export const handleCopy = () => {
     const fullBaseUrl = `${window.location.protocol}//${baseUrl}`;
 
     navigator.clipboard.writeText(fullBaseUrl);
-    alert("URL copied to clipboard!\nNow you can share it with your friends.");
+    // alert("URL copied to clipboard!\nNow you can share it with your friends.");
   } catch (error) {
     console.error("Failed to copy URL:", error);
-    alert("Failed to copy URL");
+    // alert("Failed to copy URL");
   }
 };
 

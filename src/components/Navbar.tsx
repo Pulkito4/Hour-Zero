@@ -5,9 +5,28 @@ import Link from "next/link";
 import { Menu, X, Share2, Star } from "lucide-react";
 import { Button } from "./ui/button"; // Assuming Button is imported like this
 import { handleCopy, redirectGithub } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { toast } = useToast()
+
+
+	const handleCopyWithToast = () => {
+		try {
+		  handleCopy()
+		  toast({
+			title: "Copied!",
+			description: "URL copied to clipboard.\nNow you can share it with your friends.",
+		  })
+		} catch (error) {
+		  toast({
+			variant: "destructive",
+			title: "Error",
+			description: "Failed to copy URL.",
+		  })
+		}
+	  }
 
 	return (
 		<nav className="bg-gradient-to-r from-black via-primary-dark to-black text-white px-6 py-4 font-work-sans animate-gradient-x">
@@ -53,7 +72,7 @@ const Navbar = () => {
 							</Button>
 							<Button
 								className="border border-white size-7"
-								onClick={handleCopy}>
+								onClick={handleCopyWithToast}>
 								<Share2 size={16} />
 							</Button>
 						</div>
