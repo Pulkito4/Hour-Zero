@@ -1,18 +1,37 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSubjects } from "@/firebase/firestore";
 
-const subjects = [
-	{ id: 1, name: "Computer Networks" },
-	{ id: 2, name: "Operating Systems" },
-	{ id: 3, name: "Database Management" },
-	{ id: 4, name: "Theory of Computation" },
-	{ id: 5, name: "Software Engineering" },
-];
+interface Subject {
+	id: string;
+	data: {
+		subjectCode: string;
+		credits: number;
+	};
+}
 
 const LeftSidebar = () => {
-	const [selectedSubject, setSelectedSubject] = useState<number | null>(null);
+	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
 	const [isOpen, setIsOpen] = useState(true);
+
+	const [subjects, setSubjects] = useState<Subject[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchSubjects = async () => {
+			try {
+				const subjectsList = await getSubjects("CSE", "5");
+				setSubjects(subjectsList);
+			} catch (error) {
+				console.error("Failed to fetch subjects:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchSubjects();
+	}, []);
 
 	return (
 		<div className="relative">
@@ -24,7 +43,7 @@ const LeftSidebar = () => {
         bg-dark-2 
         transition-all duration-300 ease-in-out
         z-50
-         ${!isOpen ? '-translate-x-[calc(100%-8px)]' : 'translate-x-0'}
+         ${!isOpen ? "-translate-x-[calc(100%-8px)]" : "translate-x-0"}
       lg:translate-x-0
       `}>
 				{/* Drawer handle/indicator */}
@@ -44,27 +63,33 @@ const LeftSidebar = () => {
 							SELECT A SUBJECT
 						</div>
 						<hr className="opacity-20" />
-						<ul className="flex flex-col gap-3">
-							{subjects.map((subject) => (
-								<li
-									key={subject.id}
-									className={`rounded-lg transition-all duration-300 ${
-										selectedSubject === subject.id
-											? "bg-purple-600 shadow-lg shadow-purple-600/50"
-											: "hover:bg-purple-800/40"
-									}`}>
-									<button
-										className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
-										onClick={() => {
-											setSelectedSubject(subject.id);
-											if (window.innerWidth < 1024)
-												setIsOpen(false);
-										}}>
-										{subject.name}
-									</button>
-								</li>
-							))}
-						</ul>
+						{isLoading ? (
+							<div className="text-white/70 text-center">
+								Loading subjects...
+							</div>
+						) : (
+							<ul className="flex flex-col gap-3">
+								{subjects.map((subject) => (
+									<li
+										key={subject.id}
+										className={`rounded-lg transition-all duration-300 ${
+											selectedSubject === subject.id
+												? "bg-purple-600 shadow-lg shadow-purple-600/50"
+												: "hover:bg-purple-800/40"
+										}`}>
+										<button
+											className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
+											onClick={() => {
+												setSelectedSubject(subject.id);
+												if (window.innerWidth < 1024)
+													setIsOpen(false);
+											}}>
+											{subject.id}
+										</button>
+									</li>
+								))}
+							</ul>
+						)}
 					</div>
 				</div>
 			</nav>
