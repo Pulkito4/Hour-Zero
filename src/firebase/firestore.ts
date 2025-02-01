@@ -141,3 +141,30 @@ export const AddToSubject = async (
       throw error;
     }
   };
+
+  export const addVideos = async (
+    branch: string,
+    semester: string,
+    subject: string,
+    subcollection: string,
+    videoData: VideoDocument
+  ): Promise<void> => {
+    try {
+      const subjectRef = doc(db, `Btech/${branch}/${semester}/${subject}`);
+      const subCollectionRef = collection(subjectRef, subcollection);
+  
+      try {
+        await deleteDoc(doc(subCollectionRef, 'placeholder'));
+      } catch (error) {
+        // Ignore error if placeholder doesn't exist
+      }
+  
+      const newDocRef = doc(subCollectionRef);
+      await setDoc(newDocRef, videoData);
+  
+      console.log(`Video added successfully to ${subcollection}`);
+    } catch (error) {
+      console.error("Error adding video:", error);
+      throw error;
+    }
+  };

@@ -1,39 +1,84 @@
 "use client";
 import React, { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { addVideos } from "@/firebase/firestore";
+import { VideoDocument } from "@/types/documents";
+import { getCleanUrl } from "@/lib/utils";
+
+
 
 interface UrlFormProps {
   heading: string; // Dynamic heading
 }
 
 const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
+  const { toast } = useToast();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate inputs
     if (!title || !description || !url) {
-      setMessage("Please fill all fields, including a valid URL.");
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Please fill all fields, including a valid URL.",
+      });
       return;
     }
 
-    // URL validation
-    const urlRegex =
-      /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
-    if (!urlRegex.test(url)) {
-      setMessage("Please enter a valid URL.");
+    const cleanUrl = getCleanUrl(url);
+    if (!cleanUrl) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Please enter a valid URL.",
+      });
       return;
     }
 
-    // Clear form and show success message
-    setMessage("Form submitted successfully!");
-    setTitle("");
-    setDescription("");
-    setUrl("");
+    try {
+      const videoData: VideoDocument = {
+        name: title,
+        description,
+        link: cleanUrl,
+      };
+
+      await addVideos(
+        "CSE", // Replace with actual branch
+        "5",   // Replace with actual semester
+        "Operating Systems", // Replace with actual subject
+        "videos",
+        videoData
+      );
+
+      toast({
+        title: "Success",
+        description: "Video added successfully!",
+      });
+
+      toast({
+        title: "Success",
+        description: "Video added successfully!",
+      });
+
+      // Reset form
+      setTitle("");
+      setDescription("");
+      setUrl("");
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to add video. Please try again.",
+      });
+    }
   };
+
 
   return (
     <form

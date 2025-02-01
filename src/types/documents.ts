@@ -26,7 +26,6 @@ export interface AssignmentDocument extends BaseDocument {
 
 export interface LabDocument extends BaseDocument {
   pdfUrl: string;
-  
 }
 
 export interface PYQDocument extends BaseDocument {
@@ -37,6 +36,7 @@ export interface SyllabusDocument extends BaseDocument {
   content: string
 }
 
+//creating a generic document type to handle all types of documents upload 
 export interface DocumentData {
   name: string;
   description: string;

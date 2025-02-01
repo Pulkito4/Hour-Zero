@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { VideoDocument } from "@/types/documents";
+import { getEmbedUrl } from "@/lib/utils";
 
 
 export const VideoTab = ({ documents }: { documents: VideoDocument[] }) => {
@@ -17,29 +18,29 @@ export const VideoTab = ({ documents }: { documents: VideoDocument[] }) => {
 
   console.log(selectedVideo)
 
-  const getEmbedUrl = (url: string) => {
-    try {
-      // Handle playlist URLs
-      const playlistMatch = url.match(/[&?]list=([a-zA-Z0-9_-]+)/);
-      if (playlistMatch) {
-        const playlistId = playlistMatch[1];
-        return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
-      }
+  // const getEmbedUrl = (url: string) => {
+  //   try {
+  //     // Handle playlist URLs
+  //     const playlistMatch = url.match(/[&?]list=([a-zA-Z0-9_-]+)/);
+  //     if (playlistMatch) {
+  //       const playlistId = playlistMatch[1];
+  //       return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
+  //     }
   
-      // Handle video URLs
-      const videoMatch = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/);
-      if (videoMatch) {
-        const videoId = videoMatch[1];
-        return `https://www.youtube.com/embed/${videoId}`;
-      }
+  //     // Handle video URLs
+  //     const videoMatch = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([\w-]{11})/);
+  //     if (videoMatch) {
+  //       const videoId = videoMatch[1];
+  //       return `https://www.youtube.com/embed/${videoId}`;
+  //     }
   
-      // Return original URL if no matches
-      return url;
-    } catch (error) {
-      console.error('Error processing YouTube URL:', error);
-      return url;
-    }
-  };
+  //     // Return original URL if no matches
+  //     return url;
+  //   } catch (error) {
+  //     console.error('Error processing YouTube URL:', error);
+  //     return url;
+  //   }
+  // };
 
   return (
     <div>
