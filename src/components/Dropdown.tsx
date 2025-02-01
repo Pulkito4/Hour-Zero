@@ -1,6 +1,4 @@
 "use client";
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -17,12 +15,32 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { getBranches } from "@/firebase/firestore";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 export function Dropdown() {
 	const router = useRouter();
+	const [branches, setBranches] = useState<string[]>([]);
+
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		const fetchBranches = async () => {
+			try {
+				const branchList = await getBranches();
+				setBranches(branchList);
+			} catch (error) {
+				console.error("Failed to fetch branches:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchBranches();
+	}, []);
 
 	const handleClick = () => {
 		router.push("/subject");
@@ -44,13 +62,21 @@ export function Dropdown() {
 								Select Branch
 							</Label>
 							<Select>
-								<SelectTrigger id="framework">
-									<SelectValue placeholder="Select" />
+								<SelectTrigger id="branch">
+									<SelectValue
+										placeholder={
+											isLoading ? "Loading..." : "Select"
+										}
+									/>
 								</SelectTrigger>
 								<SelectContent
 									position="popper"
-									className="bg-black text-white ">
-									<SelectItem value="cse">CSE</SelectItem>
+									className="bg-black text-white">
+									{branches.map((branch) => (
+										<SelectItem key={branch} value={branch}>
+											{branch}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 						</div>

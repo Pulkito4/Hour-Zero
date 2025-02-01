@@ -93,5 +93,16 @@ export const getDocumentsInSubjectSubCollection = async (
     }
 };
 
+export const getBranches = async (): Promise<string[]> => {
+    try {
+        const branchesSnapshot = await getDocs(collection(db, "Btech"));
+        const branches = branchesSnapshot.docs.map(doc => doc.id);
+        console.log(branches);
+        return branches;
+    } catch (error) {
+        console.error("Error fetching branches: ", error);
+        throw error;
+    }
+}
 
 
