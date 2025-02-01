@@ -30,7 +30,7 @@ const SubjectTabs: React.FC<SubjectTabsProps> = ({
 
   return (
     <div className={`w-full max-w-4xl mx-auto p-4 ${className}`}>
-      <div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
+      <div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700 sm:ml-6px">
         {tabItems.map((tab, index) => (
           <button
             key={index}

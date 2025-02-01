@@ -34,5 +34,7 @@ export interface PYQDocument extends BaseDocument {
 }
 
 export interface SyllabusDocument extends BaseDocument {
+ 
   content: string
+  
 }

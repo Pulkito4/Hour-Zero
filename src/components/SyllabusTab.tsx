@@ -1,22 +1,34 @@
 import { SyllabusDocument } from "@/types/documents";
+import Accordion from "./Accordion";
 
-export const SyllabusTab = ({ documents }: { documents: SyllabusDocument[] }) => {
-  return (
-    <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 p-5">
-      {documents.map((doc) => (
-        <div 
-          key={doc.id} 
-          className="bg-gray-950 rounded-lg overflow-hidden outline outline-purple-900
-                     hover:shadow-[0_0_15px_rgba(139,92,246,1.0)]
-                     transform hover:scale-105 
-                     transition-all duration-300 ease-in-out
-                     border border-purple-500/20"
-        >
-          <div className="p-5 text-center">
-            <h3 className="text-lg font-medium text-white mb-3">{doc.title}</h3>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
+interface AccordionItem {
+  id: string;
+  content: React.ReactNode;
 }
+
+export const SyllabusTab = ({
+  documents,
+}: {
+  documents: SyllabusDocument[];
+}) => {
+
+  const accordionItems: AccordionItem[] = documents.map((doc) => ({
+    id: doc.id,
+
+    content: (
+      <div className="space-y-4 p-4">
+        <p className="text-gray-300">{doc.content}</p>
+        <div className="text-center"></div>
+      </div>
+    ),
+  }));
+
+  console.log(accordionItems);
+  return (
+    <div className="p-4">
+      <Accordion items={accordionItems} />
+    </div>
+  );
+};
+
+export default SyllabusTab;
