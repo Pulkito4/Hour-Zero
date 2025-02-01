@@ -36,3 +36,10 @@ export interface PYQDocument extends BaseDocument {
 export interface SyllabusDocument extends BaseDocument {
   content: string
 }
+
+export interface DocumentData {
+  name: string;
+  description: string;
+  url: string;
+  createdAt: Date;
+}

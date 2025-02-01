@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import { getBranches, getSubjects } from "@/firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 
-const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
-const subjects = ["Operating System", "DBMS", "PSLP", "CNS"];
 
 export function AddToSubject() {
 	const router = useRouter();

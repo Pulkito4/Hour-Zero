@@ -108,7 +108,9 @@ export function Dropdown() {
 			<CardFooter className="flex justify-center">
 				<Button
 					className="bg-primary-300 hover:bg-primary-dark"
-					onClick={handleClick}>
+					onClick={handleClick}
+					disabled={isLoading}
+					>
 					Get Started!
 				</Button>
 			</CardFooter>

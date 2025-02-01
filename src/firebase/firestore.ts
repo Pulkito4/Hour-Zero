@@ -1,5 +1,6 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../lib/firebase.config"
+import { DocumentData } from "@/types/documents";
 
 interface Subject {
     subjectCode: string;
@@ -106,3 +107,37 @@ export const getBranches = async (): Promise<string[]> => {
 }
 
 
+export const AddToSubject = async (
+    branch: string,
+    semester: string,
+    subject: string,
+    subcollection: string,
+    documentData: DocumentData
+  ): Promise<void> => {
+    try {
+      // Get reference to the subject's subcollection
+      const subjectRef = doc(db, `Btech/${branch}/${semester}/${subject}`);
+      const subCollectionRef = collection(subjectRef, subcollection);
+  
+      // Delete placeholder document if it exists
+      try {
+        await deleteDoc(doc(subCollectionRef, 'placeholder'));
+      } catch (error) {
+        // Ignore error if placeholder doesn't exist
+      }
+  
+      // Add new document with auto-generated ID
+      const newDocRef = doc(subCollectionRef);
+      await setDoc(newDocRef, {
+        name: documentData.name,
+        description: documentData.description,
+        url: documentData.url,
+        // createdAt: documentData.createdAt,
+      });
+  
+      console.log(`Document added successfully to ${subcollection}`);
+    } catch (error) {
+      console.error("Error adding document:", error);
+      throw error;
+    }
+  };
