@@ -1,81 +1,89 @@
-import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase.config";
 import { LabDocument } from "@/types/documents";
+import { useEffect, useState } from "react";
+import { Octokit } from "@octokit/rest";
+import { CodeViewerModal } from "./CodeViewerModal";
+import { FileCode } from "lucide-react";
 
+const octokit = new Octokit({
+  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN
+});
 
+interface GitHubFile {
+  name: string;
+  path: string;
+  download_url: string;
+}
 
-export const LabTab = ({ documents }: { documents: LabDocument[] }) => {
-  const [labDocs, setLabDocs] = useState<LabDocument[]>([]);
-  const [loading, setLoading] = useState(true);
+export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
+  const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<{ content: string; name: string } | null>(null);
+
+  const fetchFileContent = async (url: string, filename: string) => {
+    try {
+      const response = await fetch(url);
+      const content = await response.text();
+      setSelectedFile({ content, name: filename });
+    } catch (error) {
+      console.error('Error fetching file content:', error);
+    }
+  };
+
+
+  const fetchLabCodes = async () => {
+    try {
+      const response = await octokit.repos.getContent({
+        owner: 'tanishkag237',
+        repo: 'Btech-3rd-Yr-coding-stuff',
+        path: 'OS lab/Tanishka codes lab file', // folder containing lab codes
+      });
+
+      if (Array.isArray(response.data)) {
+        setLabCodes(response.data as GitHubFile[]);
+      }
+    } catch (err) {
+      console.error('Error fetching lab codes:', err);
+      setError('Failed to load lab codes');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchLabDocs = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "lab"));
-        const docs = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        } as LabDocument));
-        setLabDocs(docs);
-      } catch (err) {
-        setError("Failed to fetch lab documents");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLabDocs();
+    fetchLabCodes();
   }, []);
 
-  const toggleAccordion = (id: string) => setOpenId(openId === id ? null : id);
-
-  if (loading) return <div className="text-white">Loading...</div>;
-  if (error) return <div className="text-red-500">{error}</div>;
+ 
 
   return (
-    <div className="space-y-4">
-      {labDocs.map((doc) => (
-        <div 
-          key={doc.id}
-          className="bg-gray-950 rounded-lg overflow-hidden
-                     border border-purple-500/20 hover:shadow-[0_0_15px_rgba(139,92,246,0.3)]"
-        >
-          <button
-            onClick={() => toggleAccordion(doc.id)}
-            className="w-full flex justify-between items-center p-4 
-                     text-white hover:bg-gray-900/50 transition-all duration-200"
+    <div>
+     
+
+     <div className="p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {labCodes.map((file) => (
+          <div
+            key={file.path}
+            onClick={() => fetchFileContent(file.download_url, file.name)}
+            className="bg-gray-900  text-sm p-5 rounded-lg cursor-pointer hover:bg-gray-800"
           >
-            <span className="text-lg font-medium">{doc.title}</span>
-            <span className="text-xl text-purple-500">
-              {openId === doc.id ? "−" : "+"}
-            </span>
-          </button>
-          
-          {openId === doc.id && (
-            <div className="p-4 border-t border-purple-500/20 bg-gray-900/30">
-              {/* <p className="text-gray-300 mb-4">{doc.content}</p> */}
-              {/* {doc.pdfUrl && (
-                <a
-                  href={doc.pdfUrl}
-                  className="inline-block bg-purple-600 px-6 py-2 rounded-md
-                           text-white hover:bg-purple-700 transition-colors duration-200"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download Lab File
-                </a>
-              )
-              } */}
-            </div>
-          )}
-        </div>
-      ))}
+            {/* <FileCode className="w-5 h-5 text-purple-500" /> */}
+            <span className="  text-white">{file.name}</span>
+          </div>
+        ))}
+      </div>
+
+      {selectedFile && (
+        <CodeViewerModal
+          content={selectedFile.content}
+          filename={selectedFile.name}
+          onClose={() => setSelectedFile(null)}
+        />
+      )}
     </div>
+    </div>
+
+
   );
 };
-
-export default LabTab;

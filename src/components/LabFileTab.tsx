@@ -3,22 +3,23 @@ import { useEffect, useState } from "react";
 import { DocumentPreviewer } from "./DocumentPreviewer";
 import Accordion from "./Accordion";
 import { Octokit } from "@octokit/rest";
+import { LabCodeTab } from "./LabCodesTab";
 
-const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN
-});
+// const octokit = new Octokit({
+//   auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN
+// });
 
-interface GitHubFile {
-  name: string;
-  path: string;
-  download_url: string;
-}
+// interface GitHubFile {
+//   name: string;
+//   path: string;
+//   download_url: string;
+// }
 
 export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
   const [selectedLabFile, setSelectedLabFile] = useState<LabDocument | null>(null);
-  const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState<string | null>(null);
 
   const handleOpenModal = (doc: LabDocument) => {
     setSelectedLabFile(doc);
@@ -28,28 +29,28 @@ export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
     setSelectedLabFile(null);
   };
 
-  const fetchLabCodes = async () => {
-    try {
-      const response = await octokit.repos.getContent({
-        owner: 'tanishkag237',
-        repo: 'DSA',
-        path: '01patterns', // folder containing lab codes
-      });
+  // const fetchLabCodes = async () => {
+  //   try {
+  //     const response = await octokit.repos.getContent({
+  //       owner: 'tanishkag237',
+  //       repo: 'yc-directory',
+  //       path: 'components', // folder containing lab codes
+  //     });
 
-      if (Array.isArray(response.data)) {
-        setLabCodes(response.data as GitHubFile[]);
-      }
-    } catch (err) {
-      console.error('Error fetching lab codes:', err);
-      setError('Failed to load lab codes');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     if (Array.isArray(response.data)) {
+  //       setLabCodes(response.data as GitHubFile[]);
+  //     }
+  //   } catch (err) {
+  //     console.error('Error fetching lab codes:', err);
+  //     setError('Failed to load lab codes');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchLabCodes();
-  }, []);
+  // useEffect(() => {
+  //   fetchLabCodes();
+  // }, []);
 
  
 
@@ -81,7 +82,7 @@ export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
       )}
 
       {/* <Accordion items={[labcodes]}/> */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <h2 className="text-xl font-semibold text-white mb-4">Lab Codes</h2>
         {isLoading && <p className="text-gray-400">Loading lab codes...</p>}
         {error && <p className="text-red-500">{error}</p>}
@@ -100,7 +101,9 @@ export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
             </a>
           ))}
         </div>
-      </div>
+      </div> */}
+
+      <LabCodeTab documents={[]}/>
     </div>
 
 
