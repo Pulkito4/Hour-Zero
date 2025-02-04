@@ -9,16 +9,31 @@ const octokit = new Octokit({
 });
 
 interface GitHubFile {
+  type: string;
   name: string;
   path: string;
   download_url: string;
 }
 
 export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
+  const [currentPath, setCurrentPath] = useState('WT lab');
+  const [pathHistory, setPathHistory] = useState<string[]>([currentPath]);
   const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<{ content: string; name: string } | null>(null);
+
+  const handlePathClick = (index: number) => {
+    const newPath = pathHistory[index];
+    setCurrentPath(newPath);
+    setPathHistory(prev => prev.slice(0, index + 1));
+  };
+
+  const handleFolderClick = (newPath: string) => {
+    setCurrentPath(newPath);
+    setPathHistory(prev => [...prev, newPath]);
+    setIsLoading(true);
+  };
 
   const fetchFileContent = async (url: string, filename: string) => {
     try {
@@ -36,7 +51,7 @@ export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
       const response = await octokit.repos.getContent({
         owner: 'tanishkag237',
         repo: 'Btech-3rd-Yr-coding-stuff',
-        path: 'OS lab/Tanishka codes lab file', // folder containing lab codes
+        path: currentPath,
       });
 
       if (Array.isArray(response.data)) {
@@ -50,26 +65,54 @@ export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
     }
   };
 
+  // const handleFolderClick = (newPath: string) => {
+  //   setCurrentPath(newPath);
+  //   setIsLoading(true);
+  //   fetchLabCodes();
+  // };
+
   useEffect(() => {
     fetchLabCodes();
-  }, []);
+  }, [currentPath]);
 
  
 
   return (
     <div>
      
+ {/* Path breadcrumb */}
 
      <div className="p-4">
+     <div className="flex items-center gap-2 mb-4 text-sm">
+        {pathHistory.map((path, index) => (
+          <div key={path} className="flex items-center">
+            <button
+              onClick={() => handlePathClick(index)}
+              className={`hover:text-purple-500 transition-colors
+                ${currentPath === path ? 'text-purple-500' : 'text-gray-400'}`}
+            >
+              {path.split('/').pop()}
+            </button>
+            {index < pathHistory.length - 1 && (
+              <span className="mx-2 text-gray-600">/</span>
+            )}
+          </div>
+        ))}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {labCodes.map((file) => (
           <div
             key={file.path}
-            onClick={() => fetchFileContent(file.download_url, file.name)}
-            className="bg-gray-900  text-sm p-5 rounded-lg cursor-pointer hover:bg-gray-800"
+            onClick={() => 
+              file.type === 'dir' 
+                ? handleFolderClick(file.path)
+                : fetchFileContent(file.download_url, file.name)
+            }
+            className="bg-gray-900 p-4 rounded-lg cursor-pointer hover:bg-gray-800 
+                     transition-all duration-200 hover:shadow-lg"
           >
             {/* <FileCode className="w-5 h-5 text-purple-500" /> */}
-            <span className="  text-white">{file.name}</span>
+            <span className="ml-2 text-white capitalize">{file.name}</span>
           </div>
         ))}
       </div>

@@ -1,8 +1,10 @@
 import { CarousalSlider } from "@/components/Carousel";
 import { Dropdown } from "@/components/Dropdown";
+import { Whyus } from "@/components/Whyus";
 import { Offer } from "@/components/Offer";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
-import { WhyUs } from "@/components/Whyus";
+
 
 export default function Home() {
 	return (
@@ -48,7 +50,8 @@ export default function Home() {
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
 					<span className="text-primary-100">WHY</span> HOUR ZERO ?
 					</h1>
-					<WhyUs />
+					{/* <WhyUs /> */}
+					<Whyus/>
 				</div>
 			</div>
 		</>
