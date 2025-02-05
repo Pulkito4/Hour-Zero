@@ -1,4 +1,4 @@
-import Vision from '@/components/ui/aboutus/Vision'
+import Vision from '@/components/aboutus/Vision'
 import React from 'react'
 
 const page = () => {

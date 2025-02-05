@@ -31,7 +31,8 @@ const page = () => {
       </div>
 
       <div className=" p-5 ml-15 mr-15 font-work-sans">
-        <hr className="mb-15" />
+        {/* <p>Last Updated</p> */}
+        <hr className="mb-15 border-gray-600"/>
         <div className="ppcontent">
           <h2 className="ppheading">1. INFORMATION WE COLLECT</h2>
           <p className="ml-5 m-1 p-2 ">
@@ -177,7 +178,8 @@ const page = () => {
             their services.
           </p>
         </div>
-        <hr className="ppcontent !mt-15" />
+      
+        <hr className="ppcontent !mt-15 border-gray-600" />
         <div className="m-3 mb-5 text-center">
           <h2 className="ppheading">CONTACT US</h2>
           <p className="ml-5 m-1 p-2 text-gray-200">
