@@ -19,6 +19,7 @@ import { OthersTab } from "@/components/Others";
 import { LabFileTab } from "@/components/LabFileTab";
 import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
+import { useSubject } from "@/context/SubjectContext";
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -30,6 +31,9 @@ const WelcomeMessage = () => (
 );
 
 export default function SubjectPage() {
+	const { branch, semester } = useSubject();
+	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+
 	const [documents, setDocuments] = useState<{
 		notes: NotesDocument[];
 		videos: VideoDocument[];
@@ -51,6 +55,9 @@ export default function SubjectPage() {
 	const [activeTab, setActiveTab] = useState<number>(0); // Track the active tab index
 
 	useEffect(() => {
+		if (!branch || !semester || !selectedSubject) {
+			return;
+		}
 		const fetchData = async () => {
 			try {
 				const [
@@ -63,45 +70,45 @@ export default function SubjectPage() {
 					rawLab,
 				] = await Promise.all([
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"notes"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"videos"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"syllabus"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"assignments"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"pyqs"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"other"
 					),
 					getDocumentsInSubjectSubCollection(
-						"CSE",
-						"5",
-						"Operating Systems",
+						branch,
+						semester.toString(),
+						selectedSubject,
 						"lab"
 					),
 				]);
@@ -155,7 +162,7 @@ export default function SubjectPage() {
 		};
 
 		fetchData();
-	}, []);
+	}, [branch, semester, selectedSubject]);
 
 	const renderTabContent = () => {
 		switch (activeTab) {
@@ -189,9 +196,9 @@ export default function SubjectPage() {
 
 	return (
 		<div className="flex min-h-screen">
-			<LeftSidebar />
+			<LeftSidebar onSelectSubject={setSelectedSubject}/>
 			<main className="flex-1">
-				{activeTab === null ? (
+				{activeTab === null|| !selectedSubject ? (
 					<WelcomeMessage />
 				) : (
 					<SubjectTabs

@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { addVideos } from "@/firebase/firestore";
 import { UploadDocumentData } from "@/types/documents";
 import { getCleanUrl } from "@/lib/utils";
+import { useSubject } from "@/context/SubjectContext";
 
 interface UrlFormProps {
 	heading: string; // Dynamic heading
@@ -11,6 +12,7 @@ interface UrlFormProps {
 
 const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const { toast } = useToast();
+	const {subject} = useSubject();
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -49,7 +51,7 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 			await addVideos(
 				"CSE", // Replace with actual branch
 				"5", // Replace with actual semester
-				"Operating Systems", // Replace with actual subject
+				subject,
 				"videos",
 				videoData
 			);

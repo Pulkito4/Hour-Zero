@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getBranches, getSubjects } from "@/firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
-
+import { useSubject } from "@/context/SubjectContext";
 
 export function AddToSubject() {
+	const { subject, setSubject } = useSubject();
 	const router = useRouter();
 	const { toast } = useToast();
 
@@ -148,9 +149,10 @@ export function AddToSubject() {
 					</label>
 					<select
 						value={formData.subject}
-						onChange={(e) =>
+						onChange={(e) => (
+							setSubject(e.target.value),
 							handleInputChange("subject", e.target.value)
-						}
+						)}
 						className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
                      focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
 						required

@@ -18,14 +18,25 @@ import {
 import { getBranches } from "@/firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSubject } from '../context/SubjectContext';
+
 
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 export function Dropdown() {
 	const router = useRouter();
 	const [branches, setBranches] = useState<string[]>([]);
+	const { setBranch, setSemester } = useSubject();
 
 	const [isLoading, setIsLoading] = useState(true);
+
+	const handleSelectBranch = (value: string) => {
+		setBranch(value);
+	};
+	
+	  const handleSelectSemester = (value: string) => {
+		setSemester(Number(value));
+	  };
 
 	useEffect(() => {
 		const fetchBranches = async () => {
@@ -61,12 +72,13 @@ export function Dropdown() {
 							<Label htmlFor="framework" className=" md:text-lg">
 								Select Branch
 							</Label>
-							<Select>
+							<Select onValueChange={handleSelectBranch}>
 								<SelectTrigger id="branch">
 									<SelectValue
 										placeholder={
 											isLoading ? "Loading..." : "Select"
 										}
+										
 									/>
 								</SelectTrigger>
 								<SelectContent
@@ -84,8 +96,9 @@ export function Dropdown() {
 							<Label htmlFor="framework" className=" md:text-lg">
 								Select Semester
 							</Label>
-							<Select>
+							<Select onValueChange={handleSelectSemester}>
 								<SelectTrigger id="framework">
+								
 									<SelectValue placeholder="Select" />
 								</SelectTrigger>
 								<SelectContent

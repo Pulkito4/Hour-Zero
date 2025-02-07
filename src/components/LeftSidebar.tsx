@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getSubjects } from "@/firebase/firestore";
+import { useSubject } from "@/context/SubjectContext";
 
 interface Subject {
 	id: string;
@@ -10,8 +11,9 @@ interface Subject {
 	};
 }
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string) => void }) => {
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+	const { branch, semester } = useSubject();
 
 	const [isOpen, setIsOpen] = useState(true);
 
@@ -21,7 +23,7 @@ const LeftSidebar = () => {
 	useEffect(() => {
 		const fetchSubjects = async () => {
 			try {
-				const subjectsList = await getSubjects("CSE", "5");
+				const subjectsList = await getSubjects(branch, semester.toString());
 				setSubjects(subjectsList);
 			} catch (error) {
 				console.error("Failed to fetch subjects:", error);
@@ -81,6 +83,7 @@ const LeftSidebar = () => {
 											className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
 											onClick={() => {
 												setSelectedSubject(subject.id);
+												onSelectSubject(subject.id);
 												if (window.innerWidth < 1024)
 													setIsOpen(false);
 											}}>

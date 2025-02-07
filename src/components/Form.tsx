@@ -4,6 +4,7 @@ import FileUploader from "./FileUploader";
 import { useToast } from "@/hooks/use-toast";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { AddToSubject } from "@/firebase/firestore";
+import { useSubject } from "@/context/SubjectContext";
 
 interface SimpleFormProps {
 	heading: string; // Dynamic heading
@@ -21,6 +22,7 @@ const headingToSubcollection: { [key: string]: string } = {
 
 const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 	const { toast } = useToast();
+	const {subject} = useSubject();
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState<File | null>(null);
@@ -55,13 +57,12 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 			await AddToSubject(
 				"CSE", // Replace with actual branch
 				"5", // Replace with actual semester
-				"Operating Systems", // Replace with actual subject
+				subject, // Replace with actual subject
 				subcollection, // subcollection
 				{
 					name: title,
 					description: description,
-					url: fileUrl,
-					createdAt: new Date(),
+					url: fileUrl
 				}
 			);
 

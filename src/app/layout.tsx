@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { CustomFooter } from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
+import { SubjectProvider } from "@/context/SubjectContext";
 
 
 
@@ -75,11 +76,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.variable} bg-black` }>
-     
+      <SubjectProvider>
+
         <Navbar/>
          {children}
          <Toaster/>
         <CustomFooter/>
+
+      </SubjectProvider>
 
       </body>
     </html>
