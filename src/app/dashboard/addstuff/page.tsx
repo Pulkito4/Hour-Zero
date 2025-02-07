@@ -46,7 +46,7 @@ const SubjectTab: React.FC = () => {
 
       {/* Tab Content */}
       <div className="p-5 text-white bg-gray-900 rounded-lg shadow-lg mt-4">
-        <p>{tabs[activeTab].content}</p>
+        <div>{tabs[activeTab].content}</div>
       </div>
     </div>
   );
