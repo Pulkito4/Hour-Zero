@@ -16,12 +16,24 @@ interface GitHubFile {
 }
 
 export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
-  const [currentPath, setCurrentPath] = useState('WT lab');
-  const [pathHistory, setPathHistory] = useState<string[]>([currentPath]);
+
+  const [rootFolder, setRootFolder] = useState('WT lab');
+  const [currentPath, setCurrentPath] = useState(rootFolder);
+  const [pathHistory, setPathHistory] = useState<string[]>([rootFolder]);
   const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<{ content: string; name: string } | null>(null);
+
+  const labFolders = ['WT lab', 'OS lab', 'JAVA lab'];
+
+  const handleLabChange = (selectedLab: string) => {
+    setRootFolder(selectedLab);
+    setCurrentPath(selectedLab);
+    setPathHistory([selectedLab]);
+    setIsLoading(true);
+  };
+
 
   const handlePathClick = (index: number) => {
     const newPath = pathHistory[index];
@@ -79,10 +91,27 @@ export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
 
   return (
     <div>
+
+      
      
  {/* Path breadcrumb */}
 
      <div className="p-4">
+
+     <div className="mb-4">
+        <select
+          value={rootFolder}
+          onChange={(e) => handleLabChange(e.target.value)}
+          className="bg-gray-900 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-purple-500 focus:outline-none"
+        >
+          {labFolders.map((lab) => (
+            <option key={lab} value={lab}>
+              {lab}
+            </option>
+          ))}
+        </select>
+      </div>
+
      <div className="flex items-center gap-2 mb-4 text-sm">
         {pathHistory.map((path, index) => (
           <div key={path} className="flex items-center">
@@ -99,7 +128,7 @@ export const LabCodeTab = ({ documents }: { documents: LabDocument[] }) => {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {labCodes.map((file) => (
           <div
             key={file.path}
