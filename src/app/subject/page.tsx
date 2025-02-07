@@ -21,6 +21,11 @@ import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
 
+interface SelectedSubjectInfo {
+	id: string;
+	folderName: string;
+}
+
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
 		<h2 className="text-2xl font-bold text-white">Welcome to Hour Zero</h2>
@@ -32,8 +37,12 @@ const WelcomeMessage = () => (
 
 export default function SubjectPage() {
 	const { branch, semester } = useSubject();
-	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+	const [selectedSubject, setSelectedSubject] =
+		useState<SelectedSubjectInfo | null>(null);
 
+	const handleSelectSubject = (subjectId: string, folderName: string) => {
+		setSelectedSubject({ id: subjectId, folderName });
+	};
 	const [documents, setDocuments] = useState<{
 		notes: NotesDocument[];
 		videos: VideoDocument[];
@@ -55,7 +64,7 @@ export default function SubjectPage() {
 	const [activeTab, setActiveTab] = useState<number>(0); // Track the active tab index
 
 	useEffect(() => {
-		if (!branch || !semester || !selectedSubject) {
+		if (!branch || !semester || !selectedSubject?.id) {
 			return;
 		}
 		const fetchData = async () => {
@@ -72,43 +81,43 @@ export default function SubjectPage() {
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"notes"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"videos"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"syllabus"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"assignments"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"pyqs"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"other"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"lab"
 					),
 				]);
@@ -162,7 +171,7 @@ export default function SubjectPage() {
 		};
 
 		fetchData();
-	}, [branch, semester, selectedSubject]);
+	}, [branch, semester, selectedSubject?.id]);
 
 	const renderTabContent = () => {
 		switch (activeTab) {
@@ -175,7 +184,10 @@ export default function SubjectPage() {
 				return <AssignmentsTab documents={documents.assignments} />;
 			case 3:
 				return (
-					<LabFileTab documents={documents.lab} />
+					<LabFileTab
+						documents={documents.lab}
+						folderName={selectedSubject?.folderName || null}
+					/>
 					//add accordion here
 				);
 			case 4:
@@ -196,9 +208,9 @@ export default function SubjectPage() {
 
 	return (
 		<div className="flex min-h-screen">
-			<LeftSidebar onSelectSubject={setSelectedSubject}/>
+			<LeftSidebar onSelectSubject={handleSelectSubject} />
 			<main className="flex-1">
-				{activeTab === null|| !selectedSubject ? (
+				{activeTab === null || !selectedSubject ? (
 					<WelcomeMessage />
 				) : (
 					<SubjectTabs
