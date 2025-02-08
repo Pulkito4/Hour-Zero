@@ -18,25 +18,18 @@ import {
 import { getBranches } from "@/firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSubject } from '../context/SubjectContext';
-
-
+import { useSubject } from "../context/SubjectContext";
+import { useToast } from "@/hooks/use-toast";
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 export function Dropdown() {
 	const router = useRouter();
 	const [branches, setBranches] = useState<string[]>([]);
 	const { setBranch, setSemester } = useSubject();
-
+	const { toast } = useToast();
+	const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
+	const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
-
-	const handleSelectBranch = (value: string) => {
-		setBranch(value);
-	};
-	
-	  const handleSelectSemester = (value: string) => {
-		setSemester(Number(value));
-	  };
 
 	useEffect(() => {
 		const fetchBranches = async () => {
@@ -53,37 +46,50 @@ export function Dropdown() {
 		fetchBranches();
 	}, []);
 
-	const handleClick = () => {
-		router.push("/subject");
+	const handleSelectBranch = (value: string) => {
+		setSelectedBranch(value);
+		setBranch(value);
 	};
+
+	const handleSelectSemester = (value: string) => {
+		setSelectedSemester(value);
+		setSemester(Number(value));
+	};
+
+	const handleClick = () => {
+		if (!selectedBranch || !selectedSemester) {
+			toast({
+			  variant: "destructive",
+			  title: "Invalid Input",
+			  description: "Please select both Branch and Semester to continue",
+			});
+			return;
+		  }
+		  router.push("/subject");
+	};
+
 	return (
 		<Card
 			className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
-      transition-shadow duration-300 
-      hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
+      		transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,1)]"
+		>
 			<CardHeader className="text-center md:text-xl">
 				<CardTitle>Select your Branch & Semester</CardTitle>
-				{/* <CardDescription>Get Started in one-click.</CardDescription> */}
 			</CardHeader>
 			<CardContent>
 				<form>
 					<div className="grid w-full items-center gap-4">
 						<div className="flex flex-col space-y-1.5">
-							<Label htmlFor="framework" className=" md:text-lg">
+							<Label htmlFor="branch" className="md:text-lg">
 								Select Branch
 							</Label>
 							<Select onValueChange={handleSelectBranch}>
 								<SelectTrigger id="branch">
 									<SelectValue
-										placeholder={
-											isLoading ? "Loading..." : "Select"
-										}
-										
+										placeholder={isLoading ? "Loading..." : "Select"}
 									/>
 								</SelectTrigger>
-								<SelectContent
-									position="popper"
-									className="bg-black text-white">
+								<SelectContent position="popper" className="bg-black text-white">
 									{branches.map((branch) => (
 										<SelectItem key={branch} value={branch}>
 											{branch}
@@ -93,22 +99,16 @@ export function Dropdown() {
 							</Select>
 						</div>
 						<div className="flex flex-col space-y-1.5">
-							<Label htmlFor="framework" className=" md:text-lg">
+							<Label htmlFor="semester" className="md:text-lg">
 								Select Semester
 							</Label>
 							<Select onValueChange={handleSelectSemester}>
-								<SelectTrigger id="framework">
-								
+								<SelectTrigger id="semester">
 									<SelectValue placeholder="Select" />
 								</SelectTrigger>
-								<SelectContent
-									position="popper"
-									className="bg-black text-white">
+								<SelectContent position="popper" className="bg-black text-white">
 									{semesters.map((semester) => (
-										<SelectItem
-											key={semester}
-											value={semester}
-											defaultValue={semester}>
+										<SelectItem key={semester} value={semester}>
 											Semester {semester}
 										</SelectItem>
 									))}
@@ -120,10 +120,10 @@ export function Dropdown() {
 			</CardContent>
 			<CardFooter className="flex justify-center">
 				<Button
-					className="bg-primary-300 hover:bg-primary-dark"
+					className="bg-primary-300 hover:bg-primary-400"
 					onClick={handleClick}
-					disabled={isLoading}
-					>
+					// disabled={!selectedBranch || !selectedSemester}
+				>
 					Get Started!
 				</Button>
 			</CardFooter>
