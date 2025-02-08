@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { getSubjects } from "@/firebase/firestore";
 import { useSubject } from "@/context/SubjectContext";
+import { Spinner } from "./ui/Spinner";
 
 interface Subject {
 	id: string;
@@ -50,9 +51,9 @@ const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string)
       `}>
 				{/* Drawer handle/indicator */}
 				<div
-					className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 h-20 w-2
-                     cursor-pointer bg-purple-600 rounded-l
-                     hover:w-3 transition-all duration-200
+					className="lg:hidden absolute right-0 top-1/2 -translate-y-1/2 h-20 w-4
+                     cursor-pointer bg-primary-100 rounded-l
+                     hover:w-5 transition-all duration-200
                      flex items-center justify-center"
 					onClick={() => setIsOpen(!isOpen)}>
 					<div className="w-0.5 h-8 bg-white/50 rounded-full" />
@@ -67,7 +68,8 @@ const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string)
 						<hr className="opacity-20" />
 						{isLoading ? (
 							<div className="text-white/70 text-center">
-								Loading subjects...
+								{/* Loading subjects... */}
+								<Spinner />
 							</div>
 						) : (
 							<ul className="flex flex-col gap-3">
@@ -76,7 +78,7 @@ const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string)
 										key={subject.id}
 										className={`rounded-lg transition-all duration-300 ${
 											selectedSubject === subject.id
-												? "bg-purple-600 shadow-lg shadow-purple-600/50"
+												? "bg-primary-300 shadow-lg shadow-purple-600/50"
 												: "hover:bg-purple-800/40"
 										}`}>
 										<button

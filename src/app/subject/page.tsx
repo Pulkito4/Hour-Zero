@@ -20,6 +20,7 @@ import { LabFileTab } from "@/components/LabFileTab";
 import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
+import { Spinner } from "@/components/ui/Spinner"; 
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -33,6 +34,7 @@ const WelcomeMessage = () => (
 export default function SubjectPage() {
 	const { branch, semester } = useSubject();
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false); 
 
 	const [documents, setDocuments] = useState<{
 		notes: NotesDocument[];
@@ -59,6 +61,7 @@ export default function SubjectPage() {
 			return;
 		}
 		const fetchData = async () => {
+			setIsLoading(true);
 			try {
 				const [
 					rawNotes,
@@ -159,12 +162,22 @@ export default function SubjectPage() {
 			} catch (error) {
 				console.error("Error fetching documents:", error);
 			}
+			finally {
+				setIsLoading(false); // Hide loader
+			}
 		};
 
 		fetchData();
 	}, [branch, semester, selectedSubject]);
 
 	const renderTabContent = () => {
+		if (isLoading) {
+			return (
+				<div className="flex justify-center items-center min-h-[300px]">
+					<Spinner />
+				</div>
+			);
+		}
 		switch (activeTab) {
 			case 0:
 				return <SyllabusTab documents={documents.syllabus} />;
