@@ -19,7 +19,7 @@ const sanitizePath = (value: string): string => {
 export const SubjectProvider = ({ children }: { children: ReactNode }) => {
   // const [branch, setBranch] = useState<string>('');
   // const [semester, setSemester] = useState<number>(0);
-  // const [subject, setSubject] = useState<string>('');
+  const [subject, setSubject] = useState<string>('');
 
 
   const [branch, setBranchState] = useState<string>(() => {
@@ -45,43 +45,43 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
     setSemesterState(value);
   };
 
-  const [subject, setSubjectState] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const storedSubject = localStorage.getItem('selectedSubject');
-      return storedSubject || '';
-    }
-    return '';
-  });
+  // const [subject, setSubjectState] = useState<string>(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const storedSubject = localStorage.getItem('selectedSubject');
+  //     return storedSubject || '';
+  //   }
+  //   return '';
+  // });
 
-  const setSubject = (value: string) => {
-    const sanitizedValue = sanitizePath(value);
-    setSubjectState(sanitizedValue);
-    // Immediately store in localStorage when subject changes
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('selectedSubject', sanitizedValue);
-    }
-  };
+  // const setSubject = (value: string) => {
+  //   const sanitizedValue = sanitizePath(value);
+  //   setSubjectState(sanitizedValue);
+  //   // Immediately store in localStorage when subject changes
+  //   if (typeof window !== 'undefined') {
+  //     localStorage.setItem('selectedSubject', sanitizedValue);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const storedSubject = localStorage.getItem('selectedSubject');
+  //   if (storedSubject) {
+  //     setSubjectState(storedSubject);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const storedSubject = localStorage.getItem('selectedSubject');
-    if (storedSubject) {
-      setSubjectState(storedSubject);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (branch && semester && subject) {
+    if (branch && semester && subject ) {
       localStorage.setItem('branch', branch);
       localStorage.setItem('semester', semester.toString());
       localStorage.setItem('selectedSubject', subject);
     }
-  }, [branch, semester, subject]);
+  }, [branch, semester,subject]);
 
 
 
 
   return (
-    <SubjectContext.Provider value={{ branch, semester, subject, setSubject, setBranch, setSemester }}>
+    <SubjectContext.Provider value={{ branch, semester,subject, setSubject,  setBranch, setSemester }}>
       {children}
     </SubjectContext.Provider>
   );
