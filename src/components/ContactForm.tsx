@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
@@ -9,8 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { contactUsvalidation } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
+	const recaptchaRef = useRef<ReCAPTCHA>(null);
+
 	const [loading, setLoading] = useState(false);
 	const { toast } = useToast();
 
@@ -27,29 +30,42 @@ export default function ContactForm() {
 		setLoading(true);
 
 		try {
+			const captchaToken = await recaptchaRef.current?.executeAsync();
+			if (!captchaToken) {
+				throw new Error("Please verify you are human");
+			}
+
 			const res = await fetch("/api/send-email", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(data),
+				body: JSON.stringify({
+					...data,
+					captchaToken,
+				}),
 			});
 
-			if (res.ok) {
-				toast({
-					title: "Success!",
-					description: "Your message has been sent successfully.",
-					variant: "default",
-				});
-				reset();
-			} else {
-				throw new Error("Failed to send message.");
+			const responseData = await res.json();
+
+			if (!res.ok) {
+				throw new Error(responseData.error || "Failed to send message");
 			}
-		} catch (error) {
+
+			toast({
+				title: "Success!",
+				description: "Your message has been sent successfully.",
+				variant: "default",
+			});
+			reset();
+			recaptchaRef.current?.reset();
+		} catch (error: any) {
+			console.error("Form submission error:", error);
 			toast({
 				title: "Error",
-				description: "Failed to send message. Please try again.",
+				description:
+					error.message ||
+					"Failed to send message. Please try again.",
 				variant: "destructive",
 			});
-			console.error("Error:", error);
 		} finally {
 			setLoading(false);
 		}
@@ -103,6 +119,12 @@ export default function ContactForm() {
 							</p>
 						)}
 					</div>
+
+					<ReCAPTCHA
+						ref={recaptchaRef}
+						size="invisible"
+						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+					/>
 
 					<Button
 						type="submit"
