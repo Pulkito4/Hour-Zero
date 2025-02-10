@@ -72,13 +72,16 @@ export default function ContactForm() {
 	};
 
 	return (
-		<Card className="max-w-md mx-auto bg-[#1F1F1F] border border-[#2D2D2D] rounded-xl shadow-xl">
+		<Card className="  max-w-md mx-auto bg-slate-950 border border-[#2D2D2D] rounded-xl font-work-sans
+		shadow-[0_0_20px_rgba(139,92,246,0.5)] 
+      transition-shadow duration-300 
+      hover:shadow-[0_0_40px_rgba(139,92,246,0.6)]">
 			<CardContent className="p-6">
 				<form
 					onSubmit={handleSubmit(onSubmit)}
 					className="flex flex-col gap-6">
 					<div className="space-y-1.5">
-						<label className="contact-form-label">Name</label>
+						<label className="contact-form-label ">Name</label>
 						<Input
 							{...register("name")}
 							placeholder="Your name"
@@ -92,12 +95,12 @@ export default function ContactForm() {
 					</div>
 
 					<div className="space-y-1.5">
-						<label className="contact-form-label">Email</label>
+						<label className="contact-form-label ">Email</label>
 						<Input
 							type="email"
 							{...register("email")}
 							placeholder="you@example.com"
-							className="contact-form-input"
+							className="contact-form-input "
 						/>
 						{errors.email?.message && (
 							<p className="text-red-500 text-xs mt-1">
@@ -114,7 +117,7 @@ export default function ContactForm() {
 							className="contact-form-textarea"
 						/>
 						{errors.message?.message && (
-							<p className="text-red-500 text-xs mt-1">
+							<p className="text-white text-xs mt-1 ">
 								{errors.message.message.toString()}
 							</p>
 						)}
@@ -129,7 +132,7 @@ export default function ContactForm() {
 					<Button
 						type="submit"
 						disabled={loading}
-						className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-colors py-2.5">
+						className="w-full bg-primary-300 hover:bg-primary-dark text-white transition-colors py-2.5">
 						{loading ? (
 							<div className="flex items-center justify-center gap-2">
 								<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
