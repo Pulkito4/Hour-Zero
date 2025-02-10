@@ -84,3 +84,23 @@ body {
          text-gray-300
          px-2 sm:px-4;
 }
+
+.contact-form-input {
+  @apply bg-[#1F1F1F] border border-[#2D2D2D] text-white 
+         rounded-lg p-3 w-full
+         placeholder:text-gray-500
+         focus:outline-none focus:ring-2 focus:ring-blue-500
+         transition-all duration-300;
+}
+
+.contact-form-textarea {
+  @apply bg-[#1F1F1F] border border-[#2D2D2D] text-white 
+         rounded-lg p-3 w-full min-h-[120px]
+         placeholder:text-gray-500
+         focus:outline-none focus:ring-2 focus:ring-blue-500
+         transition-all duration-300 resize-none;
+}
+
+.contact-form-label {
+  @apply text-gray-300 text-sm font-medium mb-2 block;
+}
