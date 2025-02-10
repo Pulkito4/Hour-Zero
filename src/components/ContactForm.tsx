@@ -88,7 +88,7 @@ export default function ContactForm() {
 							className="contact-form-input"
 						/>
 						{errors.name?.message && (
-							<p className="text-red-500 text-xs mt-1">
+							<p className="text-red text-xs mt-1">
 								{errors.name.message.toString()}
 							</p>
 						)}
@@ -103,7 +103,7 @@ export default function ContactForm() {
 							className="contact-form-input "
 						/>
 						{errors.email?.message && (
-							<p className="text-red-500 text-xs mt-1">
+							<p className="text-red text-xs mt-1">
 								{errors.email.message.toString()}
 							</p>
 						)}
@@ -117,7 +117,7 @@ export default function ContactForm() {
 							className="contact-form-textarea"
 						/>
 						{errors.message?.message && (
-							<p className="text-white text-xs mt-1 ">
+							<p className="text-red text-xs mt-1 ">
 								{errors.message.message.toString()}
 							</p>
 						)}
