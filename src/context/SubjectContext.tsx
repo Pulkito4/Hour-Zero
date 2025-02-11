@@ -16,23 +16,14 @@ const sanitizePath = (value: string): string => {
   return value.replace(/\/+/g, '/').replace(/^\/|\/$/g, '');
 };
 
+
 export const SubjectProvider = ({ children }: { children: ReactNode }) => {
-  // const [branch, setBranch] = useState<string>('');
-  // const [semester, setSemester] = useState<number>(0);
-  const [subject, setSubject] = useState<string>('');
-
-
   const [branch, setBranchState] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('branch') || '';
     }
     return '';
   });
-
-  const setBranch = (value: string) => {
-    const sanitizedValue = sanitizePath(value);
-    setBranchState(sanitizedValue);
-  };
 
   const [semester, setSemesterState] = useState<number>(() => {
     if (typeof window !== 'undefined') {
@@ -41,47 +32,48 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
     return 0;
   });
 
-  const setSemester = (value: number) => {
-    setSemesterState(value);
+  const [subject, setSubjectState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('selectedSubject') || '';
+    }
+    return '';
+  });
+
+  const setBranch = (value: string) => {
+    const sanitizedValue = sanitizePath(value);
+    setBranchState(sanitizedValue);
+    setSubjectState('');
+    localStorage.removeItem('selectedSubject');
   };
 
-  // const [subject, setSubjectState] = useState<string>(() => {
-  //   if (typeof window !== 'undefined') {
-  //     const storedSubject = localStorage.getItem('selectedSubject');
-  //     return storedSubject || '';
-  //   }
-  //   return '';
-  // });
+  const setSemester = (value: number) => {
+    setSemesterState(value);
+    setSubjectState('');
+    localStorage.removeItem('selectedSubject');
+  };
 
-  // const setSubject = (value: string) => {
-  //   const sanitizedValue = sanitizePath(value);
-  //   setSubjectState(sanitizedValue);
-  //   // Immediately store in localStorage when subject changes
-  //   if (typeof window !== 'undefined') {
-  //     localStorage.setItem('selectedSubject', sanitizedValue);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const storedSubject = localStorage.getItem('selectedSubject');
-  //   if (storedSubject) {
-  //     setSubjectState(storedSubject);
-  //   }
-  // }, []);
+  const setSubject = (value: string) => {
+    const sanitizedValue = sanitizePath(value);
+    setSubjectState(sanitizedValue);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedSubject', sanitizedValue);
+    }
+  };
 
   useEffect(() => {
-    if (branch && semester && subject ) {
-      localStorage.setItem('branch', branch);
-      localStorage.setItem('semester', semester.toString());
-      localStorage.setItem('selectedSubject', subject);
-    }
-  }, [branch, semester,subject]);
-
-
-
+    localStorage.setItem('branch', branch);
+    localStorage.setItem('semester', semester.toString());
+  }, [branch, semester]);
 
   return (
-    <SubjectContext.Provider value={{ branch, semester,subject, setSubject,  setBranch, setSemester }}>
+    <SubjectContext.Provider value={{ 
+      branch, 
+      semester, 
+      subject, 
+      setBranch, 
+      setSemester, 
+      setSubject 
+    }}>
       {children}
     </SubjectContext.Provider>
   );

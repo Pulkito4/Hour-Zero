@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { LayoutGrid } from "../ui/layout-grid";
+import { Github as GithubIcon, Linkedin } from 'lucide-react';
+import Link from "next/link";
 
 export function Team() {
   return (
@@ -22,10 +24,22 @@ const SkeletonTwo = () => {
         P's Thoughts
       </p>
       <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        Perched high above the world, this house offers breathtaking views and a
-        unique living experience. It&apos;s a place where the sky meets home,
-        and tranquility is a way of life.
+      <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
+      <Link
+          href="https://github.com/Pulkito4" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:text-purple-500 transition-colors"
+        >
+          <GithubIcon size={24} />
+        </Link>
+        <Link
+         target="_blank" 
+         rel="noopener noreferrer"
+         className="hover:text-purple-500 transition-colors"
+         href={"https://www.linkedin.com/in/pulkitgoyal04/"}>
+        <Linkedin/>
+        </Link>
       </p>
     </div>
   );
@@ -34,12 +48,25 @@ const SkeletonThree = () => {
   return (
     <div>
       <p className="font-bold md:text-4xl text-xl text-white">
-        T's 
+        T's Thoughts
       </p>
       <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        A house surrounded by greenery and nature&apos;s beauty. It&apos;s the
-        perfect place to relax, unwind, and enjoy life.
+      <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
+      <Link
+          href="https://github.com/tanishkag237" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:text-purple-500 transition-colors"
+        >
+          <GithubIcon size={24} />
+        </Link>
+        <Link
+         target="_blank" 
+         rel="noopener noreferrer"
+         className="hover:text-purple-500 transition-colors"
+         href={"https://www.linkedin.com/in/tanishkagoel237"}>
+        <Linkedin/>
+        </Link>
       </p>
     </div>
   );
@@ -53,7 +80,7 @@ const cards = [
     content: <SkeletonTwo />,
     className: "col-span-1",
     thumbnail:
-      "https://images.unsplash.com/photo-1464457312035-3d7d0e0c058e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "https://avatars.githubusercontent.com/u/87141808?v=4",
   },
   {
     id: 3,
