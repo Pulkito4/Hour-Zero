@@ -9,7 +9,7 @@ import type {
 	SyllabusDocument,
 	VideoDocument,
 } from "@/types/documents";
-import { getDocumentsInSubjectSubCollection } from "@/firebase/firestore";
+import { getDocumentsInSubjectSubCollection, getSubjects } from "@/firebase/firestore";
 import { NotesTab } from "@/components/NotesTab";
 import SubjectTabs from "@/components/SubjectTabs";
 import LeftSidebar from "@/components/LeftSidebar";
@@ -21,6 +21,7 @@ import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
 import { Spinner } from "@/components/ui/Spinner"; 
+import { NoData } from "@/components/NoData";
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -35,6 +36,27 @@ export default function SubjectPage() {
 	const { branch, semester } = useSubject();
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false); 
+	const [hasSubjects, setHasSubjects] = useState<boolean>(true);
+
+
+	useEffect(() => {
+		const fetchSubjects = async () => {
+		  if (!branch || !semester) return;
+		  
+		  setIsLoading(true);
+		  try {
+			const subjects = await getSubjects(branch, semester.toString());
+			setHasSubjects(subjects && subjects.length > 0);
+		  } catch (error) {
+			console.error('Error fetching subjects:', error);
+			setHasSubjects(false);
+		  } finally {
+			setIsLoading(false);
+		  }
+		};
+	
+		fetchSubjects();
+	  }, [branch, semester]);
 
 	const [documents, setDocuments] = useState<{
 		notes: NotesDocument[];
@@ -211,7 +233,13 @@ export default function SubjectPage() {
 		<div className="flex min-h-screen">
 			<LeftSidebar onSelectSubject={setSelectedSubject}/>
 			<main className="flex-1">
-				{activeTab === null|| !selectedSubject ? (
+			{isLoading ? (
+          <div className="flex items-center justify-center min-h-[300px]">
+            <Spinner />
+          </div>
+        ) : !hasSubjects ? (
+          <NoData />
+        ) : !selectedSubject ? (
 					<WelcomeMessage />
 				) : (
 					<SubjectTabs
