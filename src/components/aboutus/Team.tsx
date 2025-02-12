@@ -21,9 +21,10 @@ const SkeletonTwo = () => {
   return (
     <div >
       <p className="font-bold md:text-4xl text-xl text-white">
-        P's Thoughts
+        Pulkit
       </p>
-      <p className="font-normal text-base text-white"></p>
+     
+      <p className="font-normal text-base text-white">Little desc</p>
       <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
       <Link
           href="https://github.com/Pulkito4" 
@@ -48,9 +49,9 @@ const SkeletonThree = () => {
   return (
     <div>
       <p className="font-bold md:text-4xl text-xl text-white">
-        T's Thoughts
+        Tanishka
       </p>
-      <p className="font-normal text-base text-white"></p>
+      <p className="font-normal text-base text-white">Little desc</p>
       <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
       <Link
           href="https://github.com/tanishkag237" 
