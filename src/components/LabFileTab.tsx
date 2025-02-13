@@ -55,9 +55,13 @@ export const LabFileTab: React.FC<LabFileTabProps> = ({
 					onClose={handleCloseModal}
 				/>
 			)}
-			<hr className="mb-5" />
-			<h2 className="text-center font-bold text-2xl">CODES</h2>
-			{folderName && <LabCodeTab folderName={folderName} />}
+			{folderName && (
+				<>
+					<hr className="mb-5" />
+					<h2 className="text-center font-bold text-2xl">CODES</h2>
+					<LabCodeTab folderName={folderName} />
+				</>
+			)}
 		</div>
 	);
 };

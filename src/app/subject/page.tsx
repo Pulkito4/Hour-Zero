@@ -9,7 +9,10 @@ import type {
 	SyllabusDocument,
 	VideoDocument,
 } from "@/types/documents";
-import { getDocumentsInSubjectSubCollection, getSubjects } from "@/firebase/firestore";
+import {
+	getDocumentsInSubjectSubCollection,
+	getSubjects,
+} from "@/firebase/firestore";
 import { NotesTab } from "@/components/NotesTab";
 import SubjectTabs from "@/components/SubjectTabs";
 import LeftSidebar from "@/components/LeftSidebar";
@@ -25,7 +28,7 @@ interface SelectedSubjectInfo {
 	id: string;
 	folderName: string;
 }
-import { Spinner } from "@/components/ui/Spinner"; 
+import { Spinner } from "@/components/ui/Spinner";
 import { NoData } from "@/components/NoData";
 import { NoContent } from "@/components/NoContent";
 import { LabCodeTab } from "@/components/LabCodesTab";
@@ -43,32 +46,31 @@ export default function SubjectPage() {
 	const { branch, semester } = useSubject();
 	const [selectedSubject, setSelectedSubject] =
 		useState<SelectedSubjectInfo | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false); 
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const isPlaceholderOnly = (documents: any[]) => {
 		return documents.length === 1 && documents[0].id === "placeholder";
-	  };
+	};
 	const [hasSubjects, setHasSubjects] = useState<boolean>(true);
-
 
 	useEffect(() => {
 		const fetchSubjects = async () => {
-		  if (!branch || !semester) return;
-		  
-		  setIsLoading(true);
-		  try {
-			const subjects = await getSubjects(branch, semester.toString());
-			setHasSubjects(subjects && subjects.length > 0);
-		  } catch (error) {
-			console.error('Error fetching subjects:', error);
-			setHasSubjects(false);
-		  } finally {
-			setIsLoading(false);
-		  }
+			if (!branch || !semester) return;
+
+			setIsLoading(true);
+			try {
+				const subjects = await getSubjects(branch, semester.toString());
+				setHasSubjects(subjects && subjects.length > 0);
+			} catch (error) {
+				console.error("Error fetching subjects:", error);
+				setHasSubjects(false);
+			} finally {
+				setIsLoading(false);
+			}
 		};
-	
+
 		fetchSubjects();
-	  }, [branch, semester]);
+	}, [branch, semester]);
 
 	const handleSelectSubject = (subjectId: string, folderName: string) => {
 		setSelectedSubject({ id: subjectId, folderName });
@@ -198,8 +200,7 @@ export default function SubjectPage() {
 				});
 			} catch (error) {
 				console.error("Error fetching documents:", error);
-			}
-			finally {
+			} finally {
 				setIsLoading(false); // Hide loader
 			}
 		};
@@ -217,54 +218,61 @@ export default function SubjectPage() {
 		}
 		switch (activeTab) {
 			case 0: // Syllabus
-        return isPlaceholderOnly(documents.syllabus) ? (
-          <NoContent />
-        ) : (
-          <SyllabusTab documents={documents.syllabus} />
-        );
-      case 1: // Notes
-        return isPlaceholderOnly(documents.notes) ? (
-          <NoContent />
-        ) : (
-          <NotesTab documents={documents.notes} />
-        );
-      case 2: // Assignments
-        return isPlaceholderOnly(documents.assignments) ? (
-          <NoContent />
-        ) : (
-          <AssignmentsTab documents={documents.assignments} />
-        );
-      case 3: // Lab
-        return isPlaceholderOnly(documents.lab) ? (
-          <>
-		  < h1 className="text-center text-slate-500"> Pdf or Word document for the lab file will be uploaded soon...</h1>
-		  <LabCodeTab folderName={selectedSubject?.folderName!}/>
-		  
-		  </>
-        ) : (
-          <LabFileTab
-						documents={documents.lab}
-						folderName={selectedSubject?.folderName || null}
+				return isPlaceholderOnly(documents.syllabus) ? (
+					<NoContent />
+				) : (
+					<SyllabusTab documents={documents.syllabus} />
+				);
+			case 1: // Notes
+				return isPlaceholderOnly(documents.notes) ? (
+					<NoContent />
+				) : (
+					<NotesTab documents={documents.notes} />
+				);
+			case 2: // Assignments
+				return isPlaceholderOnly(documents.assignments) ? (
+					<NoContent />
+				) : (
+					<AssignmentsTab documents={documents.assignments} />
+				);
+				case 3: // Lab
+				if (isPlaceholderOnly(documents.lab)) {
+				  return selectedSubject?.folderName ? (
+					<>
+					  <h1 className="text-center text-slate-500">
+						Pdf or Word document for the lab file will be uploaded soon...
+					  </h1>
+					  <LabCodeTab folderName={selectedSubject.folderName} />
+					</>
+				  ) : (
+					<NoContent />
+				  );
+				} else {
+				  return (
+					<LabFileTab
+					  documents={documents.lab}
+					  folderName={selectedSubject?.folderName || null}
 					/>
-        );
-      case 4: // PYQs
-        return isPlaceholderOnly(documents.pyqs) ? (
-          <NoContent />
-        ) : (
-          <PYQsTab documents={documents.pyqs} />
-        );
-      case 5: // Others
-        return isPlaceholderOnly(documents.others) ? (
-          <NoContent />
-        ) : (
-          <OthersTab documents={documents.others} />
-        );
-      case 6: // Videos
-        return isPlaceholderOnly(documents.videos) ? (
-          <NoContent />
-        ) : (
-          <VideoTab documents={documents.videos} />
-        );
+				  );
+				}
+			case 4: // PYQs
+				return isPlaceholderOnly(documents.pyqs) ? (
+					<NoContent />
+				) : (
+					<PYQsTab documents={documents.pyqs} />
+				);
+			case 5: // Others
+				return isPlaceholderOnly(documents.others) ? (
+					<NoContent />
+				) : (
+					<OthersTab documents={documents.others} />
+				);
+			case 6: // Videos
+				return isPlaceholderOnly(documents.videos) ? (
+					<NoContent />
+				) : (
+					<VideoTab documents={documents.videos} />
+				);
 			default:
 				return (
 					<div className="text-white">
@@ -278,13 +286,13 @@ export default function SubjectPage() {
 		<div className="flex min-h-screen">
 			<LeftSidebar onSelectSubject={handleSelectSubject} />
 			<main className="flex-1">
-			{isLoading ? (
-          <div className="flex items-center justify-center min-h-[300px]">
-            <Spinner />
-          </div>
-        ) : !hasSubjects ? (
-          <NoData />
-        ) : !selectedSubject ? (
+				{isLoading ? (
+					<div className="flex items-center justify-center min-h-[300px]">
+						<Spinner />
+					</div>
+				) : !hasSubjects ? (
+					<NoData />
+				) : !selectedSubject ? (
 					<WelcomeMessage />
 				) : (
 					<SubjectTabs

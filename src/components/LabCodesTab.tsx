@@ -58,6 +58,13 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 	};
 
 	const fetchLabCodes = async () => {
+
+		if(folderName===""){
+			setError("No such folder exists");
+			setIsLoading(false);
+			return;
+		}
+
 		try {
 			const response = await octokit.repos.getContent({
 				owner: "Pulkito4",
