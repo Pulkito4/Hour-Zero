@@ -67,3 +67,11 @@ export const getEmbedUrl = (url: string): string => {
   
   return `https://www.youtube.com/embed/${videoId}`;
 };
+
+export const getYearFromSemester = (semester: number): string => {
+  if (semester === 1 || semester === 2) return "1st yr";
+  if (semester === 3 || semester === 4) return "2nd yr";
+  if (semester === 5 || semester === 6) return "3rd yr";
+  if (semester === 7 || semester === 8) return "4th yr";
+  return "";
+};

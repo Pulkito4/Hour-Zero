@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { CodeViewerModal } from "./CodeViewerModal";
 import { FileCode } from "lucide-react";
+import { useSubject } from "@/context/SubjectContext";
+import { getYearFromSemester } from "@/lib/utils";
 
 const octokit = new Octokit({
-	auth: process.env.PRIVATE_GITHUB_TOKEN,
+	auth: process.env.NEXT_PUBLIC_PRIVATE_GITHUB_TOKEN,
 });
 
 interface GitHubFile {
@@ -20,7 +22,9 @@ interface LabCodesTabProps {
 }
 
 export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
-	const [rootFolder, setRootFolder] = useState(folderName);
+	const {semester} = useSubject();
+	const year = getYearFromSemester(semester);
+	const [rootFolder, setRootFolder] = useState(`${year}/${folderName}`);
 	const [currentPath, setCurrentPath] = useState(rootFolder);
 	const [pathHistory, setPathHistory] = useState<string[]>([rootFolder]);
 	const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
