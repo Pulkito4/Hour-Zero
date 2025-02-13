@@ -3,6 +3,7 @@
 import { LampContainer } from "@/components/ui/lamp";
 import React from "react";
 import { motion } from "framer-motion";
+import ContactForm from "@/components/ContactForm";
 
 const page = () => {
 	return (
@@ -43,7 +44,8 @@ const page = () => {
 						ease: "easeInOut",
 					}}
 					className="max-w-md mx-auto  p-4">
-					<form className="space-y-6">
+					<ContactForm />
+					{/* <form className="space-y-6">
 						<div>
 							<label
 								htmlFor="name"
@@ -91,7 +93,7 @@ const page = () => {
 							className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-300 hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
 							Send Message
 						</button>
-					</form>
+					</form> */}
 				</motion.div>
 			</div>
 		</>

@@ -84,3 +84,61 @@ body {
          text-gray-300
          px-2 sm:px-4;
 }
+
+.contact-form-input {
+  @apply bg-slate-900 border border-[#2D2D2D] text-white 
+         rounded-lg p-3 w-full
+         placeholder:text-gray-400
+         focus:outline-none focus:ring-2 focus:ring-blue-500
+         transition-all duration-300;
+}
+
+.contact-form-textarea {
+  @apply bg-slate-900 border border-[#2D2D2D] text-white 
+         rounded-lg p-3 w-full min-h-[120px]
+         placeholder:text-gray-400
+         focus:outline-none focus:ring-2 focus:ring-blue-500
+         transition-all duration-300 resize-none;
+}
+
+.contact-form-label {
+  @apply text-gray-200 text-base font-medium mb-2 block ;
+}
+
+/* .border-glow {
+  position: relative;
+  border-radius: inherit;
+}
+
+.border-glow::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid transparent;
+  background: linear-gradient(
+    to right,
+    #e879f9,
+    #8600e6,
+    #38bdf8,
+    #e879f9
+  ) border-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) padding-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background-size: 300% 300%;
+  animation: borderGradient 8s linear infinite;
+}
+
+@keyframes borderGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */

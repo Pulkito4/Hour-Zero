@@ -20,6 +20,11 @@ import { LabFileTab } from "@/components/LabFileTab";
 import { VideoTab } from "@/components/VideoTab";
 import { SyllabusTab } from "@/components/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
+
+interface SelectedSubjectInfo {
+	id: string;
+	folderName: string;
+}
 import { Spinner } from "@/components/ui/Spinner"; 
 import { NoData } from "@/components/NoData";
 import { NoContent } from "@/components/NoContent";
@@ -35,7 +40,8 @@ const WelcomeMessage = () => (
 
 export default function SubjectPage() {
 	const { branch, semester } = useSubject();
-	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+	const [selectedSubject, setSelectedSubject] =
+		useState<SelectedSubjectInfo | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false); 
 
 	const isPlaceholderOnly = (documents: any[]) => {
@@ -63,6 +69,9 @@ export default function SubjectPage() {
 		fetchSubjects();
 	  }, [branch, semester]);
 
+	const handleSelectSubject = (subjectId: string, folderName: string) => {
+		setSelectedSubject({ id: subjectId, folderName });
+	};
 	const [documents, setDocuments] = useState<{
 		notes: NotesDocument[];
 		videos: VideoDocument[];
@@ -84,7 +93,7 @@ export default function SubjectPage() {
 	const [activeTab, setActiveTab] = useState<number>(0); // Track the active tab index
 
 	useEffect(() => {
-		if (!branch || !semester || !selectedSubject) {
+		if (!branch || !semester || !selectedSubject?.id) {
 			return;
 		}
 		const fetchData = async () => {
@@ -102,43 +111,43 @@ export default function SubjectPage() {
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"notes"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"videos"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"syllabus"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"assignments"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"pyqs"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"other"
 					),
 					getDocumentsInSubjectSubCollection(
 						branch,
 						semester.toString(),
-						selectedSubject,
+						selectedSubject.id,
 						"lab"
 					),
 				]);
@@ -195,7 +204,7 @@ export default function SubjectPage() {
 		};
 
 		fetchData();
-	}, [branch, semester, selectedSubject]);
+	}, [branch, semester, selectedSubject?.id]);
 
 	const renderTabContent = () => {
 		if (isLoading) {
@@ -228,7 +237,10 @@ export default function SubjectPage() {
         return isPlaceholderOnly(documents.lab) ? (
           <NoContent />
         ) : (
-          <LabFileTab documents={documents.lab} />
+          <LabFileTab
+						documents={documents.lab}
+						folderName={selectedSubject?.folderName || null}
+					/>
         );
       case 4: // PYQs
         return isPlaceholderOnly(documents.pyqs) ? (
@@ -259,7 +271,7 @@ export default function SubjectPage() {
 
 	return (
 		<div className="flex min-h-screen">
-			<LeftSidebar onSelectSubject={setSelectedSubject}/>
+			<LeftSidebar onSelectSubject={handleSelectSubject} />
 			<main className="flex-1">
 			{isLoading ? (
           <div className="flex items-center justify-center min-h-[300px]">

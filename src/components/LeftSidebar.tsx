@@ -9,10 +9,15 @@ interface Subject {
 	data: {
 		subjectCode: string;
 		credits: number;
+		folderName: string;
 	};
 }
 
-const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string) => void }) => {
+const LeftSidebar = ({
+	onSelectSubject,
+}: {
+	onSelectSubject: (subjectId: string, folderName: string) => void;
+}) => {
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const { branch, semester } = useSubject();
 
@@ -24,7 +29,10 @@ const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string)
 	useEffect(() => {
 		const fetchSubjects = async () => {
 			try {
-				const subjectsList = await getSubjects(branch, semester.toString());
+				const subjectsList = await getSubjects(
+					branch,
+					semester.toString()
+				);
 				setSubjects(subjectsList);
 			} catch (error) {
 				console.error("Failed to fetch subjects:", error);
@@ -85,7 +93,10 @@ const LeftSidebar = ({ onSelectSubject }: { onSelectSubject: (subjectId: string)
 											className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
 											onClick={() => {
 												setSelectedSubject(subject.id);
-												onSelectSubject(subject.id);
+												onSelectSubject(
+													subject.id,
+													subject.data.folderName
+												);
 												if (window.innerWidth < 1024)
 													setIsOpen(false);
 											}}>

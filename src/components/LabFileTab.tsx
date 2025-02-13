@@ -5,10 +5,17 @@ import Accordion from "./Accordion";
 import { Octokit } from "@octokit/rest";
 import { LabCodeTab } from "./LabCodesTab";
 
-
-export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
-  const [selectedLabFile, setSelectedLabFile] = useState<LabDocument | null>(null);
-
+interface LabFileTabProps {
+	documents: LabDocument[];
+	folderName: string | null;
+}
+export const LabFileTab: React.FC<LabFileTabProps> = ({
+	documents,
+	folderName,
+}) => {
+	const [selectedLabFile, setSelectedLabFile] = useState<LabDocument | null>(
+		null
+	);
 
 	const handleOpenModal = (doc: LabDocument) => {
 		setSelectedLabFile(doc);
@@ -41,15 +48,16 @@ export const LabFileTab = ({ documents }: { documents: LabDocument[] }) => {
 				))}
 			</div>
 
-      {/* Document Preview Modal */}
-      {selectedLabFile && (
-        <DocumentPreviewer document={selectedLabFile} onClose={handleCloseModal} />
-      )}
-      <hr className="mb-5" />
-      <h2 className="text-center font-bold text-2xl">CODES</h2>
-      <LabCodeTab documents={[]}/>
-    </div>
-
-
-  );
+			{/* Document Preview Modal */}
+			{selectedLabFile && (
+				<DocumentPreviewer
+					document={selectedLabFile}
+					onClose={handleCloseModal}
+				/>
+			)}
+			<hr className="mb-5" />
+			<h2 className="text-center font-bold text-2xl">CODES</h2>
+			{folderName && <LabCodeTab folderName={folderName} />}
+		</div>
+	);
 };

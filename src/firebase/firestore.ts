@@ -5,6 +5,7 @@ import { UploadDocumentData } from "@/types/documents";
 interface Subject {
   subjectCode: string;
   credits: number;
+  folderName: string;
 }
 
 // Define your subcollections
@@ -32,7 +33,7 @@ export const addSubject = async (
     );
 
     // Add subject data to Firestore
-    await setDoc(subjectRef, subjectData);
+    await setDoc(subjectRef, {...subjectData, folderName: ""});
     console.log(`Subject ${subjectName} added successfully.`);
 
     // Create subcollections and delete the placeholder document
