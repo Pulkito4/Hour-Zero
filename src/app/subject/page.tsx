@@ -28,6 +28,7 @@ interface SelectedSubjectInfo {
 import { Spinner } from "@/components/ui/Spinner"; 
 import { NoData } from "@/components/NoData";
 import { NoContent } from "@/components/NoContent";
+import { LabCodeTab } from "@/components/LabCodesTab";
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -235,7 +236,11 @@ export default function SubjectPage() {
         );
       case 3: // Lab
         return isPlaceholderOnly(documents.lab) ? (
-          <NoContent />
+          <>
+		  < h1 className="text-center text-slate-500"> Pdf or Word document for the lab file will be uploaded soon...</h1>
+		  <LabCodeTab folderName={selectedSubject?.folderName!}/>
+		  
+		  </>
         ) : (
           <LabFileTab
 						documents={documents.lab}
