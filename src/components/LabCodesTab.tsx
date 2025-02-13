@@ -5,7 +5,7 @@ import { CodeViewerModal } from "./CodeViewerModal";
 import { FileCode } from "lucide-react";
 
 const octokit = new Octokit({
-	auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN,
+	auth: process.env.PRIVATE_GITHUB_TOKEN,
 });
 
 interface GitHubFile {
@@ -56,8 +56,8 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 	const fetchLabCodes = async () => {
 		try {
 			const response = await octokit.repos.getContent({
-				owner: "tanishkag237",
-				repo: "Btech-3rd-Yr-coding-stuff",
+				owner: "Pulkito4",
+				repo: "hour-zero-codes",
 				path: currentPath,
 			});
 
