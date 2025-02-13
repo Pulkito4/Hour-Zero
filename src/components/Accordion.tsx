@@ -6,6 +6,7 @@ import { doc } from "firebase/firestore";
 
 interface AccordionItem {
   id: string;
+  title: string;
   content: React.ReactNode;
 }
 
@@ -32,7 +33,7 @@ const Accordion: React.FC<AccordionProps> = ({ items }) => {
             onClick={() => toggleAccordion(index)}
             className="w-full flex items-center justify-between p-4 text-left font-semibold text-lg hover:bg-gray-800 transition-colors duration-200"
           >
-            <span>UNIT - {item.id}</span>
+             <span>UNIT - {item.title}</span>
             <ChevronDown
               className={`ml-auto transition-transform duration-200 ${
                 openIndex === index ? "rotate-180" : ""

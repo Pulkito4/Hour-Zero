@@ -51,11 +51,12 @@ const CreateSubject = () => {
 			await addSubject(branch, semester, subjectName, {
 				subjectCode,
 				credits,
+				folderName:""
 			});
 
 			toast({
 				title: "Success!",
-				description: `Subject ${subjectName} was added successfully.`,
+				description: `Subject ${subjectName} was added successfully. Please wait atleast 30 seconds before adding content to this subject.`,
 			});
 
 			// Reset form

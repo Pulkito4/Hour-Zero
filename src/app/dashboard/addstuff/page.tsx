@@ -6,13 +6,16 @@ import {
   BookOpen,
   FileCode,
   FileQuestion,
+  LibraryBig,
   NotebookPen,
   TvMinimalPlay,
 } from "lucide-react";
 import Form from "@/components/Form";
 import UrlForm from "@/components/Urlform";
+import { SyllabusForm } from "@/components/SyllabusForm";
 
 const tabs = [
+  { title: "Syllabus", icon:  <LibraryBig size={20} />, content: <SyllabusForm onClose={() => {}} />  },
   { title: "Notes", icon: <NotebookPen size={20} />, content: <Form heading={"Add Notes"}/> },
   { title: "Assignments", icon: <BookA size={20} />, content: <Form heading={"Add Assignment"}/> },
   { title: "Lab File", icon: <FileCode size={20} />, content: <Form heading={"Add Lab File"}/> },
@@ -25,7 +28,7 @@ const SubjectTab: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div className="w-full max-w-4xl mx-auto items-center justify-center p-4">
+    <div className="w-full max-w-4xl mx-auto items-center justify-center p-2">
       {/* Tab Navigation */}
       <div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
         {tabs.map((tab, index) => (

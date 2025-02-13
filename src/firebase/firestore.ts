@@ -168,3 +168,36 @@ export const addVideos = async (
     throw error;
   }
 };
+
+export interface SyllabusData {
+  name: string;
+  content: string;
+ 
+}
+
+export const addSyllabus = async (
+  branch: string,
+  semester: string,
+  subject: string,
+  syllabusData: SyllabusData
+): Promise<void> => {
+  try {
+    const subjectRef = doc(db, `Btech/${branch}/${semester}/${subject}`);
+    const syllabusCollectionRef = collection(subjectRef, 'syllabus');
+
+    // Try to delete placeholder if it exists
+    try {
+      await deleteDoc(doc(syllabusCollectionRef, 'placeholder'));
+    } catch (error) {
+      // Ignore error if placeholder doesn't exist
+    }
+
+    const newDocRef = doc(syllabusCollectionRef);
+    await setDoc(newDocRef, syllabusData);
+
+    console.log('Syllabus added successfully');
+  } catch (error) {
+    console.error('Error adding syllabus:', error);
+    throw error;
+  }
+};
