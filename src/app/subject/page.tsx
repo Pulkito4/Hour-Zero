@@ -22,6 +22,7 @@ import { SyllabusTab } from "@/components/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
 import { Spinner } from "@/components/ui/Spinner"; 
 import { NoData } from "@/components/NoData";
+import { NoContent } from "@/components/NoContent";
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -36,6 +37,10 @@ export default function SubjectPage() {
 	const { branch, semester } = useSubject();
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(false); 
+
+	const isPlaceholderOnly = (documents: any[]) => {
+		return documents.length === 1 && documents[0].id === "placeholder";
+	  };
 	const [hasSubjects, setHasSubjects] = useState<boolean>(true);
 
 
@@ -201,25 +206,48 @@ export default function SubjectPage() {
 			);
 		}
 		switch (activeTab) {
-			case 0:
-				return <SyllabusTab documents={documents.syllabus} />;
-			case 1:
-				return <NotesTab documents={documents.notes} />;
-
-			case 2:
-				return <AssignmentsTab documents={documents.assignments} />;
-			case 3:
-				return (
-					<LabFileTab documents={documents.lab} />
-					//add accordion here
-				);
-			case 4:
-				return <PYQsTab documents={documents.pyqs} />;
-			case 5:
-				return <OthersTab documents={documents.others} />;
-
-			case 6:
-				return <VideoTab documents={documents.videos} />;
+			case 0: // Syllabus
+        return isPlaceholderOnly(documents.syllabus) ? (
+          <NoContent />
+        ) : (
+          <SyllabusTab documents={documents.syllabus} />
+        );
+      case 1: // Notes
+        return isPlaceholderOnly(documents.notes) ? (
+          <NoContent />
+        ) : (
+          <NotesTab documents={documents.notes} />
+        );
+      case 2: // Assignments
+        return isPlaceholderOnly(documents.assignments) ? (
+          <NoContent />
+        ) : (
+          <AssignmentsTab documents={documents.assignments} />
+        );
+      case 3: // Lab
+        return isPlaceholderOnly(documents.lab) ? (
+          <NoContent />
+        ) : (
+          <LabFileTab documents={documents.lab} />
+        );
+      case 4: // PYQs
+        return isPlaceholderOnly(documents.pyqs) ? (
+          <NoContent />
+        ) : (
+          <PYQsTab documents={documents.pyqs} />
+        );
+      case 5: // Others
+        return isPlaceholderOnly(documents.others) ? (
+          <NoContent />
+        ) : (
+          <OthersTab documents={documents.others} />
+        );
+      case 6: // Videos
+        return isPlaceholderOnly(documents.videos) ? (
+          <NoContent />
+        ) : (
+          <VideoTab documents={documents.videos} />
+        );
 			default:
 				return (
 					<div className="text-white">
