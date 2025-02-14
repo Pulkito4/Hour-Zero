@@ -22,10 +22,10 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto items-center justify-center p-4">
-      <h1 className="text-center text-white text-2xl">ADMIN DASHBOARD</h1>
+      <h1 className="text-center text-white text-2xl font-work-sans font-semibold">ADMIN DASHBOARD</h1>
       <br />
       
-      <div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
+      <div className="flex flex-wrap justify-center sm:justify-evenly border-b border-gray-700">
         {Admintabs.map((Admintabs, index) => (
           <button
             key={index}
@@ -36,7 +36,7 @@ const AdminDashboard: React.FC = () => {
                 : "text-gray-400 hover:text-white"
             }`}
           >
-            <span className="hidden sm:inline">{Admintabs.title}</span>
+            <span className=" sm:inline">{Admintabs.title}</span>
           </button>
         ))}
       </div>

@@ -39,6 +39,7 @@ const WelcomeMessage = () => (
 		<p className="text-gray-400">
 			Select a subject from the sidebar to get started
 		</p>
+		<p className="text-slate-500">DISCLAIMER: All the assignments and lab files are as per VIPS CSE 2022-2026 Batch</p>
 	</div>
 );
 

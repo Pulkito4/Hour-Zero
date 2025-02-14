@@ -67,18 +67,16 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 						<button
 							onClick={handleDownload}
 							disabled={isDownloading}
-							className="flex items-center gap-2 px-4 py-2 bg-purple-600 rounded-lg 
-                hover:bg-purple-700 transition-all duration-200 
-                text-white transform hover:scale-105 disabled:opacity-50">
-							<Download size={20} />
+							className="text-primary-300 p-2 hover:text-primary-light transition-colors font-bold hover:bg-gray-800 rounded-lg">
+							<Download size={24} />
 							<span className="hidden sm:inline">
-								{isDownloading ? "Downloading..." : "Download"}
+								{isDownloading ? "Downloading..." : ""}
 							</span>
 						</button>
 						<button
 							onClick={onClose}
 							aria-label="Close preview"
-							className="text-rose-500 hover:text-red transition-colors font-bold">
+							className="text-rose-500 hover:text-red transition-colors p-2 hover:bg-gray-800 rounded-lg font-bold mr-3">
 							<X size={24} />
 						</button>
 					</div>
