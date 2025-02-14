@@ -4,6 +4,7 @@ import { Whyus } from "@/components/Whyus";
 import { Offer } from "@/components/Offer";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
+import { Contribution } from "@/components/Contribution";
 
 
 export default function Home() {
@@ -45,6 +46,13 @@ export default function Home() {
 					</h1>
 					<CarousalSlider />
 				</div> */}
+
+				<div className="px-8 mt-15  mb-15 ">
+					<h1 className="text-white ml-4 mb-9 text-3xl font-bold text-center">
+						WANT TO <span className="text-primary-100">CONTRIBUTE ?</span>
+					</h1>
+					<Contribution/>
+				</div>
 
 				<div className="px-8 mt-15  mb-15 flex flex-col items-center">
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
