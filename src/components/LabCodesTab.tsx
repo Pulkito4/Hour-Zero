@@ -5,6 +5,7 @@ import { CodeViewerModal } from "./CodeViewerModal";
 import { FileCode } from "lucide-react";
 import { useSubject } from "@/context/SubjectContext";
 import { getYearFromSemester } from "@/lib/utils";
+import { Spinner } from "flowbite-react";
 
 const octokit = new Octokit({
 	auth: process.env.NEXT_PUBLIC_PRIVATE_GITHUB_TOKEN,
@@ -114,25 +115,29 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 					))}
 				</div>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-					{labCodes.map((file) => (
-						<div
-							key={file.path}
-							onClick={() =>
-								file.type === "dir"
-									? handleFolderClick(file.path)
-									: fetchFileContent(
-											file.download_url,
-											file.name
-									  )
-							}
-							className="bg-gray-900 p-4 rounded-lg cursor-pointer hover:bg-gray-800 
+					{isLoading ? (
+						<Spinner className="text-primary-300" />
+					) : (
+						labCodes.map((file) => (
+							<div
+								key={file.path}
+								onClick={() =>
+									file.type === "dir"
+										? handleFolderClick(file.path)
+										: fetchFileContent(
+												file.download_url,
+												file.name
+										  )
+								}
+								className="bg-gray-900 p-4 rounded-lg cursor-pointer hover:bg-gray-800 
                      transition-all duration-200 hover:shadow-lg">
-							{/* <FileCode className="w-5 h-5 text-purple-500" /> */}
-							<span className="ml-2 text-white capitalize">
-								{file.name}
-							</span>
-						</div>
-					))}
+								{/* <FileCode className="w-5 h-5 text-purple-500" /> */}
+								<span className="ml-2 text-white capitalize">
+									{file.name}
+								</span>
+							</div>
+						))
+					)}
 				</div>
 
 				{selectedFile && (

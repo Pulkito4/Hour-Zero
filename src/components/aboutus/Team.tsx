@@ -81,7 +81,7 @@ const cards = [
     content: <SkeletonTwo />,
     className: "col-span-1",
     thumbnail:
-      "https://avatars.githubusercontent.com/u/87141808?v=4",
+      "https://res.cloudinary.com/hourzero/image/upload/v1739471335/pulkit_pfp_o3aqow.jpg",
   },
   {
     id: 3,
