@@ -17,7 +17,18 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!syllabusDoc.name || !syllabusDoc.content) {
+    console.log('Form Data:', { branch, semester, subject, syllabusDoc }); // Debug log
+    if (!branch || !semester || !subject) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Missing subject information",
+      });
+      console.error('Missing context:', { branch, semester, subject }); // Debug log
+      return;
+    }
+
+    if (!syllabusDoc.name?.trim() || !syllabusDoc.content?.trim()) {
       toast({
         variant: "destructive",
         title: "Error",
@@ -28,14 +39,23 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
 
     setIsLoading(true);
     try {
+      const syllabusData = {
+        name: syllabusDoc.name.trim(),
+        content: syllabusDoc.content.trim(),
+      };
+      
+      console.log('Adding syllabus with:', { // Debug log
+        branch,
+        semester: semester.toString(),
+        subject,
+        syllabusData
+      });
+
       await addSyllabus(
         branch,
         semester.toString(),
         subject,
-        {
-          name: syllabusDoc.name,
-          content: syllabusDoc.content,
-        }
+        syllabusData
       );
 
       toast({
@@ -44,10 +64,11 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
       });
       onClose();
     } catch (error) {
+      console.error('Syllabus submission error:', error); // Debug log
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to add syllabus. Please try again.",
+        description: (error instanceof Error ? error.message : "Failed to add syllabus"),
       });
     } finally {
       setIsLoading(false);
