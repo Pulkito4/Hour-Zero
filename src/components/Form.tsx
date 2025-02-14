@@ -22,7 +22,7 @@ const headingToSubcollection: { [key: string]: string } = {
 
 const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 	const { toast } = useToast();
-	const {subject} = useSubject();
+	const {subject, semester, branch} = useSubject();
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState<File | null>(null);
@@ -55,8 +55,8 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 
 			// Then add document data to Firestore
 			await AddToSubject(
-				"CSE", // Replace with actual branch
-				"5", // Replace with actual semester
+				branch, // Replace with actual branch
+				semester.toString(), // Replace with actual semester
 				subject, // Replace with actual subject
 				subcollection, // subcollection
 				{

@@ -12,7 +12,7 @@ interface UrlFormProps {
 
 const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const { toast } = useToast();
-	const {subject} = useSubject();
+	const {subject, semester, branch} = useSubject();
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -49,8 +49,8 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 			};
 
 			await addVideos(
-				"CSE", // Replace with actual branch
-				"5", // Replace with actual semester
+				branch, // Replace with actual branch
+				semester.toString(), // Replace with actual semester
 				subject,
 				"videos",
 				videoData
