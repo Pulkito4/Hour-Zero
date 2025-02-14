@@ -5,11 +5,13 @@ const nodatalist = [
     " There are no subjects available for the selected branch and semester.",
     "Uh Oh! You ended up on the wrong side of the website.",
     "Simon says, 'No data found!",
-    "Looks like the data is on a vacation.",
-    "Sorry, no data available for the selected branch and semester.",
-    "The data you are looking for is not here.",
-    "The data is missing in action.",
+    "Looks like the study material is on a vacation.",
+    "No notes, no assignments… just an empty void of procrastination!",
+    "It seems your study resources went for a coffee break… and forgot to return!",
+    "Looks like your study materials are still downloading... from the universe!",
     "The data is not available at the moment.",
+    "Your assignments saw you coming and ran the other way!",
+    "Notes and assignments? Never heard of them. Try again later!"
 
 ]
 
