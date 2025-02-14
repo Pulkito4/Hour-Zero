@@ -30,7 +30,7 @@ const page = () => {
 							ease: "easeInOut",
 						}}
 						className="text-center text-lg text-slate-300 mt-4 md:text-2xl">
-						Got a query? <br /> Want removal of some content? <br />
+						Got a query or a suggestion? <br /> Want removal of some content? <br />
 						Get in touch NOW!
 					</motion.p>
 				</LampContainer>

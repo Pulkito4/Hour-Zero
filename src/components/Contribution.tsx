@@ -1,6 +1,7 @@
 "use client";
 
 import { GlowingEffect } from "@/components/ui/glowing-effect";
+import Link from "next/link";
 
 export function Contribution() {
   return (
@@ -39,7 +40,7 @@ const GridItem = ({ area, title, description }: GridItemProps) => {
               </h3>
               <br/>
               <div className="text-center">
-              <h4 className="mb-3 text-lg">{description}</h4>
+              <h4 className="mb-3 text-lg">{description} <Link href={'/contact-us'} className="text-primary-100">Get in touch now!</Link></h4>
               <p className="text-gray-500 text-md">P.S. Good karma has a way of coming back when you need it the most! 😊</p>
               </div>
             
