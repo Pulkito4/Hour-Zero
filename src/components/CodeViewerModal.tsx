@@ -1,6 +1,17 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { Copy, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Prism from "prismjs";
+import "prismjs/themes/prism-tomorrow.css"; // Dark theme
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-tsx";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-python";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-c";
+import "prismjs/components/prism-cpp";
 
 interface CodeViewerModalProps {
 	content: string;
@@ -14,6 +25,37 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 	onClose,
 }) => {
 	const { toast } = useToast();
+
+	// Determine language from filename extension
+	const getLanguage = (filename: string) => {
+		const ext = filename.split(".").pop()?.toLowerCase();
+		switch (ext) {
+			case "ts":
+				return "typescript";
+			case "js":
+				return "javascript";
+			case "jsx":
+				return "jsx";
+			case "tsx":
+				return "tsx";
+			case "css":
+				return "css";
+			case "py":
+				return "python";
+			case "java":
+				return "java";
+			case "c":
+				return "c";
+			case "cpp":
+				return "cpp";
+			default:
+				return "javascript";
+		}
+	};
+
+	useEffect(() => {
+		Prism.highlightAll();
+	}, [content]);
 
 	const handleCopy = async () => {
 		try {
@@ -54,7 +96,7 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 				</div>
 				<div className="p-4 h-[calc(90vh-80px)] overflow-auto">
 					<pre className="bg-gray-900 p-4 rounded-lg">
-						<code className="text-gray-300 font-mono text-wrap text-sm">
+						<code className={`language-${getLanguage(filename)}`}>
 							{content}
 						</code>
 					</pre>
