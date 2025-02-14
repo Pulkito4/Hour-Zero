@@ -12,6 +12,14 @@ import "prismjs/components/prism-python";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-cpp";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-markdown";
+import "prismjs/components/prism-sql";
+import "prismjs/components/prism-dart";
+import "prismjs/components/prism-yaml";
+import "prismjs/components/prism-markup";
+import "prismjs/components/prism-bash";
+
 
 interface CodeViewerModalProps {
 	content: string;
@@ -48,6 +56,22 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 				return "c";
 			case "cpp":
 				return "cpp";
+			case "json":
+				return "json";
+			case "md":
+				return "markdown";
+			case "sql":
+				return "sql";
+			case "dart":
+				return "dart";
+			case "yaml":
+				return "yaml";
+			case "html":
+			case "xml":
+			case "svg":
+				return "markup";
+			case "sh":
+				return "bash";
 			default:
 				return "javascript";
 		}
