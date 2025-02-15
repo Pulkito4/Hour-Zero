@@ -15,6 +15,7 @@ export function CustomFooter() {
               alt="Hour Zero Logo - Academic Resource Platform"
               width={100}
               height={100}
+              priority
               className="hover:opacity-90"
             />
             <div className="flex flex-col ">

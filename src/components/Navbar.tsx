@@ -39,6 +39,7 @@ const Navbar = () => {
 							alt="Hour Zero Logo - Academic Resource Platform"
 							width={70}
 							height={70}
+							priority
 							className="hover:opacity-90"
 						/>
 						<span className="text-xl font-semibold">
