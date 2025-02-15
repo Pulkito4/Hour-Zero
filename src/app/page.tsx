@@ -6,7 +6,36 @@ import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
 import { Contribution } from "@/components/homepage/Contribution";
 import { Dropdown } from "@/components/homepage/Dropdown";
+import { BASE_URL } from "@/lib/constants";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+	title: "Hour Zero - Engineering Study Materials & Academic Resources",
+	description: "Access engineering study materials, notes, assignments, and previous year questions. Your one-stop platform for VIPS academic resources and study materials.",
+	keywords: [
+	  "engineering study materials",
+	  "VIPS resources",
+	  "academic notes",
+	  "engineering assignments",
+	  "previous year questions",
+	  "IPU study materials",
+	  "GGSIPU resources",
+	  "engineering education",
+	  "BTech materials",
+	  "student resources"
+	],
+	alternates: {
+	  canonical: BASE_URL
+	},
+	openGraph: {
+	  title: "Hour Zero - Engineering Study Materials & Academic Resources",
+	  description: "Access engineering study materials, notes, assignments, and previous year questions.",
+	  url: BASE_URL,
+	  siteName: "Hour Zero",
+	  type: "website"
+	}
+  };
+  
 
 export default function Home() {
 	return (
@@ -59,7 +88,6 @@ export default function Home() {
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
 					<span className="text-primary-100">WHY</span> HOUR ZERO ?
 					</h1>
-					{/* <WhyUs /> */}
 					<Whyus/>
 				</div>
 			</div>

@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSubject } from "@/context/SubjectContext";
 import { useToast } from "@/hooks/use-toast";
-const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
+import { semesters } from "@/lib/constants";
 
 export function Dropdown() {
 	const router = useRouter();

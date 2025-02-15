@@ -60,6 +60,7 @@ const workSans = localFont({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL(BASE_URL),
 	title: {
 		default: "Hour Zero - Because Every Mark Counts",
 		template: "%s | Hour Zero",
