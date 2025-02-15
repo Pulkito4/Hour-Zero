@@ -1,12 +1,12 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { LayoutGrid } from "../ui/layout-grid";
 import { Github as GithubIcon, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 export function Team() {
   return (
-    <div className="h-screen py-20 w-full ">
+    <div className="h-screen py-20 w-full">
       <h1 className="text-white text-4xl font-bold text-center mt-2">
         MEET THE <span className="text-primary-100">TEAM</span>
       </h1>
@@ -16,81 +16,63 @@ export function Team() {
   );
 }
 
-const SkeletonTwo = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">Pulkit</p>
+interface TeamMember {
+  name: string;
+  branch: string;
+  college: string;
+  description?: string;
+  github: string;
+  linkedin: string;
+  image: string;
+}
 
-      <p className="font-normal text-base text-white">
-        Computer Science Engineering
-      </p>
-      <p className="font-normal text-base text-white">VIPS-TC, GGSIPU</p>
-      <p className="font-normal text-sm text-white text-wrap">Web Developer | Tech Enthusiast</p>
-      <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
-        <Link
-          href="https://github.com/Pulkito4"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-purple-500 transition-colors "
-        >
-          <GithubIcon size={24} />
-        </Link>
-        <Link
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-purple-500 transition-colors"
-          href={"https://www.linkedin.com/in/pulkitgoyal04/"}
-        >
-          <Linkedin />
-        </Link>
-      </p>
-    </div>
-  );
-};
-const SkeletonThree = () => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">Tanishka</p>
-      <p className="font-normal text-base text-white">
-        Computer Science Engineering
-      </p>
-      <p className="font-normal text-base text-white">VIPS-TC, GGSIPU</p>
-      
-      <p className="flex gap-2 font-normal text-base my-4 max-w-lg text-neutral-200">
-        <Link
-          href="https://github.com/tanishkag237"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-purple-500 transition-colors"
-        >
-          <GithubIcon size={24} />
-        </Link>
-        <Link
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-purple-500 transition-colors"
-          href={"https://www.linkedin.com/in/tanishkagoel237"}
-        >
-          <Linkedin />
-        </Link>
-      </p>
-    </div>
-  );
-};
-
-const cards = [
+const memberList: TeamMember[] = [
   {
-    id: 2,
-    content: <SkeletonTwo />,
-    className: "col-span-1",
-    thumbnail:
-      "https://res.cloudinary.com/hourzero/image/upload/v1739471335/pulkit_pfp_o3aqow.jpg",
+    name: "Pulkit",
+    branch: "Computer Science Engineering",
+    college: "VIPS-TC, GGSIPU",
+    description: "Web Developer | Tech Enthusiast",
+    github: "https://github.com/Pulkito4",
+    linkedin: "https://www.linkedin.com/in/pulkitgoyal04/",
+    image: "https://res.cloudinary.com/hourzero/image/upload/v1739471335/pulkit_pfp_o3aqow.jpg",
   },
   {
-    id: 3,
-    content: <SkeletonThree />,
-    className: "col-span-1",
-    thumbnail:
-      "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
+    name: "Tanishka",
+    branch: "Computer Science Engineering",
+    college: "VIPS-TC, GGSIPU",
+    description: "Web Developer",
+    github: "https://github.com/tanishkag237",
+    linkedin: "https://www.linkedin.com/in/tanishkagoel237",
+    image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?q=80&w=3540&auto=format&fit=crop",
+  }
 ];
+
+const TeamMemberCard: React.FC<TeamMember> = ({ name, branch, college, description, github, linkedin }) => {
+  return (
+    <div className="text-white ">
+      <p className="font-bold md:text-4xl text-xl">{name}</p>
+      <p className="font-normal text-base">{branch}</p>
+      <p className="font-normal text-base">{college}</p>
+      {description && <p className="font-normal text-sm">{description}</p>}
+
+      {/* Socials */}
+      <div className="flex  gap-3 mt-4">
+        <Link href={github} target="_blank" className="hover:text-purple-500 transition-colors">
+          <GithubIcon size={24} />
+        </Link>
+        <Link href={linkedin} target="_blank" className="hover:text-purple-500 transition-colors">
+          <Linkedin />
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+const cards = memberList.map((member, index) => ({
+  id: index + 1,
+  content: <TeamMemberCard {...member} />,
+  className: "col-span-1",
+  thumbnail: member.image,
+}));
+
+export default Team;
