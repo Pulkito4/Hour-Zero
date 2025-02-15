@@ -36,7 +36,7 @@ const Navbar = () => {
 					<Link href="/" className="flex items-center gap-2">
 						<Image
 							src="/logo.png"
-							alt="logo"
+							alt="Hour Zero Logo - Academic Resource Platform"
 							width={70}
 							height={70}
 							className="hover:opacity-90"

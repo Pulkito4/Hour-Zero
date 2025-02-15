@@ -1,0 +1,1 @@
+export const BASE_URL = "https://hourzero.vercel.app"  // actual base url will go here
