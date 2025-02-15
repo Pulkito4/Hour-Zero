@@ -3,7 +3,7 @@
 import { LampContainer } from "@/components/ui/lamp";
 import React from "react";
 import { motion } from "framer-motion";
-import ContactForm from "@/components/ContactForm";
+import ContactForm from "@/components/forms/ContactForm";
 
 const page = () => {
 	return (

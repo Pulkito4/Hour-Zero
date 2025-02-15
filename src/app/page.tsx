@@ -1,10 +1,11 @@
-import { CarousalSlider } from "@/components/Carousel";
-import { Dropdown } from "@/components/Dropdown";
-import { Whyus } from "@/components/Whyus";
-import { Offer } from "@/components/Offer";
+import { CarousalSlider } from "@/components/homepage/ContributorsCarousel";
+
+import { Whyus } from "@/components/homepage/Whyus";
+import { Offer } from "@/components/homepage/whatWeOffer";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
-import { Contribution } from "@/components/Contribution";
+import { Contribution } from "@/components/homepage/Contribution";
+import { Dropdown } from "@/components/homepage/Dropdown";
 
 
 export default function Home() {

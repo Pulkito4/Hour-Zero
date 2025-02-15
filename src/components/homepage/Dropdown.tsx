@@ -18,7 +18,7 @@ import {
 import { getBranches } from "@/firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSubject } from "../context/SubjectContext";
+import { useSubject } from "@/context/SubjectContext";
 import { useToast } from "@/hooks/use-toast";
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 

@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 
-import { AddToSubject } from "@/components/AddToSubject";
-import CreateSubject from "@/components/CreateSubject";
+import { AddToSubject } from "@/components/dashBoard/AddToSubject";
+import CreateSubject from "@/components/dashBoard/CreateSubject";
 
 const WelcomeMessage = () => (
   <div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
