@@ -10,9 +10,9 @@ import {
   NotebookPen,
   TvMinimalPlay,
 } from "lucide-react";
-import Form from "@/components/Form";
-import UrlForm from "@/components/Urlform";
-import { SyllabusForm } from "@/components/SyllabusForm";
+import Form from "@/components/forms/Form";
+import UrlForm from "@/components/forms/Urlform";
+import { SyllabusForm } from "@/components/forms/SyllabusForm";
 
 const tabs = [
   { title: "Syllabus", icon:  <LibraryBig size={20} />, content: <SyllabusForm onClose={() => {}} />  },

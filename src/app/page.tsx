@@ -1,10 +1,41 @@
-import { CarousalSlider } from "@/components/Carousel";
-import { Dropdown } from "@/components/Dropdown";
-import { Whyus } from "@/components/Whyus";
-import { Offer } from "@/components/Offer";
+import { CarousalSlider } from "@/components/homepage/ContributorsCarousel";
+
+import { Whyus } from "@/components/homepage/Whyus";
+import { Offer } from "@/components/homepage/whatWeOffer";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { WavyBackground } from "@/components/ui/wavy-background";
+import { Contribution } from "@/components/homepage/Contribution";
+import { Dropdown } from "@/components/homepage/Dropdown";
+import { BASE_URL } from "@/lib/constants";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+	title: "Hour Zero - Engineering Study Materials & Academic Resources",
+	description: "Access engineering study materials, notes, assignments, and previous year questions. Your one-stop platform for VIPS academic resources and study materials.",
+	keywords: [
+	  "engineering study materials",
+	  "VIPS resources",
+	  "academic notes",
+	  "engineering assignments",
+	  "previous year questions",
+	  "IPU study materials",
+	  "GGSIPU resources",
+	  "engineering education",
+	  "BTech materials",
+	  "student resources"
+	],
+	alternates: {
+	  canonical: BASE_URL
+	},
+	openGraph: {
+	  title: "Hour Zero - Engineering Study Materials & Academic Resources",
+	  description: "Access engineering study materials, notes, assignments, and previous year questions.",
+	  url: BASE_URL,
+	  siteName: "Hour Zero",
+	  type: "website"
+	}
+  };
+  
 
 export default function Home() {
 	return (
@@ -46,11 +77,17 @@ export default function Home() {
 					<CarousalSlider />
 				</div> */}
 
+				<div className="px-8 mt-15  mb-15 ">
+					<h1 className="text-white ml-4 mb-9 text-3xl font-bold text-center">
+						WANT TO <span className="text-primary-100">CONTRIBUTE ?</span>
+					</h1>
+					<Contribution/>
+				</div>
+
 				<div className="px-8 mt-15  mb-15 flex flex-col items-center">
 					<h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
 					<span className="text-primary-100">WHY</span> HOUR ZERO ?
 					</h1>
-					{/* <WhyUs /> */}
 					<Whyus/>
 				</div>
 			</div>

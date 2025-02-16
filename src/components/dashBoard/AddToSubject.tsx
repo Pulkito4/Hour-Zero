@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { getBranches, getSubjects } from "@/firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { useSubject } from "@/context/SubjectContext";
+import { semesters } from "@/lib/constants";
 
 export function AddToSubject() {
 	const { subject, setSubject } = useSubject();
@@ -20,7 +21,6 @@ export function AddToSubject() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 	// Fetch branches on component mount
 	useEffect(() => {
@@ -40,7 +40,7 @@ export function AddToSubject() {
 		};
 
 		fetchBranches();
-	}, []);
+	});
 
 	// Fetch subjects when branch and semester are selected
 	useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { addSubject, getBranches } from "@/firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
+import { semesters } from "@/lib/constants";
 
 const CreateSubject = () => {
 	const { toast } = useToast();
@@ -11,8 +12,6 @@ const CreateSubject = () => {
 	const [credits, setCredits] = useState(0);
 	const [branches, setBranches] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-
-	const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
 	useEffect(() => {
 		const fetchBranches = async () => {

@@ -1,5 +1,5 @@
 import { SyllabusDocument } from "@/types/documents";
-import Accordion from "./Accordion";
+import Accordion from "../Accordion";
 
 interface AccordionItem {
   id: string;

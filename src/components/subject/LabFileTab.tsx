@@ -1,7 +1,7 @@
 import { LabDocument } from "@/types/documents";
 import { useEffect, useState } from "react";
 import { DocumentPreviewer } from "./DocumentPreviewer";
-import Accordion from "./Accordion";
+import Accordion from "../Accordion";
 import { Octokit } from "@octokit/rest";
 import { LabCodeTab } from "./LabCodesTab";
 

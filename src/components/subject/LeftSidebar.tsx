@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { getSubjects } from "@/firebase/firestore";
 import { useSubject } from "@/context/SubjectContext";
-import { Spinner } from "./ui/Spinner";
+import { Spinner } from "@/components/ui/Spinner";
 
 interface Subject {
 	id: string;
@@ -42,7 +42,7 @@ const LeftSidebar = ({
 		};
 
 		fetchSubjects();
-	}, []);
+	});
 
 	return (
 		<div className="relative">

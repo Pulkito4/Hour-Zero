@@ -11,9 +11,6 @@ interface GridItemProps {
 const GridItem = ({ area, title, description }: GridItemProps) => {
   return (
     <>
-      {/* <h1 className="text-white ml-4 mb-5 text-3xl font-bold text-center">
-						ABOUT <span className="text-primary-100">US</span>
-					</h1> */}
       <div>
         
         <ul>
