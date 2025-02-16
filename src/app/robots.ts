@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/lib/constants'
 import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
@@ -5,8 +6,12 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '*',
-            disallow: '/google , /api , /dashboard/*',
+            disallow: [
+                '/google/',
+                '/api/',
+                '/dashboard/*'
+            ]
         },
-        sitemap: 'https://hour-zero-woad.vercel.app/sitemap.xml',
+        sitemap: `${BASE_URL}/sitemap.xml`,
     }
 }
