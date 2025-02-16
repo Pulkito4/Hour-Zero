@@ -12,9 +12,10 @@ export function CustomFooter() {
           <Link href="/" className="flex items-center mb-3 md:mb-0 ">
             <Image
               src="/logo.png"
-              alt="Hour Zero Logo"
+              alt="Hour Zero Logo - Academic Resource Platform"
               width={100}
               height={100}
+              priority
               className="hover:opacity-90"
             />
             <div className="flex flex-col ">

@@ -1,100 +1,82 @@
 "use client";
 import React, { useState } from "react";
-import FileUploader from "./FileUploader";
 import { useToast } from "@/hooks/use-toast";
-import { uploadToCloudinary } from "@/lib/cloudinary";
-import { AddToSubject } from "@/firebase/firestore";
+import { addVideos } from "@/firebase/firestore";
+import { UploadDocumentData } from "@/types/documents";
+import { getCleanUrl } from "@/lib/utils";
 import { useSubject } from "@/context/SubjectContext";
 
-interface SimpleFormProps {
+interface UrlFormProps {
 	heading: string; // Dynamic heading
 }
 
-// Add mapping for headings to subcollections
-const headingToSubcollection: { [key: string]: string } = {
-	"Add Notes": "notes",
-	"Add Assignment": "assignments",
-	"Add Lab File": "lab",
-	"Add PYQ": "pyqs",
-	"Add Other Reference Material": "other",
-	"Add Video": "videos",
-};
-
-const Form: React.FC<SimpleFormProps> = ({ heading }) => {
+const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const { toast } = useToast();
-	const {subject} = useSubject();
+	const {subject, semester, branch} = useSubject();
+
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [file, setFile] = useState<File | null>(null);
-	const [fileUrl, setFileUrl] = useState<string | null>(null);
-
+	const [url, setUrl] = useState("");
 	const [message, setMessage] = useState("");
-
-	const handleFileChange = (newFile: File) => {
-		setFile(newFile);
-		setFileUrl(URL.createObjectURL(newFile));
-	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		const subcollection = headingToSubcollection[heading];
 
-		if (!title || !file) {
+		if (!title || !description || !url) {
 			toast({
 				variant: "destructive",
 				title: "Error",
-				description:
-					"Please fill all required fields and attach a PDF file.",
+				description: "Please fill all fields, including a valid URL.",
+			});
+			return;
+		}
+
+		const cleanUrl = getCleanUrl(url);
+		if (!cleanUrl) {
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: "Please enter a valid URL.",
 			});
 			return;
 		}
 
 		try {
-			// First upload file to Cloudinary
-			const fileUrl = await uploadToCloudinary(file);
+			const videoData: UploadDocumentData = {
+				name: title,
+				description,
+				url: cleanUrl,
+			};
 
-			// Then add document data to Firestore
-			await AddToSubject(
-				"CSE", // Replace with actual branch
-				"5", // Replace with actual semester
-				subject, // Replace with actual subject
-				subcollection, // subcollection
-				{
-					name: title,
-					description: description,
-					url: fileUrl
-				}
+			await addVideos(
+				branch, // Replace with actual branch
+				semester.toString(), // Replace with actual semester
+				subject,
+				"videos",
+				videoData
 			);
 
 			toast({
 				title: "Success",
-				description: "Document uploaded successfully!",
+				description: "Video added successfully!",
+			});
+
+			toast({
+				title: "Success",
+				description: "Video added successfully!",
 			});
 
 			// Reset form
 			setTitle("");
 			setDescription("");
-			setFile(null);
-			setFileUrl(null);
+			setUrl("");
 		} catch (error) {
 			toast({
 				variant: "destructive",
 				title: "Error",
-				description: "Failed to upload document. Please try again.",
+				description: "Failed to add video. Please try again.",
 			});
 		}
-
-		// Handle form submission
-		toast({
-			title: "Success",
-			description: "Form submitted successfully!",
-		});
-
-		// Reset form
-		setTitle("");
-		setDescription("");
-		setFile(null);
-		setFileUrl(null);
 	};
 
 	return (
@@ -135,14 +117,18 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 					rows={4}></textarea>
 			</div>
 
-			{/* File Uploader */}
+			{/* URL Input */}
 			<div className="mb-4">
-				<label className="block text-sm font-medium mb-2">
-					Attach PDF
+				<label htmlFor="url" className="block text-sm font-medium mb-2">
+					Attach URL
 				</label>
-				<FileUploader
-					fieldChange={handleFileChange}
-					fileUrl={fileUrl}
+				<input
+					type="url"
+					id="url"
+					className="w-full p-2 border border-gray-600 rounded bg-gray-900"
+					value={url}
+					onChange={(e) => setUrl(e.target.value)}
+					placeholder="https://example.com"
 				/>
 			</div>
 
@@ -159,4 +145,4 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 	);
 };
 
-export default Form;
+export default UrlForm;

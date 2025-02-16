@@ -6,6 +6,7 @@ import { FileCode } from "lucide-react";
 import { useSubject } from "@/context/SubjectContext";
 import { getYearFromSemester } from "@/lib/utils";
 import { Spinner } from "flowbite-react";
+import { useToast } from "@/hooks/use-toast";
 
 const octokit = new Octokit({
 	auth: process.env.NEXT_PUBLIC_PRIVATE_GITHUB_TOKEN,
@@ -23,7 +24,9 @@ interface LabCodesTabProps {
 }
 
 export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
-	const {semester} = useSubject();
+	const { semester } = useSubject();
+	const { toast } = useToast();
+
 	const year = getYearFromSemester(semester);
 	const [rootFolder, setRootFolder] = useState(`${year}/${folderName}`);
 	const [currentPath, setCurrentPath] = useState(rootFolder);
@@ -48,19 +51,54 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 		setIsLoading(true);
 	};
 
-	const fetchFileContent = async (url: string, filename: string) => {
+	const fetchFileContent = async (
+		url: string | null,
+		filename: string,
+		path: string
+	) => {
 		try {
-			const response = await fetch(url);
-			const content = await response.text();
-			setSelectedFile({ content, name: filename });
+			// Always try to fetch using the path first
+			const response = await octokit.repos.getContent({
+				owner: "Pulkito4",
+				repo: "hour-zero-codes",
+				path: path,
+			});
+
+			// Handle response based on the type of data received
+			if ("content" in response.data) {
+				// Single file response
+				const content = Buffer.from(
+					response.data.content,
+					"base64"
+				).toString();
+				setSelectedFile({ content, name: filename });
+			} else {
+				// If we didn't get content directly, try the download_url
+				if (url) {
+					const directResponse = await fetch(url);
+					if (!directResponse.ok) {
+						throw new Error(
+							`HTTP error! status: ${directResponse.status}`
+						);
+					}
+					const content = await directResponse.text();
+					setSelectedFile({ content, name: filename });
+				} else {
+					throw new Error("No content or download URL available");
+				}
+			}
 		} catch (error) {
 			console.error("Error fetching file content:", error);
+			toast({
+				title: "Error",
+				description: "Failed to load file content",
+				variant: "destructive",
+			});
 		}
 	};
 
 	const fetchLabCodes = async () => {
-
-		if(folderName===""){
+		if (folderName === "") {
 			setError("No such folder exists");
 			setIsLoading(false);
 			return;
@@ -126,7 +164,8 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 										? handleFolderClick(file.path)
 										: fetchFileContent(
 												file.download_url,
-												file.name
+												file.name,
+												file.path
 										  )
 								}
 								className="bg-gray-900 p-4 rounded-lg cursor-pointer hover:bg-gray-800 

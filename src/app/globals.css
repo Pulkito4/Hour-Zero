@@ -105,6 +105,20 @@ body {
   @apply text-gray-200 text-base font-medium mb-2 block ;
 }
 
+/* Syntax Highlighting using Prism.js*/
+pre[class*="language-"] {
+  background: #1a1a1a !important;
+  border-radius: 0.5rem;
+  margin: 0;
+}
+
+code[class*="language-"] {
+  font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-shadow: none;
+}
+
 /* .border-glow {
   position: relative;
   border-radius: inherit;

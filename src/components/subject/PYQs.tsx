@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PYQDocument } from "@/types/documents";
-import { DocumentPreviewer } from "@/components/DocumentPreviewer";
+import { DocumentPreviewer } from "@/components/subject/DocumentPreviewer";
 
 export const PYQsTab = ({ documents }: { documents: PYQDocument[] }) => {
 	const [selectedPYQ, setSelectedPYQ] = useState<PYQDocument | null>(null);

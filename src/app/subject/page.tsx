@@ -14,15 +14,15 @@ import {
   getDocumentsInSubjectSubCollection,
   getSubjects,
 } from "@/firebase/firestore";
-import { NotesTab } from "@/components/NotesTab";
-import SubjectTabs from "@/components/SubjectTabs";
-import LeftSidebar from "@/components/LeftSidebar";
-import { AssignmentsTab } from "@/components/AssignmentsTab";
-import { PYQsTab } from "@/components/PYQs";
-import { OthersTab } from "@/components/Others";
-import { LabFileTab } from "@/components/LabFileTab";
-import { VideoTab } from "@/components/VideoTab";
-import { SyllabusTab } from "@/components/SyllabusTab";
+import { NotesTab } from "@/components/subject/NotesTab";
+import SubjectTabs from "@/components/subject/SubjectTabs";
+import LeftSidebar from "@/components/subject/LeftSidebar";
+import { AssignmentsTab } from "@/components/subject/AssignmentsTab";
+import { PYQsTab } from "@/components/subject/PYQs";
+import { OthersTab } from "@/components/subject/Others";
+import { LabFileTab } from "@/components/subject/LabFileTab";
+import { VideoTab } from "@/components/subject/VideoTab";
+import { SyllabusTab } from "@/components/subject/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
 
 
@@ -31,9 +31,9 @@ interface SelectedSubjectInfo {
   folderName: string;
 }
 import { Spinner } from "@/components/ui/Spinner";
-import { NoData } from "@/components/NoData";
-import { NoContent } from "@/components/NoContent";
-import { LabCodeTab } from "@/components/LabCodesTab";
+import { NoData } from "@/components/subject/NoData";
+import { NoContent } from "@/components/subject/NoContent";
+import { LabCodeTab } from "@/components/subject/LabCodesTab";
 import { Metadata } from "next";
 import Head from "next/head";
 
@@ -43,6 +43,7 @@ const WelcomeMessage = () => (
     <p className="text-gray-400">
       Select a subject from the sidebar to get started
     </p>
+		<p className="text-slate-500">DISCLAIMER: All the assignments and lab files are as per VIPS CSE 2022-2026 Batch</p>
   </div>
 );
 
