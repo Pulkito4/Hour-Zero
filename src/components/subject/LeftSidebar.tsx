@@ -47,13 +47,6 @@ const LeftSidebar = ({
 
 	return (
 		<>
-		<Head>
-        <title>Subjects - {branch} {semester}</title>
-		<meta property="og:title" content={`Get study resources for ${branch}`} />
-        <meta name="description" content={`Subjects for ${branch} semester ${semester}`} />
-        <meta name="keywords" content={`HourZero, hourzero, subjects, ${branch}, ${semester}, engineering, btech`} />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
 	
 		<div className="relative">
 			<nav

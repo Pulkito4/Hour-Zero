@@ -305,10 +305,10 @@ export default function SubjectPage() {
 			  name="description"
 			  content={`Get all the study materials for ${selectedSubject.id} at HourZero. Find notes, assignments, previous year questions, syllabus, and more.`}
 			/>
-			 <meta property="og:title" content={`${selectedSubject.id} Study Resources`} />
+			 <meta property="og:title" content={`${selectedSubject.id} Study Resources || ${selectedSubject.id} Study Material`} />
 			<meta
 			  name="keywords"
-			  content={`HourZero, hourzero, subjects, engineering, btech, ${selectedSubject.id}, ${selectedSubject.id} notes,${selectedSubject.id} assignments, ${selectedSubject.id} PYQ, ${selectedSubject.id} syllabus, ${selectedSubject.id} playlist,${selectedSubject.id} lab`}
+			  content={`HourZero, hourzero, subjects, engineering, btech, Btech, ${selectedSubject.id}, ${selectedSubject.id} notes,${selectedSubject.id} assignments, ${selectedSubject.id} PYQ, ${selectedSubject.id} syllabus, ${selectedSubject.id} playlist,${selectedSubject.id} lab`}
 			/>
 		  </Head>
           <SubjectTabs
