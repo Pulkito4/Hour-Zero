@@ -308,7 +308,47 @@ export default function SubjectPage() {
 			 <meta property="og:title" content={`${selectedSubject.id} Study Resources || ${selectedSubject.id} Study Material`} />
 			<meta
 			  name="keywords"
-			  content={`HourZero, hourzero, subjects, engineering, btech, Btech, ${selectedSubject.id}, ${selectedSubject.id} notes,${selectedSubject.id} assignments, ${selectedSubject.id} PYQ, ${selectedSubject.id} syllabus, ${selectedSubject.id} playlist,${selectedSubject.id} lab`}
+			  content={`HourZero, 
+          hourzero, 
+          subjects, 
+          engineering, 
+          btech, 
+          Btech, 
+          notes,
+          assignments,
+          assignment solutions,
+          PYQ,
+          pyq,
+          previous year questions,
+          previous year papers,
+          pyq solutions,
+          syllabus,
+          playlist,
+          lab,
+          lab files,
+          ${selectedSubject.id}, 
+          ${selectedSubject.id} notes,
+          ${selectedSubject.id} assignments, 
+          ${selectedSubject.id} assignment solutions, 
+          ${selectedSubject.id} PYQ, 
+          ${selectedSubject.id} pyq,
+          ${selectedSubject.id} previous year questions,
+          ${selectedSubject.id} previous year papers,
+          ${selectedSubject.id} pyq solutions, 
+          ${selectedSubject.id} syllabus, 
+          ${selectedSubject.id} playlist,
+          ${selectedSubject.id} lab, 
+          ${selectedSubject.id} lab files,
+          ${selectedSubject.id} lab files codes,
+          ${selectedSubject.id} lab codes,
+          ${selectedSubject.id} videos,
+          ${selectedSubject.id} study material,
+          best study material,
+          best notes,
+          complete notes,
+          complete study material,
+
+          `}
 			/>
 		  </Head>
           <SubjectTabs
