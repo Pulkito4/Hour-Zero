@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '*',
             disallow: '/google , /api , /dashboard/*',
         },
-        sitemap: 'https://hourzero.vercel.app/sitemap.xml',
+        sitemap: 'https://hour-zero-woad.vercel.app/sitemap.xml',
     }
 }
