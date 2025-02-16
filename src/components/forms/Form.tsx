@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import FileUploader from "./FileUploader";
 import { useToast } from "@/hooks/use-toast";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 import { AddToSubject } from "@/firebase/firestore";
 import { useSubject } from "@/context/SubjectContext";
+import FileUploader from "../dashBoard/FileUploader";
 
 interface SimpleFormProps {
 	heading: string; // Dynamic heading
