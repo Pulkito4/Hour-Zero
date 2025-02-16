@@ -10,9 +10,14 @@ import { BASE_URL } from "@/lib/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "Hour Zero - Engineering Study Materials & Academic Resources",
-	description: "Access engineering study materials, notes, assignments, and previous year questions. Your one-stop platform for VIPS academic resources and study materials.",
+	title: "Hour Zero - Because Every Mark Counts",
+	description: "Access engineering study materials, notes, assignments, and previous year questions. Your one-stop platform for academic resources and study materials.",
 	keywords: [
+		"Hour Zero",
+		"hourzero",
+		"study materials",
+		"academic resources",
+		"solutions",
 	  "engineering study materials",
 	  "VIPS resources",
 	  "academic notes",
@@ -22,7 +27,10 @@ export const metadata: Metadata = {
 	  "GGSIPU resources",
 	  "engineering education",
 	  "BTech materials",
-	  "student resources"
+	  "student resources",
+	  "academic support",
+	  "academic help",
+	  
 	],
 	alternates: {
 	  canonical: BASE_URL
