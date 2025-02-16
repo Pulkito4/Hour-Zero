@@ -135,7 +135,7 @@ export default function RootLayout({
 			<head>
 				<meta
 					name="google-site-verification"
-					content="8xF4K5McdHNEIcEOvoYwlnrAgH3iIYYf9U_D-jvHo_U"
+					content="VA0qOyHRbQxr87rx_hSVEOn7uNGvYkvkH3hoKtf4RuA"
 				/>
 				<Script
 					src="https://www.google.com/recaptcha/api.js"
