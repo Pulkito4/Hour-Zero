@@ -40,7 +40,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
 
 const ImageComponent = ({ card }: { card: Card }) => {
   return (
-    <img
+    <Image
       src={card.thumbnail}
       className="object-cover object-top h-full w-full transition duration-200"
       alt="thumbnail"

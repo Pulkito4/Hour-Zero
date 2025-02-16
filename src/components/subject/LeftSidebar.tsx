@@ -42,7 +42,7 @@ const LeftSidebar = ({
 		};
 
 		fetchSubjects();
-	}, []);
+	});
 
 	return (
 		<div className="relative">

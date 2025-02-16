@@ -40,7 +40,7 @@ export function AddToSubject() {
 		};
 
 		fetchBranches();
-	}, []);
+	});
 
 	// Fetch subjects when branch and semester are selected
 	useEffect(() => {
