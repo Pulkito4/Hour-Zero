@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 	  canonical: BASE_URL
 	},
 	openGraph: {
-	  title: "Hour Zero - Engineering Study Materials & Academic Resources",
+	  title: "Hour Zero - Because Every Mark Counts",
 	  description: "Access engineering study materials, notes, assignments, and previous year questions.",
 	  url: BASE_URL,
 	  siteName: "Hour Zero",
