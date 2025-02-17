@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { getBranches, getSubjects, getDocumentsInSubjectSubCollection } from '@/firebase/firestore'
+import { AssignmentDocument, LabDocument, NotesDocument, OthersDocument, PYQDocument, SyllabusDocument, VideoDocument } from '@/types/documents'
 
 export function useBranches() {
   return useQuery({
