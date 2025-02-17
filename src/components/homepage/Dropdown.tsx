@@ -8,6 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/Spinner";
 import {
 	Select,
 	SelectContent,
@@ -30,6 +31,7 @@ export function Dropdown() {
 	const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
 	const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isRedirecting, setIsRedirecting] = useState(false);
 
 	useEffect(() => {
 		const fetchBranches = async () => {
@@ -56,17 +58,31 @@ export function Dropdown() {
 		setSemester(Number(value));
 	};
 
-	const handleClick = () => {
+	const handleClick = async () => {
 		if (!selectedBranch || !selectedSemester) {
-			toast({
-			  variant: "destructive",
-			  title: "Invalid Input",
-			  description: "Please select both Branch and Semester to continue",
-			});
-			return;
-		  }
+		  toast({
+			variant: "destructive",
+			title: "Invalid Input",
+			description: "Please select both Branch and Semester to continue",
+		  });
+		  return;
+		}
+		
+		setIsRedirecting(true);
+		try {
+		  // Simulate loading time if needed
+		  // await new Promise(resolve => setTimeout(resolve, 1000));
 		  router.push("/subject");
-	};
+		} catch (error) {
+		  toast({
+			variant: "destructive",
+			title: "Error",
+			description: "Failed to redirect. Please try again.",
+		  });
+		  setIsRedirecting(false);
+		}
+	
+	}
 
 	return (
 		<Card
@@ -120,11 +136,22 @@ export function Dropdown() {
 			</CardContent>
 			<CardFooter className="flex justify-center">
 				<Button
-					className="bg-primary-300 hover:bg-primary-400"
+					className={`flex items-center gap-2 ${
+						isRedirecting 
+						  ? 'bg-black text-white hover:bg-black' 
+						  : 'bg-primary-300 hover:bg-primary-400'
+					  }`}
 					onClick={handleClick}
-					// disabled={!selectedBranch || !selectedSemester}
+					//disabled={isRedirecting || !selectedBranch || !selectedSemester}
 				>
-					Get Started!
+					{isRedirecting ? (
+            <>
+              <Spinner />
+              {/* <span>Loading...</span> */}
+            </>
+          ) : (
+            'Get Started!'
+          )}
 				</Button>
 			</CardFooter>
 		</Card>

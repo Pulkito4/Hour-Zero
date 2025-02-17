@@ -5,6 +5,7 @@ import { uploadToCloudinary } from "@/lib/cloudinary";
 import { AddToSubject } from "@/firebase/firestore";
 import { useSubject } from "@/context/SubjectContext";
 import FileUploader from "../dashBoard/FileUploader";
+import { Spinner } from "../ui/Spinner";
 
 interface SimpleFormProps {
 	heading: string; // Dynamic heading
@@ -27,6 +28,7 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState<File | null>(null);
 	const [fileUrl, setFileUrl] = useState<string | null>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [message, setMessage] = useState("");
 
@@ -45,7 +47,9 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 				title: "Error",
 				description:
 					"Please fill all required fields and attach a PDF file.",
+					duration: 10000,
 			});
+			setIsSubmitting(false);
 			return;
 		}
 
@@ -69,6 +73,7 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 			toast({
 				title: "Success",
 				description: "Document uploaded successfully!",
+				duration: 10000,
 			});
 
 			// Reset form
@@ -83,6 +88,9 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 				description: "Failed to upload document. Please try again.",
 			});
 		}
+		finally {
+			setIsSubmitting(false);
+		  }
 
 		// Handle form submission
 		toast({
@@ -148,10 +156,23 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 
 			{/* Submit Button */}
 			<button
-				type="submit"
-				className="w-full py-2 px-4 bg-purple-600 rounded hover:bg-purple-700 transition">
-				Submit
-			</button>
+        type="submit"
+        disabled={isSubmitting}
+        className={`w-full py-2 px-4 rounded transition-all duration-200 
+          ${isSubmitting 
+            ? 'bg-gray-600 cursor-not-allowed' 
+            : 'bg-purple-600 hover:bg-purple-700'
+          }`}
+      >
+        {isSubmitting ? (
+          <div className="flex items-center justify-center gap-2">
+            <Spinner />
+            <span className="text-white text-sm">Uploading...</span>
+          </div>
+        ) : (
+          'Submit'
+        )}
+      </button>
 
 			{/* Message */}
 			{message && <p className="mt-4 text-center">{message}</p>}
