@@ -21,30 +21,36 @@ import { useEffect, useState } from "react";
 import { useSubject } from "@/context/SubjectContext";
 import { useToast } from "@/hooks/use-toast";
 import { semesters } from "@/lib/constants";
+import { useBranches } from "@/lib/react-query/queries";
+import { Loader2 } from "lucide-react";
 
 export function Dropdown() {
 	const router = useRouter();
-	const [branches, setBranches] = useState<string[]>([]);
+	// const [branches, setBranches] = useState<string[]>([]);
 	const { setBranch, setSemester } = useSubject();
+	const [isRedirecting, setIsRedirecting] = useState(false);
 	const { toast } = useToast();
 	const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
-	const [selectedSemester, setSelectedSemester] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [selectedSemester, setSelectedSemester] = useState<string | null>(
+		null
+	);
+	// const [isLoading, setIsLoading] = useState(true);
+	const { data: branches, isLoading } = useBranches();
 
-	useEffect(() => {
-		const fetchBranches = async () => {
-			try {
-				const branchList = await getBranches();
-				setBranches(branchList);
-			} catch (error) {
-				console.error("Failed to fetch branches:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
+	// useEffect(() => {
+	// 	const fetchBranches = async () => {
+	// 		try {
+	// 			const branchList = await getBranches();
+	// 			setBranches(branchList);
+	// 		} catch (error) {
+	// 			console.error("Failed to fetch branches:", error);
+	// 		} finally {
+	// 			setIsLoading(false);
+	// 		}
+	// 	};
 
-		fetchBranches();
-	}, []);
+	// 	fetchBranches();
+	// }, []);
 
 	const handleSelectBranch = (value: string) => {
 		setSelectedBranch(value);
@@ -59,20 +65,21 @@ export function Dropdown() {
 	const handleClick = () => {
 		if (!selectedBranch || !selectedSemester) {
 			toast({
-			  variant: "destructive",
-			  title: "Invalid Input",
-			  description: "Please select both Branch and Semester to continue",
+				variant: "destructive",
+				title: "Invalid Input",
+				description:
+					"Please select both Branch and Semester to continue",
 			});
 			return;
-		  }
-		  router.push("/subject");
+		}
+		setIsRedirecting(true);
+		router.push("/subject");
 	};
 
 	return (
 		<Card
 			className="w-full max-w-2xl mx-auto bg-black text-white shadow-[0_0_20px_rgba(139,92,246,0.5)] 
-      		transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,1)]"
-		>
+      		transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(139,92,246,1)]">
 			<CardHeader className="text-center md:text-xl">
 				<CardTitle>Select your Branch & Semester</CardTitle>
 			</CardHeader>
@@ -86,11 +93,15 @@ export function Dropdown() {
 							<Select onValueChange={handleSelectBranch}>
 								<SelectTrigger id="branch">
 									<SelectValue
-										placeholder={isLoading ? "Loading..." : "Select"}
+										placeholder={
+											isLoading ? "Loading..." : "Select"
+										}
 									/>
 								</SelectTrigger>
-								<SelectContent position="popper" className="bg-black text-white">
-									{branches.map((branch) => (
+								<SelectContent
+									position="popper"
+									className="bg-black text-white">
+									{branches?.map((branch) => (
 										<SelectItem key={branch} value={branch}>
 											{branch}
 										</SelectItem>
@@ -106,9 +117,13 @@ export function Dropdown() {
 								<SelectTrigger id="semester">
 									<SelectValue placeholder="Select" />
 								</SelectTrigger>
-								<SelectContent position="popper" className="bg-black text-white">
+								<SelectContent
+									position="popper"
+									className="bg-black text-white">
 									{semesters.map((semester) => (
-										<SelectItem key={semester} value={semester}>
+										<SelectItem
+											key={semester}
+											value={semester}>
 											Semester {semester}
 										</SelectItem>
 									))}
@@ -122,10 +137,9 @@ export function Dropdown() {
 				<Button
 					className="bg-primary-300 hover:bg-primary-400"
 					onClick={handleClick}
-					// disabled={!selectedBranch || !selectedSemester}
-				>
-					Get Started!
-				</Button>
+					disabled={isRedirecting}>
+						{isRedirecting? <Loader2/> : "Get Started"}
+					</Button>
 			</CardFooter>
 		</Card>
 	);

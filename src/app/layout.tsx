@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { SubjectProvider } from "@/context/SubjectContext";
 import Script from "next/script";
 import { BASE_URL } from "@/lib/constants";
+import { QueryProvider } from "@/lib/react-query/QueryProvider";
 
 const workSans = localFont({
 	src: [
@@ -143,12 +144,15 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className={`${workSans.variable} bg-black`}>
+				<QueryProvider>
 				<SubjectProvider>
 					<Navbar />
 					{children}
 					<Toaster />
+
 					<CustomFooter />
 				</SubjectProvider>
+				</QueryProvider>
 			</body>
 		</html>
 	);

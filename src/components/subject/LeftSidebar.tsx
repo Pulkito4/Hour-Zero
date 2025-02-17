@@ -4,6 +4,7 @@ import { getSubjects } from "@/firebase/firestore";
 import { useSubject } from "@/context/SubjectContext";
 import { Spinner } from "@/components/ui/Spinner";
 import Head from "next/head";
+import { useSubjects } from "@/lib/react-query/queries";
 
 interface Subject {
 	id: string;
@@ -24,26 +25,29 @@ const LeftSidebar = ({
 
 	const [isOpen, setIsOpen] = useState(true);
 
-	const [subjects, setSubjects] = useState<Subject[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const { data: subjects, isLoading } = useSubjects(branch, semester.toString())
 
-	useEffect(() => {
-		const fetchSubjects = async () => {
-			try {
-				const subjectsList = await getSubjects(
-					branch,
-					semester.toString()
-				);
-				setSubjects(subjectsList);
-			} catch (error) {
-				console.error("Failed to fetch subjects:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
 
-		fetchSubjects();
-	});
+	// const [subjects, setSubjects] = useState<Subject[]>([]);
+	// const [isLoading, setIsLoading] = useState(true);
+
+	// useEffect(() => {
+	// 	const fetchSubjects = async () => {
+	// 		try {
+	// 			const subjectsList = await getSubjects(
+	// 				branch,
+	// 				semester.toString()
+	// 			);
+	// 			setSubjects(subjectsList);
+	// 		} catch (error) {
+	// 			console.error("Failed to fetch subjects:", error);
+	// 		} finally {
+	// 			setIsLoading(false);
+	// 		}
+	// 	};
+
+	// 	fetchSubjects();
+	// });
 
 	return (
 		<>
@@ -91,7 +95,7 @@ const LeftSidebar = ({
 							</div>
 						) : (
 							<ul className="flex flex-col gap-3">
-								{subjects.map((subject) => (
+								{subjects?.map((subject) => (
 									<li
 										key={subject.id}
 										className={`rounded-lg transition-all duration-300 ${
