@@ -7,8 +7,11 @@ import React from "react";
 export const metadata: Metadata = {
 	title: "About Us | Hour Zero",
 	description:
-		"Learn about Hour Zero - your trusted platform for engineering study materials, notes, and academic resources. Discover our mission to empower students with quality educational content.",
+		"Hour Zero - is a trusted platform for students for acessing study materials, notes, and all other academic resources. Our mission is to empower students with quality educational content.",
 	keywords: [
+		"students",
+		"HourZero",
+		"hourzero",
 		"Hour Zero about",
 		"engineering study platform",
 		"academic resources",
@@ -33,6 +36,14 @@ export const metadata: Metadata = {
 		"btech",
 		"notes",
 		"assignments",
+		"previous year questions",
+		"syllabus",
+		"notes",
+		"study materials",
+		"question papers",
+		"previous year papers",
+		
+
 	],
 	alternates: {
 		canonical: `${BASE_URL}/about`,

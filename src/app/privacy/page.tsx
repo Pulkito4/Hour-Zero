@@ -6,10 +6,16 @@ import React from "react";
 export const metadata: Metadata = {
 	title: "Privacy Policy | Hour Zero",
 	description:
-		"Learn how Hour Zero collects, uses, and protects your information. Read our comprehensive privacy policy to understand your rights and our data practices.",
+		"Read our comprehensive privacy policy to understand your rights and our data practices and learn how Hour Zero collects, uses, and protects your information.",
 	keywords: [
 		"privacy policy",
+		"Hour Zero privacy policy",
+		"privacy",
+		"HourZero",
+		"hourzero",
 		"data protection",
+		"data collection",
+		"data security",
 		"user privacy",
 		"Hour Zero privacy",
 		"student data protection",
