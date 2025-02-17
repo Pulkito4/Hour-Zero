@@ -156,23 +156,10 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 
 			{/* Submit Button */}
 			<button
-        type="submit"
-        disabled={isSubmitting}
-        className={`w-full py-2 px-4 rounded transition-all duration-200 
-          ${isSubmitting 
-            ? 'bg-gray-600 cursor-not-allowed' 
-            : 'bg-purple-600 hover:bg-purple-700'
-          }`}
-      >
-        {isSubmitting ? (
-          <div className="flex items-center justify-center gap-2">
-            <Spinner />
-            <span className="text-white text-sm">Uploading...</span>
-          </div>
-        ) : (
-          'Submit'
-        )}
-      </button>
+				type="submit"
+				className="w-full py-2 px-4 bg-purple-600 rounded hover:bg-purple-700 transition">
+				Submit
+			</button>
 
 			{/* Message */}
 			{message && <p className="mt-4 text-center">{message}</p>}
