@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { SyllabusDocument } from "@/types/documents";
 import { addSyllabus } from "@/firebase/firestore";
+import { Spinner } from "../ui/Spinner";
 
 export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
   const [syllabusDoc, setSyllabusDoc] = useState<Partial<SyllabusDocument>>({
@@ -108,9 +109,11 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
       <Button 
         type="submit" 
         disabled={isLoading}
-        className="w-full bg-purple-600 hover:bg-purple-700"
+        className={`w-full flex items-center justify-center gap-2 ${
+          isLoading ? "bg-transparent" : "bg-purple-600 hover:bg-purple-700"
+        }`}
       >
-        {isLoading ? "Adding..." : "Add Syllabus"}
+        {isLoading ? <Spinner/> : "Add Syllabus"}
       </Button>
     </form>
   );

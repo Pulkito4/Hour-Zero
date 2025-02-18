@@ -186,7 +186,6 @@ export function AddToSubject() {
             {isLoading ? (
               <div className="flex items-center justify-center gap-2">
                 <Spinner />
-                <span className="text-white text-sm">Processing...</span>
               </div>
             ) : (
               "Continue"
