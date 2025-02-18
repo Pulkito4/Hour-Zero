@@ -32,13 +32,15 @@ const SubjectTab: React.FC = () => {
 
   return (
     <>
-    <div className="bg-black p-3 ml-12 hover:bg-gray-600 hover:bg-opacity-45 w-11 rounded-md">
+    <div className=" bg-black p-2 w-12 ml-9  rounded-md">
       
-     <button 
-     onClick={() => router.push('/dashboard')}
-     className="text-white font-bold ">
-      <MoveLeft/>
-      </button>
+    <button 
+          onClick={() => router.push('/dashboard')}
+          className="text-white rounded-lg font-bold text-2xl py-2 px-2 hover:bg-gray-600 hover:bg-opacity-45 flex items-center gap-1"
+        >
+          <MoveLeft />
+          <p className="text-sm">Dashboard</p>
+        </button>
       </div>
     <div className="w-full max-w-4xl mx-auto items-center justify-center p-2">
       
