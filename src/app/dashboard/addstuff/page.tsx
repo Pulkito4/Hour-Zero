@@ -7,12 +7,14 @@ import {
   FileCode,
   FileQuestion,
   LibraryBig,
+  MoveLeft,
   NotebookPen,
   TvMinimalPlay,
 } from "lucide-react";
 import Form from "@/components/forms/Form";
 import UrlForm from "@/components/forms/Urlform";
 import { SyllabusForm } from "@/components/forms/SyllabusForm";
+import { useRouter } from "next/navigation";
 
 const tabs = [
   { title: "Syllabus", icon:  <LibraryBig size={20} />, content: <SyllabusForm onClose={() => {}} />  },
@@ -26,9 +28,20 @@ const tabs = [
 
 const SubjectTab: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
+  const router = useRouter();
 
   return (
+    <>
+    <div className="bg-black p-3 ml-12 hover:bg-gray-600 hover:bg-opacity-45 w-11 rounded-md">
+      
+     <button 
+     onClick={() => router.push('/dashboard')}
+     className="text-white font-bold ">
+      <MoveLeft/>
+      </button>
+      </div>
     <div className="w-full max-w-4xl mx-auto items-center justify-center p-2">
+      
       {/* Tab Navigation */}
       <div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
         {tabs.map((tab, index) => (
@@ -52,6 +65,7 @@ const SubjectTab: React.FC = () => {
         <div>{tabs[activeTab].content}</div>
       </div>
     </div>
+    </>
   );
 };
 
