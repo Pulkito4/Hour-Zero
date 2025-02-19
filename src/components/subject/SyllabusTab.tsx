@@ -22,9 +22,8 @@ export const SyllabusTab = ({
 				<div className="text-center"></div>
 			</div>
 		),
-	}));
+	})).sort((a, b) => a.title.localeCompare(b.title));
 
-	console.log(accordionItems);
 	return (
 		<div className="p-4">
 			<Accordion items={accordionItems} />
