@@ -7,9 +7,16 @@ import { semesters } from "@/lib/constants";
 import { Spinner } from "../ui/Spinner";
 
 export function AddToSubject() {
-  const { subject, setSubject } = useSubject();
+  const { branch, semester, subject, setSubject, setBranch, setSemester } = useSubject();
   const router = useRouter();
   const { toast } = useToast();
+
+  // get initial form data from context
+  // const [formData, setFormData] = useState({
+  //   branch: branch || "",
+  //   semester: semester?.toString() || "",
+  //   subject: subject || "",
+  // });
 
   const [formData, setFormData] = useState({
     branch: "",
@@ -22,12 +29,12 @@ export function AddToSubject() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Fetch branches on component mount
   useEffect(() => {
     const fetchBranches = async () => {
       try {
         const branchList = await getBranches();
         setBranches(branchList);
+        console.log("Fetched branches:", branchList);
       } catch (error) {
         toast({
           variant: "destructive",
@@ -40,13 +47,17 @@ export function AddToSubject() {
     };
 
     fetchBranches();
-  });
+  }, [toast]);
 
-  // Fetch subjects when branch and semester are selected
   useEffect(() => {
     const fetchSubjects = async () => {
       if (formData.branch && formData.semester) {
         try {
+          console.log("Fetching subjects for:", {
+            branch: formData.branch,
+            semester: formData.semester
+          });
+          
           const subjectsList = await getSubjects(
             formData.branch,
             formData.semester
@@ -63,11 +74,30 @@ export function AddToSubject() {
     };
 
     fetchSubjects();
-  }, [formData.branch, formData.semester]);
+  }, [formData.branch, formData.semester, toast]);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData({ ...formData, [field]: value });
+    console.log(`Updating ${field} with value:`, value);
+    
+    setFormData(prev => ({ ...prev, [field]: value }));
     setError(false);
+
+    // Update context values
+    switch (field) {
+      case "branch":
+        setBranch(value);
+        console.log("Updated branch in context:", value);
+        break;
+      case "semester":
+        const semesterNumber = Number(value);
+        setSemester(semesterNumber);
+        console.log("Updated semester in context:", semesterNumber);
+        break;
+      case "subject":
+        setSubject(value);
+        console.log("Updated subject in context:", value);
+        break;
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -81,12 +111,22 @@ export function AddToSubject() {
 
     setIsLoading(true);
     try {
-      // Navigate to content upload page with query params
-      // router.push(`/dashboard/newdata?branch=${branch}&semester=${semester}&subject=${subject}`);
+      console.log("Final form submission:", {
+        branch,
+        semester: Number(semester),
+        subject,
+        contextValues: {
+          branch: branch,
+          semester: semester,
+          subject: subject
+        }
+      });
+
       router.push("/dashboard/addstuff");
     } catch (error) {
       console.error("Error:", error);
       setError(true);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -147,10 +187,7 @@ export function AddToSubject() {
           </label>
           <select
             value={formData.subject}
-            onChange={(e) => (
-              setSubject(e.target.value),
-              handleInputChange("subject", e.target.value)
-            )}
+            onChange={(e) => handleInputChange("subject", e.target.value)}
             className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
                      focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
             required
@@ -176,12 +213,12 @@ export function AddToSubject() {
             type="submit"
             disabled={isLoading}
             className={`px-8 py-3 font-medium rounded-lg transform transition-all duration-200 
-    focus:outline-none focus:ring-2 focus:ring-purple-500 min-w-[150px]
-    ${
-      isLoading
-        ? "bg-transparent cursor-not-allowed"
-        : "bg-purple-600 hover:bg-purple-700 hover:scale-[1.02]"
-    }`}
+              focus:outline-none focus:ring-2 focus:ring-purple-500 min-w-[150px]
+              ${
+                isLoading
+                  ? "bg-transparent cursor-not-allowed"
+                  : "bg-purple-600 hover:bg-purple-700 hover:scale-[1.02]"
+              }`}
           >
             {isLoading ? (
               <div className="flex items-center justify-center gap-2">
