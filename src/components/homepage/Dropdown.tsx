@@ -16,18 +16,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { getBranches } from "@/firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSubject } from "@/context/SubjectContext";
 import { useToast } from "@/hooks/use-toast";
 import { semesters } from "@/lib/constants";
 import { useBranches } from "@/lib/react-query/queries";
-import { Loader2 } from "lucide-react";
 
 export function Dropdown() {
 	const router = useRouter();
-	// const [branches, setBranches] = useState<string[]>([]);
 	const { setBranch, setSemester } = useSubject();
 	const [isRedirecting, setIsRedirecting] = useState(false);
 	const { toast } = useToast();
@@ -35,23 +32,7 @@ export function Dropdown() {
 	const [selectedSemester, setSelectedSemester] = useState<string | null>(
 		null
 	);
-	// const [isLoading, setIsLoading] = useState(true);
 	const { data: branches, isLoading } = useBranches();
-
-	// useEffect(() => {
-	// 	const fetchBranches = async () => {
-	// 		try {
-	// 			const branchList = await getBranches();
-	// 			setBranches(branchList);
-	// 		} catch (error) {
-	// 			console.error("Failed to fetch branches:", error);
-	// 		} finally {
-	// 			setIsLoading(false);
-	// 		}
-	// 	};
-
-	// 	fetchBranches();
-	// }, []);
 
 	const handleSelectBranch = (value: string) => {
 		setSelectedBranch(value);
@@ -65,29 +46,27 @@ export function Dropdown() {
 
 	const handleClick = async () => {
 		if (!selectedBranch || !selectedSemester) {
-		  toast({
-			variant: "destructive",
-			title: "Invalid Input",
-			description: "Please select both Branch and Semester to continue",
-		  });
-		  return;
+			toast({
+				variant: "destructive",
+				title: "Invalid Input",
+				description:
+					"Please select both Branch and Semester to continue",
+			});
+			return;
 		}
-		
+
 		setIsRedirecting(true);
 		try {
-		  // Simulate loading time if needed
-		  // await new Promise(resolve => setTimeout(resolve, 1000));
-		  router.push("/subject");
+			router.push("/subject");
 		} catch (error) {
-		  toast({
-			variant: "destructive",
-			title: "Error",
-			description: "Failed to redirect. Please try again.",
-		  });
-		  setIsRedirecting(false);
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: "Failed to redirect. Please try again.",
+			});
+			setIsRedirecting(false);
 		}
-	
-	}
+	};
 
 	return (
 		<Card
@@ -149,21 +128,18 @@ export function Dropdown() {
 			<CardFooter className="flex justify-center">
 				<Button
 					className={`flex items-center gap-2 ${
-						isRedirecting 
-						  ? 'bg-black text-white hover:bg-black' 
-						  : 'bg-primary-300 hover:bg-primary-400'
-					  }`}
-					onClick={handleClick}
-					//disabled={isRedirecting || !selectedBranch || !selectedSemester}
-				>
+						isRedirecting
+							? "bg-black text-white hover:bg-black"
+							: "bg-primary-300 hover:bg-primary-400"
+					}`}
+					onClick={handleClick}>
 					{isRedirecting ? (
-            <>
-              <Spinner />
-              {/* <span>Loading...</span> */}
-            </>
-          ) : (
-            'Get Started!'
-          )}
+						<>
+							<Spinner />
+						</>
+					) : (
+						"Get Started!"
+					)}
 				</Button>
 			</CardFooter>
 		</Card>

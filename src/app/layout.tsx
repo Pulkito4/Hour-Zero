@@ -121,8 +121,7 @@ export const metadata: Metadata = {
 		"GGSIPU syllabus",
 		"BTech study guide",
 		"engineering practice questions",
-		"engineering exam preparation"
-
+		"engineering exam preparation",
 	],
 	authors: [{ name: "Hour Zero Team" }],
 	creator: "Hour Zero",
@@ -142,7 +141,7 @@ export const metadata: Metadata = {
 		siteName: "Hour Zero",
 		images: [
 			{
-				url: "/logo.png", // Add your Open Graph image
+				url: "https://res.cloudinary.com/hourzero/image/upload/v1739986316/logo_xtxpt9.png", // Add your Open Graph image
 				width: 1200,
 				height: 630,
 				alt: "Hour Zero Preview",
@@ -165,7 +164,9 @@ export const metadata: Metadata = {
 		title: "Hour Zero",
 		description:
 			"Your one-stop hub for BTech notes, assignments, and lab resources.",
-		images: ["../../public/logo.png"],
+		images: [
+			"https://res.cloudinary.com/hourzero/image/upload/v1739986316/logo_xtxpt9.png",
+		],
 	},
 	icons: {
 		icon: "@/app/favicon.ico",
@@ -191,13 +192,13 @@ export default function RootLayout({
 			</head>
 			<body className={`${workSans.variable} bg-black`}>
 				<QueryProvider>
-				<SubjectProvider>
-					<Navbar />
-					{children}
-					<Toaster />
+					<SubjectProvider>
+						<Navbar />
+						{children}
+						<Toaster />
 
-					<CustomFooter />
-				</SubjectProvider>
+						<CustomFooter />
+					</SubjectProvider>
 				</QueryProvider>
 			</body>
 		</html>

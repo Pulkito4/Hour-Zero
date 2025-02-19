@@ -15,22 +15,22 @@ export function useSubjects(branch: string, semester: string) {
     queryKey: ['subjects', branch, semester],
     queryFn: () => getSubjects(branch, semester),
     enabled: !!branch && !!semester,
-    staleTime: 1000 * 60 * 5 // 5 minutes
+    staleTime: 1000 * 60 * 60 // 1 hour
   })
 }
 
-export function useSubjectDocuments<T extends 
-  NotesDocument | 
-  VideoDocument | 
-  SyllabusDocument | 
+export function useSubjectDocuments<T extends
+  NotesDocument |
+  VideoDocument |
+  SyllabusDocument |
   AssignmentDocument |
   PYQDocument |
   OthersDocument |
   LabDocument
 >(
-  branch: string | undefined, 
+  branch: string | undefined,
   semester: string | undefined,
-  subjectId: string | undefined, 
+  subjectId: string | undefined,
   collection: string
 ) {
   return useQuery<T[]>({
@@ -45,13 +45,13 @@ export function useSubjectDocuments<T extends
         subjectId,
         collection
       );
-      
+
       return rawDocs.map(doc => ({
         id: doc.id,
         ...doc.data
       })) as T[];
     },
     enabled: !!branch && !!semester && !!subjectId,
-    staleTime: 1000 * 60 * 5 // 5 minutes
+    staleTime: 1000 * 60 * 60 // 1 hour
   })
 }

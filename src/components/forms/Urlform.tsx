@@ -13,7 +13,7 @@ interface UrlFormProps {
 
 const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const { toast } = useToast();
-	const {subject, semester, branch} = useSubject();
+	const { subject, semester, branch } = useSubject();
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -79,9 +79,9 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 				title: "Error",
 				description: "Failed to add video. Please try again.",
 			});
-		}finally {
-            setIsSubmitting(false);
-        }
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -139,20 +139,21 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 
 			{/* Submit Button */}
 			<button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-2 px-4 rounded transition-all duration-200 flex items-center justify-center gap-2 ${
-                    isSubmitting ? "bg-transparent cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
-                }`}
-            >
-                {isSubmitting ? (
-                    <>
-                        <Spinner />
-                    </>
-                ) : (
-                    "Submit"
-                )}
-            </button>
+				type="submit"
+				disabled={isSubmitting}
+				className={`w-full py-2 px-4 rounded transition-all duration-200 flex items-center justify-center gap-2 ${
+					isSubmitting
+						? "bg-transparent cursor-not-allowed"
+						: "bg-purple-600 hover:bg-purple-700"
+				}`}>
+				{isSubmitting ? (
+					<>
+						<Spinner />
+					</>
+				) : (
+					"Submit"
+				)}
+			</button>
 
 			{/* Message */}
 			{message && <p className="mt-4 text-center">{message}</p>}

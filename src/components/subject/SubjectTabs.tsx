@@ -39,30 +39,38 @@ const SubjectTabs: React.FC<SubjectTabsProps> = ({
 
 	return (
 		<>
-		<Head>
-			<title>Subjects</title>
-			<meta name="description" content="HourZero - Subjects" />
-			<meta name="keywords" content="HourZero, hourzero, subjects, engineering, btech, PYQ,pyq,assignments,notes," />
-			<meta name="viewport" content="width=device-width, initial-scale=1" />
-		</Head>
-		<div className={`w-full max-w-4xl mx-auto p-4 ${className}`}>
-			<div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
-				{tabItems.map((tab, index) => (
-					<button
-						key={index}
-						onClick={() => setActiveTab(index)}
-						className={`flex items-center justify-evenly gap-3 px-4 py-2 text-sm sm:text-base sm:gap-2 transition-all ${
-							activeTab === index
-								? "text-white border-b-2 border-purple-500"
-								: "text-gray-400"
-						}`}>
-						{tab.icon}
-						<span className="hidden sm:inline">{tab.title}</span>
-					</button>
-				))}
+			<Head>
+				<title>Subjects</title>
+				<meta name="description" content="HourZero - Subjects" />
+				<meta
+					name="keywords"
+					content="HourZero, hourzero, subjects, engineering, btech, PYQ,pyq,assignments,notes,"
+				/>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1"
+				/>
+			</Head>
+			<div className={`w-full max-w-4xl mx-auto p-4 ${className}`}>
+				<div className="flex flex-wrap lg:justify-evenly sm:justify-evenly border-b border-gray-700">
+					{tabItems.map((tab, index) => (
+						<button
+							key={index}
+							onClick={() => setActiveTab(index)}
+							className={`flex items-center justify-evenly gap-3 px-4 py-2 text-sm sm:text-base sm:gap-2 transition-all ${
+								activeTab === index
+									? "text-white border-b-2 border-purple-500"
+									: "text-gray-400"
+							}`}>
+							{tab.icon}
+							<span className="hidden sm:inline">
+								{tab.title}
+							</span>
+						</button>
+					))}
+				</div>
+				<div className="p-5 text-white mt-4">{children}</div>
 			</div>
-			<div className="p-5 text-white mt-4">{children}</div>
-		</div>
 		</>
 	);
 };

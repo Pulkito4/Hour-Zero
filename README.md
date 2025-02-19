@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hour Zero - Because Every Mark Counts   
 
-## Getting Started
+**Hour Zero** is your go-to academic resource hub, built to simplify access to study materials, assignments, lab files, and previous year questions. Whether you're preparing for exams or brushing up on concepts, Hour Zero ensures that **every mark counts** by providing well-organized and readily available content.  
+>**Our resources are used and trusted by students scoring 8+ GPA every semester**
 
-First, run the development server:
+🔗 **Live Site:** [Hour Zero](https://hour-zero-woad.vercel.app/)  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 What is Hour Zero?  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Hour Zero is an open-source initiative designed to help **engineering students**, particularly from **GGSIPU**, by offering:  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+✅ **Semester-wise study materials** – Notes, PDFs, and summaries for quick revision.  
+✅ **Solved assignments & lab files** – Organized by subject and semester.  
+✅ **Past year papers** – Access previous exam questions with ease.  
+✅ **Programming & project resources** – Code files and guides for practical learning.  
 
-## Learn More
+Built with a focus on simplicity and accessibility, Hour Zero **eliminates the hassle of searching for resources across multiple platforms.**  
 
-To learn more about Next.js, take a look at the following resources:
+We believe in quality over quantity. So you might not find hundreds of resources here, but the ones provided here are more than sufficient for scoring a really good GPA.
+> 💡 *Because Every Mark Counts!* 🎯  
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Key Features  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+🔹 **Intuitive Navigation** – Choose your **branch** → **semester** → **subject** → Get relevant materials instantly.  
+🔹 **Well-Organized Repository** – Neatly categorized study notes, assignments, and lab resources.  
+🔹 **Minimalist UI & Dark Mode Support** – Sleek, distraction-free experience.  
+🔹 **Direct Downloads** – PDFs and code files readily available without authentication.  
+🔹 **GitHub-Integrated Code Access** – View and copy structured coding files from repositories.  
+🔹 **Community Contributions** – Anyone can contribute materials to help fellow students.  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🛠 Tech Stack  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend:** Next.js (App Router) + TypeScript  
+- **UI:** TailwindCSS, Shadcn UI, Acertinity UI, React Flowbite   
+- **State Management:** Context API  
+- **Backend:** Firebase  
+- **Hosting:** Vercel  
+- **Database:** Firebase Firestore  
+- **Data Storage:** Cloudinary
+---
+
+## 🤝 Contributing  
+
+We welcome contributions! If you have **study materials, notes, or solved assignments** that could benefit students, feel free to contribute.  
+You could reach out to us via out [contact form](https://hour-zero-woad.vercel.app/contact-us) or simply drop us a DM on Linkedin
+
+---
+
+## 📢 Connect & Spread the Word  
+
+If you find **Hour Zero** helpful, **share it with your peers**! Post about us on Instagram or Linkedin. Let’s make academic resources more **accessible & organized** for students everywhere.  
+
+📌 **Follow Us:**  
+🔹 **LinkedIn:** [Pulkit](https://www.linkedin.com/in/pulkitgoyal04) | [Tanishka](https://www.linkedin.com/in/tanishkagoel237)  
+🔹 **GitHub:** [Pulkit](https://github.com/Pulkito4) | [Tanishka](https://github.com/tanishkag237)  
+

@@ -20,7 +20,6 @@ import "prismjs/components/prism-yaml";
 import "prismjs/components/prism-markup";
 import "prismjs/components/prism-bash";
 
-
 interface CodeViewerModalProps {
 	content: string;
 	filename: string;
@@ -81,7 +80,7 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 		Prism.highlightAll();
 	}, [content]);
 
-	const handleCopy = async () => {
+	const handleCodeCopy = async () => {
 		try {
 			await navigator.clipboard.writeText(content);
 			toast({
@@ -107,7 +106,7 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 					</h3>
 					<div className="flex gap-2">
 						<button
-							onClick={handleCopy}
+							onClick={handleCodeCopy}
 							className="p-2 hover:bg-gray-800 rounded-lg">
 							<Copy className="w-5 h-5 text-purple-500" />
 						</button>

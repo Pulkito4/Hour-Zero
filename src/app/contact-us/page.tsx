@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 		"HourZero",
 		"hourzero",
 		"IPU",
-        "IPU notes",
-        "IPU study materials",
-        "IPU resources",
-        "ipu notes",
-        "GGSIPU",
+		"IPU notes",
+		"IPU study materials",
+		"IPU resources",
+		"ipu notes",
+		"GGSIPU",
 		"contact Hour Zero",
 		"academic resources support",
 		"student help",
@@ -53,6 +53,6 @@ export const metadata: Metadata = {
 	},
 };
 
-export default function Page(){
-	return <ContactPage/>
+export default function Page() {
+	return <ContactPage />;
 }

@@ -53,9 +53,6 @@ export const metadata: Metadata = {
 		"student privacy",
 		"student data",
 		"student information",
-		
-
-
 	],
 	alternates: {
 		canonical: `${BASE_URL}/privacy`,

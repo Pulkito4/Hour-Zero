@@ -32,7 +32,6 @@ export const OthersTab = ({ documents }: { documents: OthersDocument[] }) => {
 							<h3 className="text-lg font-medium text-white">
 								{doc.name}
 							</h3>
-							{/* <p className="text-sm text-gray-400">{doc.title}</p> */}
 						</div>
 					</div>
 				))}

@@ -1,8 +1,6 @@
-import { LabDocument } from "@/types/documents";
 import { useEffect, useState } from "react";
 import { Octokit } from "@octokit/rest";
 import { CodeViewerModal } from "./CodeViewerModal";
-import { FileCode } from "lucide-react";
 import { useSubject } from "@/context/SubjectContext";
 import { getYearFromSemester } from "@/lib/utils";
 import { Spinner } from "flowbite-react";
@@ -121,12 +119,6 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 			setIsLoading(false);
 		}
 	};
-
-	// const handleFolderClick = (newPath: string) => {
-	//   setCurrentPath(newPath);
-	//   setIsLoading(true);
-	//   fetchLabCodes();
-	// };
 
 	useEffect(() => {
 		fetchLabCodes();

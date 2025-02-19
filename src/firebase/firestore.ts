@@ -33,7 +33,7 @@ export const addSubject = async (
     );
 
     // Add subject data to Firestore
-    await setDoc(subjectRef, {...subjectData, folderName: ""});
+    await setDoc(subjectRef, { ...subjectData, folderName: "" });
     console.log(`Subject ${subjectName} added successfully.`);
 
     // Create subcollections and delete the placeholder document
@@ -172,7 +172,7 @@ export const addVideos = async (
 export interface SyllabusData {
   name: string;
   content: string;
- 
+
 }
 
 export const addSyllabus = async (

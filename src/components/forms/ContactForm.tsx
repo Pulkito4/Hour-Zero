@@ -72,7 +72,8 @@ export default function ContactForm() {
 	};
 
 	return (
-		<Card className="  max-w-md mx-auto bg-slate-950 border border-[#2D2D2D] rounded-xl font-work-sans
+		<Card
+			className="  max-w-md mx-auto bg-slate-950 border border-[#2D2D2D] rounded-xl font-work-sans
 		shadow-[0_0_20px_rgba(139,92,246,0.5)] 
       transition-shadow duration-300 
       hover:shadow-[0_0_40px_rgba(139,92,246,0.6)]">

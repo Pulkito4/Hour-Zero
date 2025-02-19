@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { twMerge } from "tailwind-merge"
+import { db } from "./firebase.config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -47,24 +49,24 @@ export const getVideoId = (url: string): string | null => {
 export const getCleanUrl = (url: string): string | null => {
   const videoId = getVideoId(url);
   if (!videoId) return null;
-  
+
   if (videoId.startsWith('playlist/')) {
     const playlistId = videoId.replace('playlist/', '');
     return `https://www.youtube.com/playlist?list=${playlistId}`;
   }
-  
+
   return `https://www.youtube.com/watch?v=${videoId}`;
 };
 
 export const getEmbedUrl = (url: string): string => {
   const videoId = getVideoId(url);
   if (!videoId) return url;
-  
+
   if (videoId.startsWith('playlist/')) {
     const playlistId = videoId.replace('playlist/', '');
     return `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
   }
-  
+
   return `https://www.youtube.com/embed/${videoId}`;
 };
 
@@ -75,3 +77,13 @@ export const getYearFromSemester = (semester: number): string => {
   if (semester === 7 || semester === 8) return "4th yr";
   return "";
 };
+
+
+export const checkAuthorizedUser = async (email: string): Promise<boolean> => {
+    const q = query(
+      collection(db, "authorizedUsers"),
+      where("email", "==", email.toLowerCase())
+    );
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  };

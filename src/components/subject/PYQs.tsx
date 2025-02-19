@@ -32,7 +32,6 @@ export const PYQsTab = ({ documents }: { documents: PYQDocument[] }) => {
 							<h3 className="text-lg font-medium text-white">
 								{doc.name}
 							</h3>
-							{/* <p className="text-sm text-gray-400">{doc.}</p> */}
 						</div>
 					</div>
 				))}

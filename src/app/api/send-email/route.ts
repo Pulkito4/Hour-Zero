@@ -17,9 +17,9 @@ async function verifyCaptcha(token: string) {
 }
 
 export async function POST(req: NextRequest) {
-  // if (req.headers.get("origin")?.includes("localhost")) {
-  //   return NextResponse.json({ error: "Localhost submissions are blocked" }, { status: 403 });
-  // }
+  if (req.headers.get("origin")?.includes("localhost")) {
+    return NextResponse.json({ error: "Localhost submissions are blocked" }, { status: 403 });
+  }
 
   try {
     const { name, email, message, captchaToken } = await req.json();
