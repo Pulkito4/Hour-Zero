@@ -43,7 +43,7 @@ const memberList: TeamMember[] = [
 		description: "Web Developer",
 		github: "https://github.com/tanishkag237",
 		linkedin: "https://www.linkedin.com/in/tanishkagoel237",
-		image: "https://drive.google.com/file/d/1RJ4H1Jctk7pLeZAjwix5_QO3HjYCWJnx/view?usp=drive_link",
+		image: "https://res.cloudinary.com/hourzero/image/upload/v1739990162/tg-pfp_ffinev.jpg",
 	},
 ];
 
