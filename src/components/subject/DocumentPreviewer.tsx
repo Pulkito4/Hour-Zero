@@ -60,8 +60,23 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 
 	const getViewerUrl = (url: string) => {
         const extension = url.split('.').pop()?.toLowerCase();
-        if (extension === 'doc' || extension === 'docx') {
-            return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+
+		const supportedTypes = [
+			'doc', 'docx',          // Word documents
+			'ppt', 'pptx',         // PowerPoint presentations
+			'xls', 'xlsx',         // Excel spreadsheets
+			'pages',               // Apple Pages
+			'ai', 'psd',          // Adobe files
+			'tiff', 'dxf',        // Image/CAD formats
+			'xps', 'odt'          // Other document formats
+		];
+        if (supportedTypes.includes(extension || '')) {
+			// using google docs to render it 
+            // return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+
+			// using microsoft document previewer for it
+			return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
+
         }
         return url;
     };
