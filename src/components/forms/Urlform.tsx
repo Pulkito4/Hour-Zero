@@ -5,6 +5,7 @@ import { addVideos } from "@/firebase/firestore";
 import { UploadDocumentData } from "@/types/documents";
 import { getCleanUrl } from "@/lib/utils";
 import { useSubject } from "@/context/SubjectContext";
+import { Spinner } from "../ui/Spinner";
 
 interface UrlFormProps {
 	heading: string; // Dynamic heading
@@ -17,6 +18,7 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [url, setUrl] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [message, setMessage] = useState("");
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -41,6 +43,7 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 			return;
 		}
 
+		setIsSubmitting(true);
 		try {
 			const videoData: UploadDocumentData = {
 				name: title,
@@ -76,7 +79,9 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 				title: "Error",
 				description: "Failed to add video. Please try again.",
 			});
-		}
+		}finally {
+            setIsSubmitting(false);
+        }
 	};
 
 	return (
@@ -134,10 +139,20 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 
 			{/* Submit Button */}
 			<button
-				type="submit"
-				className="w-full py-2 px-4 bg-purple-600 rounded hover:bg-purple-700 transition">
-				Submit
-			</button>
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-2 px-4 rounded transition-all duration-200 flex items-center justify-center gap-2 ${
+                    isSubmitting ? "bg-transparent cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"
+                }`}
+            >
+                {isSubmitting ? (
+                    <>
+                        <Spinner />
+                    </>
+                ) : (
+                    "Submit"
+                )}
+            </button>
 
 			{/* Message */}
 			{message && <p className="mt-4 text-center">{message}</p>}

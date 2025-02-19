@@ -28,10 +28,17 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 			const response = await fetch(doc.url);
 			const blob = await response.blob();
 
+			const extension = doc.url.split('.').pop() || 'pdf';
+
 			// Create file name from document title
 			const fileName = `${doc.name
 				.replace(/[^a-z0-9]/gi, "_")
-				.toLowerCase()}.pdf`;
+				.toLowerCase()}.${extension}`;
+
+			// // Create file name from document title
+			// const fileName = `${doc.name
+			// 	.replace(/[^a-z0-9]/gi, "_")
+			// 	.toLowerCase()}.pdf`;
 
 			// Create a link element and trigger download
 			const link = document.createElement("a");
@@ -49,6 +56,16 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 			setIsDownloading(false);
 		}
 	};
+
+
+	const getViewerUrl = (url: string) => {
+        const extension = url.split('.').pop()?.toLowerCase();
+        if (extension === 'doc' || extension === 'docx') {
+            return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+        }
+        return url;
+    };
+
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75 p-2 sm:p-4">
 			<div className="bg-gray-950 rounded-lg w-full h-[95vh] sm:h-[90vh] sm:w-11/12 md:w-4/5 lg:w-3/5 relative">
@@ -86,15 +103,26 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 
 				{/* Document Viewer */}
 				<div className="mt-4 h-[75vh] sm:h-[70vh] px-2 sm:px-6">
-					<iframe
+					{/* <iframe
 						className="w-full h-full rounded-lg sm:w-{120px} sm:text-{20px}"
-						src={`${doc.url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+						// src={`${doc.url}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+						src={getViewerUrl(doc.url)}
 						title={doc.name}
 						allow="fullscreen"
 						style={{
 							minWidth: "100%",
 							minHeight: "100%",
-						}}></iframe>
+						}}></iframe> */}
+
+<iframe
+                        className="w-full h-full rounded-lg"
+                        src={`${getViewerUrl(doc.url)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                        title={doc.name}
+                        allow="fullscreen"
+                        style={{
+                            minWidth: "100%",
+                            minHeight: "100%",
+                        }}></iframe>
 				</div>
 			</div>
 		</div>

@@ -375,33 +375,31 @@ export default function SubjectPage() {
 		}
 	};
 
-	return (
-		<div className="flex min-h-screen">
-			<LeftSidebar onSelectSubject={handleSelectSubject} />
-			<main className="flex-1">
-				{isLoading ? (
-					<div className="flex items-center justify-center min-h-[300px]">
-						<Spinner />
-					</div>
-				) : !hasSubjects ? (
-					<NoData />
-				) : !selectedSubject ? (
-					<WelcomeMessage />
-				) : (
-					<>
-						<Head>
-							<title>{`HourZero - ${selectedSubject.id}`}</title>
-							<meta
-								name="description"
-								content={`Get all the study materials for ${selectedSubject.id} at HourZero. Find notes, assignments, previous year questions, syllabus, and more.`}
-							/>
-							<meta
-								property="og:title"
-								content={`${selectedSubject.id} Study Resources || ${selectedSubject.id} Study Material`}
-							/>
-							<meta
-								name="keywords"
-								content={`HourZero, 
+  return (
+    <div className="flex min-h-screen">
+      <LeftSidebar onSelectSubject={handleSelectSubject} />
+      <main className="flex-1">
+        {isLoading ? (
+          <div className="flex items-center justify-center min-h-[300px]">
+            <Spinner />
+          </div>
+        ) : !hasSubjects ? (
+          <NoData />
+        ) : !selectedSubject ? (
+          <WelcomeMessage />
+        ) : (
+			<>
+			<Head>
+			<title>{`HourZero - ${selectedSubject.id}`}</title>
+			<meta
+			  name="description"
+			  content={`Get all the study materials for ${selectedSubject.id} at HourZero. Find notes, assignments, previous year questions and more.`}
+			/>
+			 <meta property="og:title" content={`${selectedSubject.id} Study Resources || ${selectedSubject.id} Study Material`} />
+			<meta
+			  name="keywords"
+			  content={`HourZero, 
+          ipu,IPU,GGSIPU,ggsipu, vips,VIPS,VIPS-TC,cse,CSE
           hourzero, 
           subjects, 
           engineering, 
@@ -440,6 +438,21 @@ export default function SubjectPage() {
           best notes,
           complete notes,
           complete study material,
+          ${selectedSubject.id} complete notes,
+          ${selectedSubject.id} complete study material,
+          ${selectedSubject.id} best study material,
+          ${selectedSubject.id} best notes,
+          best ${selectedSubject.id} notes,
+          best ${selectedSubject.id} study material,
+          best notes,
+          best study material,
+           IPU,
+        IPU notes,
+        IPU study materials,
+        IPU resources,
+        ipu notes,
+        GGSIPU,
+
 
           `}
 							/>
