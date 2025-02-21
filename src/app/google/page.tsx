@@ -52,7 +52,7 @@ export default function GoogleSignIn() {
 
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-black text-white">
-			<div className="w-full max-w-md p-8 space-y-6 bg-black border-2 border-purple-500 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.5)]">
+			<div className="w-full max-w-md m-5 p-8 space-y-6 bg-black border-2 border-purple-500 rounded-lg shadow-[0_0_15px_rgba(139,92,246,0.5)]">
 				<h2 className="text-2xl font-bold text-center text-white">
 					Sign In with Google
 				</h2>
