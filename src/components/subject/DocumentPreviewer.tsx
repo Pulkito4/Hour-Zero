@@ -18,6 +18,19 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 	const handleDownload = async () => {
 		try {
 			setIsDownloading(true);
+
+			 // Handle Google Drive downloads differently
+			 if (doc.url.includes('drive.google.com')) {
+				const fileId = doc.url.match(/[-\w]{25,}/);
+				if (fileId) {
+					const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId[0]}`;
+					window.open(downloadUrl, '_blank');
+					setIsDownloading(false);
+					return;
+				}
+			}
+
+			// Handle regular file downloads
 			const response = await fetch(doc.url);
 			const blob = await response.blob();
 
@@ -48,13 +61,13 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 	const getViewerUrl = (url: string) => {
 		const extension = url.split(".").pop()?.toLowerCase();
 
-		 // Check if it's a Google Drive link
-		 const isGoogleDriveLink = url.includes('drive.google.com');
-    
-		 if (isGoogleDriveLink) {
-			 // Convert Google Drive link to viewable format
-			 return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
-		 }
+		 // Check if it's a Google Drive link and extract file ID
+		 if (url.includes('drive.google.com')) {
+			const fileId = url.match(/[-\w]{25,}/);
+			if (fileId) {
+				return `https://drive.google.com/file/d/${fileId[0]}/preview`;
+			}
+		}
 
 		const supportedTypes = [
 			"doc",
