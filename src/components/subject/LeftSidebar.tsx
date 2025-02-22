@@ -1,13 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSubject } from "@/context/SubjectContext";
 import { Spinner } from "@/components/ui/Spinner";
 import { useSubjects } from "@/lib/react-query/queries";
 
-const LeftSidebar = ({
-	onSelectSubject,
-}: {
+interface LeftSidebarProps {
 	onSelectSubject: (subjectId: string, folderName: string) => void;
+	onSubjectsStatus: (hasSubjects: boolean) => void;
+}
+
+const LeftSidebar: React.FC<LeftSidebarProps> = ({
+	onSelectSubject,
+	onSubjectsStatus,
 }) => {
 	const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 	const { branch, semester } = useSubject();
@@ -18,6 +22,12 @@ const LeftSidebar = ({
 		branch,
 		semester.toString()
 	);
+
+	useEffect(() => {
+		if (!isLoading) {
+			onSubjectsStatus(Boolean(subjects?.length));
+		}
+	}, [subjects, isLoading, onSubjectsStatus]);
 
 	return (
 		<>

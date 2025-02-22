@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import type {
 	AssignmentDocument,
@@ -56,6 +56,10 @@ export default function SubjectPage() {
 		return documents.length === 1 && documents[0].id === "placeholder";
 	};
 	const [hasSubjects, setHasSubjects] = useState<boolean>(true);
+
+	const handleSubjectsStatus = useCallback((hasAnySubjects: boolean) => {
+		setHasSubjects(hasAnySubjects);
+	}, []);
 
 	const { data: notesData, isLoading: isLoadingNotes } =
 		useSubjectDocuments<NotesDocument>(
@@ -222,7 +226,10 @@ export default function SubjectPage() {
 
 	return (
 		<div className="flex min-h-screen">
-			<LeftSidebar onSelectSubject={handleSelectSubject} />
+			<LeftSidebar
+				onSelectSubject={handleSelectSubject}
+				onSubjectsStatus={handleSubjectsStatus}
+			/>
 			<main className="flex-1">
 				{isLoading ? (
 					<div className="flex items-center justify-center min-h-[300px]">
