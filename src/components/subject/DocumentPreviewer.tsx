@@ -48,6 +48,14 @@ export const DocumentPreviewer: FC<DocumentPreviewerProps> = ({
 	const getViewerUrl = (url: string) => {
 		const extension = url.split(".").pop()?.toLowerCase();
 
+		 // Check if it's a Google Drive link
+		 const isGoogleDriveLink = url.includes('drive.google.com');
+    
+		 if (isGoogleDriveLink) {
+			 // Convert Google Drive link to viewable format
+			 return `https://docs.google.com/gview?url=${encodeURIComponent(url)}&embedded=true`;
+		 }
+
 		const supportedTypes = [
 			"doc",
 			"docx", // Word documents
