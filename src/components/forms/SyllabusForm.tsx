@@ -18,14 +18,14 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("Form Data:", { branch, semester, subject, syllabusDoc }); // Debug log
+		// console.log("Form Data:", { branch, semester, subject, syllabusDoc }); // Debug log
 		if (!branch || !semester || !subject) {
 			toast({
 				variant: "destructive",
 				title: "Error",
 				description: "Missing subject information",
 			});
-			console.error("Missing context:", { branch, semester, subject }); // Debug log
+			// console.error("Missing context:", { branch, semester, subject }); // Debug log
 			return;
 		}
 
@@ -45,13 +45,13 @@ export const SyllabusForm = ({ onClose }: { onClose: () => void }) => {
 				content: syllabusDoc.content.trim(),
 			};
 
-			console.log("Adding syllabus with:", {
-				// Debug log
-				branch,
-				semester: semester.toString(),
-				subject,
-				syllabusData,
-			});
+			// console.log("Adding syllabus with:", {
+			// 	// Debug log
+			// 	branch,
+			// 	semester: semester.toString(),
+			// 	subject,
+			// 	syllabusData,
+			// });
 
 			await addSyllabus(
 				branch,

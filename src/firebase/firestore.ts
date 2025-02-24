@@ -34,7 +34,7 @@ export const addSubject = async (
 
     // Add subject data to Firestore
     await setDoc(subjectRef, { ...subjectData, folderName: "" });
-    console.log(`Subject ${subjectName} added successfully.`);
+    // console.log(`Subject ${subjectName} added successfully.`);
 
     // Create subcollections and delete the placeholder document
     for (const subCollection of subCollections) {
@@ -47,7 +47,7 @@ export const addSubject = async (
       await setDoc(placeholderRef, { placeholder: true });
     }
 
-    console.log("All subcollections created and placeholder documents deleted.");
+    // console.log("All subcollections created and placeholder documents deleted.");
   } catch (error) {
     console.error("Error adding subject:", error);
   }
@@ -61,8 +61,8 @@ export const getSubjects = async (branch: string, semester: string): Promise<{ i
       id: doc.id,        // Document ID (subject name)
       data: doc.data()   // Document data
     }));
-    console.log(subjects);
-    subjects.forEach(subject => console.log(subject.id));   // print subject 
+    // console.log(subjects);
+    // subjects.forEach(subject => console.log(subject.id));   // print subject 
     return subjects; // Return the array of subjects with IDs
 
   } catch (error) {
@@ -86,7 +86,7 @@ export const getDocumentsInSubjectSubCollection = async (
       id: doc.id,
       data: doc.data()
     }));
-    console.log(documents);
+    // console.log(documents);
     return documents;
 
   } catch (error) {
@@ -99,7 +99,7 @@ export const getBranches = async (): Promise<string[]> => {
   try {
     const branchesSnapshot = await getDocs(collection(db, "Btech"));
     const branches = branchesSnapshot.docs.map(doc => doc.id);
-    console.log(branches);
+    // console.log(branches);
     return branches;
   } catch (error) {
     console.error("Error fetching branches: ", error);
@@ -135,9 +135,9 @@ export const AddToSubject = async (
       url: documentData.url,
     });
 
-    console.log(`Document added successfully to ${subcollection}`);
+    // console.log(`Document added successfully to ${subcollection}`);
   } catch (error) {
-    console.error("Error adding document:", error);
+    // console.error("Error adding document:", error);
     throw error;
   }
 };
@@ -162,7 +162,7 @@ export const addVideos = async (
     const newDocRef = doc(subCollectionRef);
     await setDoc(newDocRef, videoData);
 
-    console.log(`Video added successfully to ${subcollection}`);
+    // console.log(`Video added successfully to ${subcollection}`);
   } catch (error) {
     console.error("Error adding video:", error);
     throw error;
@@ -195,7 +195,7 @@ export const addSyllabus = async (
     const newDocRef = doc(syllabusCollectionRef);
     await setDoc(newDocRef, syllabusData);
 
-    console.log('Syllabus added successfully');
+    // console.log('Syllabus added successfully');
   } catch (error) {
     console.error('Error adding syllabus:', error);
     throw error;

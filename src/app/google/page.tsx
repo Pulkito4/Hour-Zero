@@ -41,7 +41,7 @@ export default function GoogleSignIn() {
 				secure: true,
 			});
 
-			console.log("User signed in and session set.");
+			// console.log("User signed in and session set.");
 			router.push("/dashboard");
 		} catch (err: any) {
 			setError("Error: " + err.message);

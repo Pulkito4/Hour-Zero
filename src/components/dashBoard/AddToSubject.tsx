@@ -5,9 +5,10 @@ import { useToast } from "@/hooks/use-toast";
 import { useSubject } from "@/context/SubjectContext";
 import { semesters } from "@/lib/constants";
 import { Spinner } from "../ui/Spinner";
+import { useBranches, useSubjects } from "@/lib/react-query/queries";
 
 export function AddToSubject() {
-	const { branch, semester, subject, setSubject, setBranch, setSemester } =
+	const { setSubject, setBranch, setSemester } =
 		useSubject();
 	const router = useRouter();
 	const { toast } = useToast();
@@ -18,60 +19,18 @@ export function AddToSubject() {
 		subject: "",
 	});
 
-	const [branches, setBranches] = useState<string[]>([]);
-	const [subjects, setSubjects] = useState<{ id: string; data: any }[]>([]);
-	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState(false);
+	const { data: branches = [], isLoading: isLoadingBranches } = useBranches();
+    const { data: subjects = [], isLoading: isLoadingSubjects } = useSubjects(
+        formData.branch,
+        formData.semester
+    );
 
-	useEffect(() => {
-		const fetchBranches = async () => {
-			try {
-				const branchList = await getBranches();
-				setBranches(branchList);
-				console.log("Fetched branches:", branchList);
-			} catch (error) {
-				toast({
-					variant: "destructive",
-					title: "Error",
-					description: "Failed to fetch branches.",
-				});
-			} finally {
-				setIsLoading(false);
-			}
-		};
+	const isLoading = isLoadingBranches || isLoadingSubjects;
 
-		fetchBranches();
-	}, [toast]);
-
-	useEffect(() => {
-		const fetchSubjects = async () => {
-			if (formData.branch && formData.semester) {
-				try {
-					console.log("Fetching subjects for:", {
-						branch: formData.branch,
-						semester: formData.semester,
-					});
-
-					const subjectsList = await getSubjects(
-						formData.branch,
-						formData.semester
-					);
-					setSubjects(subjectsList);
-				} catch (error) {
-					toast({
-						variant: "destructive",
-						title: "Error",
-						description: "Failed to fetch subjects.",
-					});
-				}
-			}
-		};
-
-		fetchSubjects();
-	}, [formData.branch, formData.semester, toast]);
 
 	const handleInputChange = (field: string, value: string) => {
-		console.log(`Updating ${field} with value:`, value);
+		// console.log(`Updating ${field} with value:`, value);
 
 		setFormData((prev) => ({ ...prev, [field]: value }));
 		setError(false);
@@ -80,16 +39,16 @@ export function AddToSubject() {
 		switch (field) {
 			case "branch":
 				setBranch(value);
-				console.log("Updated branch in context:", value);
+				// console.log("Updated branch in context:", value);
 				break;
 			case "semester":
 				const semesterNumber = Number(value);
 				setSemester(semesterNumber);
-				console.log("Updated semester in context:", semesterNumber);
+				// console.log("Updated semester in context:", semesterNumber);
 				break;
 			case "subject":
 				setSubject(value);
-				console.log("Updated subject in context:", value);
+				// console.log("Updated subject in context:", value);
 				break;
 		}
 	};
@@ -100,29 +59,41 @@ export function AddToSubject() {
 
 		if (!branch || !semester || !subject) {
 			setError(true);
+			toast({
+				title: "Missing Fields",
+				description: "Please fill out all fields before proceeding.",
+				variant: "destructive",
+			});
 			return;
 		}
 
-		setIsLoading(true);
 		try {
-			console.log("Final form submission:", {
-				branch,
-				semester: Number(semester),
-				subject,
-				contextValues: {
-					branch: branch,
-					semester: semester,
-					subject: subject,
-				},
+			// console.log("Final form submission:", {
+			// 	branch,
+			// 	semester: Number(semester),
+			// 	subject,
+			// 	contextValues: {
+			// 		branch: branch,
+			// 		semester: semester,
+			// 		subject: subject,
+			// 	},
+			// });
+			toast({
+				title: "Success!",
+				description: `Selected ${subject} from ${branch} - Semester ${semester}`,
+				variant: "default",
 			});
 
 			router.push("/dashboard/addstuff");
 		} catch (error) {
 			console.error("Error:", error);
 			setError(true);
-		} finally {
-			setIsLoading(false);
-		}
+			toast({
+				title: "Error",
+				description: "Something went wrong. Please try again.",
+				variant: "destructive",
+			});
+		} 
 	};
 
 	return (
@@ -146,7 +117,7 @@ export function AddToSubject() {
 						className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
                      focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
 						required
-						disabled={isLoading}>
+						disabled={isLoadingBranches}>
 						<option value="">Select</option>
 						{branches.map((branch) => (
 							<option key={branch} value={branch}>
@@ -189,7 +160,7 @@ export function AddToSubject() {
 						className="w-full p-3 bg-gray-800 text-white rounded-lg border border-purple-500/30 
                      focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"
 						required
-						disabled={!formData.branch || !formData.semester}>
+						disabled={!formData.branch || !formData.semester || isLoadingSubjects}>
 						<option value="">Select</option>
 						{subjects.map((subject) => (
 							<option key={subject.id} value={subject.id}>

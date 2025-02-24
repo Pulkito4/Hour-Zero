@@ -17,7 +17,7 @@ export const VideoTab = ({ documents }: { documents: VideoDocument[] }) => {
 		setSelectedVideo(null);
 	};
 
-	console.log(selectedVideo);
+	// console.log(selectedVideo);
 
 	return (
 		<div>

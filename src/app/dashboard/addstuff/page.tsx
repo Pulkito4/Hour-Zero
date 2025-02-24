@@ -15,6 +15,7 @@ import Form from "@/components/forms/Form";
 import UrlForm from "@/components/forms/Urlform";
 import { SyllabusForm } from "@/components/forms/SyllabusForm";
 import { useRouter } from "next/navigation";
+import { useSubject } from "@/context/SubjectContext";
 
 const tabs = [
 	{
@@ -57,16 +58,19 @@ const tabs = [
 const SubjectTab: React.FC = () => {
 	const [activeTab, setActiveTab] = useState(0);
 	const router = useRouter();
+	const {subject} = useSubject();
 
 	return (
 		<>
-			<div className=" bg-black p-2 w-12 ml-9  rounded-md">
+			<div className=" bg-black p-2 w-12 ml-9  rounded-md flex items-center gap-4">
 				<button
 					onClick={() => router.push("/dashboard")}
 					className="text-white rounded-lg font-bold text-2xl py-2 px-2 hover:bg-gray-600 hover:bg-opacity-45 flex items-center gap-1">
 					<MoveLeft />
 					<p className="text-sm">Dashboard</p>
 				</button>
+				<p className="text-primary-400">|</p>
+				<p className="text-primary-light text-sm font-medium">{subject}</p>
 			</div>
 			<div className="w-full max-w-4xl mx-auto items-center justify-center p-2">
 				{/* Tab Navigation */}
