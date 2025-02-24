@@ -60,42 +60,55 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({
 								SELECT A SUBJECT
 							</div>
 							<hr className="opacity-20" />
-							{isLoading ? (
-								<div className="text-white/70 text-center">
-									{/* Loading subjects... */}
-									<Spinner />
-								</div>
-							) : (
-								<ul className="flex flex-col gap-3">
-									{subjects?.map((subject) => (
-										<li
-											key={subject.id}
-											className={`rounded-lg transition-all duration-300 ${
-												selectedSubject === subject.id
-													? "bg-primary-300 shadow-lg shadow-purple-600/50"
-													: "hover:bg-purple-800/40"
-											}`}>
-											<button
-												className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
-												onClick={() => {
-													setSelectedSubject(
-														subject.id
-													);
-													onSelectSubject(
-														subject.id,
-														subject.data.folderName
-													);
-													if (
-														window.innerWidth < 1024
-													)
-														setIsOpen(false);
-												}}>
-												{subject.id}
-											</button>
-										</li>
-									))}
-								</ul>
-							)}
+							<div
+								className="max-h-[calc(100vh-200px)] overflow-y-auto 
+								scrollbar-thin 
+								scrollbar-track-transparent
+								scrollbar-thumb-purple-500/30
+								hover:scrollbar-thumb-purple-400/50
+								scrollbar-thumb-rounded
+								scrollbar-track-rounded
+								pr-2">
+								{isLoading ? (
+									<div className="text-white/70 text-center">
+										{/* Loading subjects... */}
+										<Spinner />
+									</div>
+								) : (
+									<ul className="flex flex-col gap-3">
+										{subjects?.map((subject) => (
+											<li
+												key={subject.id}
+												className={`rounded-lg transition-all duration-300 ${
+													selectedSubject ===
+													subject.id
+														? "bg-primary-300 shadow-lg shadow-purple-600/50"
+														: "hover:bg-purple-800/40"
+												}`}>
+												<button
+													className="w-full text-left px-4 py-3 text-sm lg:text-base text-white/90"
+													onClick={() => {
+														setSelectedSubject(
+															subject.id
+														);
+														onSelectSubject(
+															subject.id,
+															subject.data
+																.folderName
+														);
+														if (
+															window.innerWidth <
+															1024
+														)
+															setIsOpen(false);
+													}}>
+													{subject.id}
+												</button>
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
 						</div>
 					</div>
 				</nav>

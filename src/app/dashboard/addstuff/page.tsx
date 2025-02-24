@@ -62,7 +62,7 @@ const SubjectTab: React.FC = () => {
 
 	return (
 		<>
-			<div className=" bg-black p-2 w-12 ml-9  rounded-md flex items-center gap-4">
+			<div className=" bg-black p-2 w-18 ml-9  rounded-md flex items-center gap-4">
 				<button
 					onClick={() => router.push("/dashboard")}
 					className="text-white rounded-lg font-bold text-2xl py-2 px-2 hover:bg-gray-600 hover:bg-opacity-45 flex items-center gap-1">
