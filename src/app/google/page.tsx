@@ -46,8 +46,8 @@ export default function GoogleSignIn() {
 
 			// console.log("User signed in and session set.");
 			router.push("/dashboard");
-		} catch (err: any) {
-			setError("Error: " + err.message);
+		} catch (err: unknown) {
+			setError("Error: " + (err instanceof Error ? err.message : "Authentication failed"));
 		} finally {
 			setIsLoading(false);
 		}
