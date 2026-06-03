@@ -25,7 +25,7 @@ export default function ContactForm() {
 		handleSubmit,
 		reset,
 		formState: { errors },
-	} = useForm({
+	} = useForm<ContactFormData>({
 		resolver: zodResolver(contactUsvalidation),
 	});
 
