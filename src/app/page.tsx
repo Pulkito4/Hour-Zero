@@ -1,4 +1,3 @@
-import { CarousalSlider } from "@/components/homepage/ContributorsCarousel";
 
 import { Whyus } from "@/components/homepage/Whyus";
 import { Offer } from "@/components/homepage/whatWeOffer";

@@ -234,7 +234,7 @@ const PrivacyPolicy = () => {
 						We may update this policy periodically to reflect
 						changes in our services, legal requirements, or security
 						measures. Any updates will be posted on this page with
-						the "Last Updated" date. We encourage users to review
+						the &quot;Last Updated&quot; date. We encourage users to review
 						this policy regularly.
 					</p>
 				</section>
