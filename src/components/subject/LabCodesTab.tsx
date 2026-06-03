@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { CodeViewerModal } from "./CodeViewerModal";
 import { useSubject } from "@/context/SubjectContext";
 import { getYearFromSemester } from "@/lib/utils";
@@ -21,12 +21,11 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 	const { toast } = useToast();
 
 	const year = getYearFromSemester(semester);
-	const [rootFolder, setRootFolder] = useState(`${year}/${folderName}`);
+	const rootFolder = `${year}/${folderName}`;
 	const [currentPath, setCurrentPath] = useState(rootFolder);
 	const [pathHistory, setPathHistory] = useState<string[]>([rootFolder]);
 	const [labCodes, setLabCodes] = useState<GitHubFile[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
 	const [selectedFile, setSelectedFile] = useState<{
 		content: string;
 		name: string;
@@ -91,9 +90,8 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 		}
 	};
 
-	const fetchLabCodes = async () => {
+	const fetchLabCodes = useCallback(async () => {
 		if (folderName === "") {
-			setError("No such folder exists");
 			setIsLoading(false);
 			return;
 		}
@@ -110,15 +108,14 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 			}
 		} catch (err) {
 			console.error("Error fetching lab codes:", err);
-			setError("Failed to load lab codes");
 		} finally {
 			setIsLoading(false);
 		}
-	};
+	}, [currentPath, folderName]);
 
 	useEffect(() => {
 		fetchLabCodes();
-	}, [currentPath]);
+	}, [fetchLabCodes]);
 
 	return (
 		<div>

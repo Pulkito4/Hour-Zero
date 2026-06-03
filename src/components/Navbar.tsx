@@ -20,6 +20,7 @@ const Navbar = () => {
 					"URL copied to clipboard.\nNow you can share it with your friends.",
 			});
 		} catch (error) {
+			console.error("Copy error:", error);
 			toast({
 				variant: "destructive",
 				title: "Error",

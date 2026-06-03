@@ -10,6 +10,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { contactUsvalidation } from "@/lib/validation";
 import { useToast } from "@/hooks/use-toast";
 import ReCAPTCHA from "react-google-recaptcha";
+import { z } from "zod";
+
+type ContactFormData = z.infer<typeof contactUsvalidation>;
 
 export default function ContactForm() {
 	const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -26,7 +29,7 @@ export default function ContactForm() {
 		resolver: zodResolver(contactUsvalidation),
 	});
 
-	const onSubmit = async (data: any) => {
+	const onSubmit = async (data: ContactFormData) => {
 		setLoading(true);
 
 		try {
@@ -57,13 +60,12 @@ export default function ContactForm() {
 			});
 			reset();
 			recaptchaRef.current?.reset();
-		} catch (error: any) {
+		} catch (error: unknown) {
 			console.error("Form submission error:", error);
+			const errMessage = error instanceof Error ? error.message : "Failed to send message. Please try again.";
 			toast({
 				title: "Error",
-				description:
-					error.message ||
-					"Failed to send message. Please try again.",
+				description: errMessage,
 				variant: "destructive",
 			});
 		} finally {

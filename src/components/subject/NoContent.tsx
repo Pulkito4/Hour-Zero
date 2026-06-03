@@ -8,7 +8,7 @@ export const NoContent = () => {
 				No Content Available
 			</h3>
 			<p className="text-gray-400 text-center">
-				There's nothing to see here yet. Content will be added soon.
+				{"There's nothing to see here yet. Content will be added soon."}
 			</p>
 		</div>
 	);

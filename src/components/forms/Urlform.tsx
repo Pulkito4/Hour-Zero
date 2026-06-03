@@ -19,7 +19,6 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 	const [description, setDescription] = useState("");
 	const [url, setUrl] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [message, setMessage] = useState("");
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -64,16 +63,12 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 				description: "Video added successfully!",
 			});
 
-			toast({
-				title: "Success",
-				description: "Video added successfully!",
-			});
-
 			// Reset form
 			setTitle("");
 			setDescription("");
 			setUrl("");
 		} catch (error) {
+			console.error("Failed to add video:", error);
 			toast({
 				variant: "destructive",
 				title: "Error",
@@ -155,8 +150,6 @@ const UrlForm: React.FC<UrlFormProps> = ({ heading }) => {
 				)}
 			</button>
 
-			{/* Message */}
-			{message && <p className="mt-4 text-center">{message}</p>}
 		</form>
 	);
 };

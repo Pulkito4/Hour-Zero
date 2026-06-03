@@ -81,6 +81,7 @@ const Form: React.FC<SimpleFormProps> = ({ heading }) => {
 			setFile(null);
 			setFileUrl(null);
 		} catch (error) {
+			console.error("Upload error:", error);
 			toast({
 				variant: "destructive",
 				title: "Error",

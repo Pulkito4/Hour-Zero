@@ -89,6 +89,7 @@ export const CodeViewerModal: FC<CodeViewerModalProps> = ({
 				duration: 2000,
 			});
 		} catch (error) {
+			console.error("Copy code error:", error);
 			toast({
 				title: "Error",
 				description: "Failed to copy code",

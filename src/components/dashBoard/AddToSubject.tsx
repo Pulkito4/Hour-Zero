@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getBranches, getSubjects } from "@/firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 import { useSubject } from "@/context/SubjectContext";
 import { semesters } from "@/lib/constants";

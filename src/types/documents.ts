@@ -5,12 +5,12 @@ export interface BaseDocumentData {
   url: string;
 }
 
-export interface NotesDocument extends BaseDocumentData { }
-export interface OthersDocument extends BaseDocumentData { }
-export interface VideoDocument extends BaseDocumentData { }
-export interface AssignmentDocument extends BaseDocumentData { }
-export interface LabDocument extends BaseDocumentData { }
-export interface PYQDocument extends BaseDocumentData { }
+export type NotesDocument = BaseDocumentData;
+export type OthersDocument = BaseDocumentData;
+export type VideoDocument = BaseDocumentData;
+export type AssignmentDocument = BaseDocumentData;
+export type LabDocument = BaseDocumentData;
+export type PYQDocument = BaseDocumentData;
 export interface SyllabusDocument {
   id: string;
   name: string;

@@ -59,6 +59,7 @@ export function Dropdown() {
 		try {
 			router.push(`/subject?branch=${encodeURIComponent(selectedBranch)}&semester=${encodeURIComponent(selectedSemester)}`);
 		} catch (error) {
+			console.error("Redirect error:", error);
 			toast({
 				variant: "destructive",
 				title: "Error",

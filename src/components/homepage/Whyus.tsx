@@ -37,12 +37,7 @@ const GridItem = ({ area, title, description }: GridItemProps) => {
 							</h3>
 							<br />
 							<p className="text-white text-center">
-								We have the exact resources - notes, playlists
-								and survival kits that will actually get you a
-								good GPA—without you having to pull a miracle.
-								<br /> <br />
-								So go ahead, procrastinate a little longer (or
-								maybe not). We’ve got your back. 😎
+								{description}
 							</p>
 						</div>
 					</div>

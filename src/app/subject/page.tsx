@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState, useEffect, Suspense } from "react";
+import React, { useCallback, useState, useEffect, Suspense, useMemo } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import type {
@@ -58,7 +58,9 @@ function SubjectPageContent() {
 	const tabParam = searchParams.get("tab");
 	
 	const activeTab = tabParam ? parseInt(tabParam, 10) : 0;
-	const selectedSubject: SelectedSubjectInfo | null = subjectId ? { id: subjectId, folderName } : null;
+	const selectedSubject = useMemo<SelectedSubjectInfo | null>(() => {
+		return subjectId ? { id: subjectId, folderName } : null;
+	}, [subjectId, folderName]);
 
 	useEffect(() => {
 		if (selectedSubject) {
@@ -68,7 +70,7 @@ function SubjectPageContent() {
 		}
 	}, [selectedSubject]);
 
-	const isPlaceholderOnly = (documents: any[]) => {
+	const isPlaceholderOnly = (documents: { id: string }[]) => {
 		return documents.length === 1 && documents[0].id === "placeholder";
 	};
 	const [hasSubjects, setHasSubjects] = useState<boolean>(true);

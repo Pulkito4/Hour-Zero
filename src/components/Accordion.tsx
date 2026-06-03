@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { doc } from "firebase/firestore";
 
 interface AccordionItem {
 	id: string;

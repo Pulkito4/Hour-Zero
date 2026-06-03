@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, setDoc, DocumentData } from "firebase/firestore";
 import { db } from "../lib/firebase.config"
 import { UploadDocumentData } from "@/types/documents";
 
@@ -54,7 +54,7 @@ export const addSubject = async (
 };
 
 
-export const getSubjects = async (branch: string, semester: string): Promise<{ id: string, data: any }[]> => {
+export const getSubjects = async (branch: string, semester: string): Promise<{ id: string, data: DocumentData }[]> => {
   try {
     const subjectsSnapshot = await getDocs(collection(db, `Btech/${branch}/${semester}`));
     const subjects = subjectsSnapshot.docs.map(doc => ({
@@ -78,7 +78,7 @@ export const getDocumentsInSubjectSubCollection = async (
   semester: string,
   subject: string,
   subCollection: string
-): Promise<{ id: string, data: any }[]> => {
+): Promise<{ id: string, data: DocumentData }[]> => {
   try {
     const subjectRef = doc(db, `Btech/${branch}/${semester}/${subject}`);
     const subCollectionSnapshot = await getDocs(collection(subjectRef, subCollection));
@@ -123,7 +123,7 @@ export const AddToSubject = async (
     // Delete placeholder document if it exists
     try {
       await deleteDoc(doc(subCollectionRef, 'placeholder'));
-    } catch (error) {
+    } catch {
       // Ignore error if placeholder doesn't exist
     }
 
@@ -155,7 +155,7 @@ export const addVideos = async (
 
     try {
       await deleteDoc(doc(subCollectionRef, 'placeholder'));
-    } catch (error) {
+    } catch {
       // Ignore error if placeholder doesn't exist
     }
 
@@ -188,7 +188,7 @@ export const addSyllabus = async (
     // Try to delete placeholder if it exists
     try {
       await deleteDoc(doc(syllabusCollectionRef, 'placeholder'));
-    } catch (error) {
+    } catch {
       // Ignore error if placeholder doesn't exist
     }
 
