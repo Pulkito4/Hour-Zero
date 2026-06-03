@@ -32,7 +32,7 @@ export default function SignIn() {
 
 			// Redirect to the dashboard after successful login
 			router.push("/dashboard");
-		} catch (err: any) {
+		} catch {
 			setError("You are not authorized to access this page.");
 			setIsLoading(false);
 		}
