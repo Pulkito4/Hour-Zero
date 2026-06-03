@@ -24,11 +24,13 @@ export async function GET(request: NextRequest) {
 		});
 
 		return NextResponse.json(response.data);
-	} catch (error: any) {
+	} catch (error: unknown) {
 		console.error("GitHub API error:", error);
+		const status = typeof error === 'object' && error !== null && 'status' in error ? (error as { status: number }).status : 500;
+		const message = error instanceof Error ? error.message : "Unknown error";
 		return NextResponse.json(
-			{ error: "Failed to fetch repository contents", details: error.message },
-			{ status: error.status || 500 }
+			{ error: "Failed to fetch repository contents", details: message },
+			{ status: status }
 		);
 	}
 }

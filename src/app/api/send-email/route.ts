@@ -51,14 +51,15 @@ export async function POST(req: NextRequest) {
       });
 
       return NextResponse.json({ success: true, data });
-    } catch (emailError: any) {
+    } catch (emailError: unknown) {
       console.error("Email sending error:", emailError);
+      const message = emailError instanceof Error ? emailError.message : "Failed to send email";
       return NextResponse.json(
-        { error: emailError?.message || "Failed to send email" },
+        { error: message },
         { status: 500 }
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("General error:", error);
     return NextResponse.json(
       { error: "Invalid request format" },
