@@ -57,7 +57,7 @@ export function Dropdown() {
 
 		setIsRedirecting(true);
 		try {
-			router.push("/subject");
+			router.push(`/subject?branch=${encodeURIComponent(selectedBranch)}&semester=${encodeURIComponent(selectedSemester)}`);
 		} catch (error) {
 			toast({
 				variant: "destructive",

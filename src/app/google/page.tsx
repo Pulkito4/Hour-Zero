@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
-
 import { auth } from "@/lib/firebase.config";
 import { checkAuthorizedUser } from "@/lib/utils";
 
@@ -33,13 +31,18 @@ export default function GoogleSignIn() {
 			// Get Firebase ID token
 			const token = await user.getIdToken();
 
-			// Set the session cookie (accessible by middleware)
-			Cookies.set("session", token, {
-				path: "/",
-				expires: 5, // 5 days
-				sameSite: "Strict",
-				secure: true,
+			// Set the session cookie via the secure HTTP-only API route
+			const sessionResponse = await fetch("/api/auth/session", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ token }),
 			});
+
+			if (!sessionResponse.ok) {
+				throw new Error("Failed to set session cookie");
+			}
 
 			// console.log("User signed in and session set.");
 			router.push("/dashboard");

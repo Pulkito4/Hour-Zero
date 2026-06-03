@@ -1,5 +1,6 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import type {
 	AssignmentDocument,
@@ -21,17 +22,16 @@ import { LabFileTab } from "@/components/subject/LabFileTab";
 import { VideoTab } from "@/components/subject/VideoTab";
 import { SyllabusTab } from "@/components/subject/SyllabusTab";
 import { useSubject } from "@/context/SubjectContext";
+import { Spinner } from "@/components/ui/Spinner";
+import { NoData } from "@/components/subject/NoData";
+import { NoContent } from "@/components/subject/NoContent";
+import { LabCodeTab } from "@/components/subject/LabCodesTab";
+import { useSubjectDocuments } from "@/lib/react-query/queries";
 
 interface SelectedSubjectInfo {
 	id: string;
 	folderName: string;
 }
-import { Spinner } from "@/components/ui/Spinner";
-import { NoData } from "@/components/subject/NoData";
-import { NoContent } from "@/components/subject/NoContent";
-import { LabCodeTab } from "@/components/subject/LabCodesTab";
-import Head from "next/head";
-import { useSubjectDocuments } from "@/lib/react-query/queries";
 
 const WelcomeMessage = () => (
 	<div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
@@ -46,11 +46,27 @@ const WelcomeMessage = () => (
 	</div>
 );
 
-export default function SubjectPage() {
-	const { branch, semester } = useSubject();
-	const [activeTab, setActiveTab] = useState<number>(0); // Track the active tab index
-	const [selectedSubject, setSelectedSubject] =
-		useState<SelectedSubjectInfo | null>(null);
+function SubjectPageContent() {
+	const searchParams = useSearchParams();
+	const router = useRouter();
+	const { branch: contextBranch, semester: contextSemester } = useSubject();
+
+	const branch = searchParams.get("branch") || contextBranch;
+	const semester = searchParams.get("semester") || contextSemester?.toString();
+	const subjectId = searchParams.get("subject") || "";
+	const folderName = searchParams.get("folderName") || "";
+	const tabParam = searchParams.get("tab");
+	
+	const activeTab = tabParam ? parseInt(tabParam, 10) : 0;
+	const selectedSubject: SelectedSubjectInfo | null = subjectId ? { id: subjectId, folderName } : null;
+
+	useEffect(() => {
+		if (selectedSubject) {
+			document.title = `HourZero - ${selectedSubject.id}`;
+		} else {
+			document.title = "Hour Zero - Subjects";
+		}
+	}, [selectedSubject]);
 
 	const isPlaceholderOnly = (documents: any[]) => {
 		return documents.length === 1 && documents[0].id === "placeholder";
@@ -64,7 +80,7 @@ export default function SubjectPage() {
 	const { data: notesData, isLoading: isLoadingNotes } =
 		useSubjectDocuments<NotesDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"notes"
 		);
@@ -72,7 +88,7 @@ export default function SubjectPage() {
 	const { data: videosData, isLoading: isLoadingVideos } =
 		useSubjectDocuments<VideoDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"videos"
 		);
@@ -80,7 +96,7 @@ export default function SubjectPage() {
 	const { data: syllabusData, isLoading: isLoadingSyllabus } =
 		useSubjectDocuments<SyllabusDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"syllabus"
 		);
@@ -88,7 +104,7 @@ export default function SubjectPage() {
 	const { data: assignmentsData, isLoading: isLoadingAssignments } =
 		useSubjectDocuments<AssignmentDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"assignments"
 		);
@@ -96,7 +112,7 @@ export default function SubjectPage() {
 	const { data: pyqsData, isLoading: isLoadingPyqs } =
 		useSubjectDocuments<PYQDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"pyqs"
 		);
@@ -104,7 +120,7 @@ export default function SubjectPage() {
 	const { data: othersData, isLoading: isLoadingOthers } =
 		useSubjectDocuments<OthersDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"other"
 		);
@@ -112,20 +128,12 @@ export default function SubjectPage() {
 	const { data: labData, isLoading: isLoadingLab } =
 		useSubjectDocuments<LabDocument>(
 			branch,
-			semester?.toString(),
+			semester,
 			selectedSubject?.id,
 			"lab"
 		);
 
-	const documents: {
-		notes: NotesDocument[];
-		videos: VideoDocument[];
-		syllabus: SyllabusDocument[];
-		assignments: AssignmentDocument[];
-		pyqs: PYQDocument[];
-		others: OthersDocument[];
-		lab: LabDocument[];
-	} = {
+	const documents = {
 		notes: notesData || [],
 		videos: videosData || [],
 		syllabus: syllabusData || [],
@@ -134,6 +142,7 @@ export default function SubjectPage() {
 		others: othersData || [],
 		lab: labData || [],
 	};
+	
 	const isLoading =
 		isLoadingNotes ||
 		isLoadingVideos ||
@@ -143,8 +152,22 @@ export default function SubjectPage() {
 		isLoadingOthers ||
 		isLoadingLab;
 
-	const handleSelectSubject = (subjectId: string, folderName: string) => {
-		setSelectedSubject({ id: subjectId, folderName });
+	const handleSelectSubject = (id: string, folder: string) => {
+		const newParams = new URLSearchParams(searchParams.toString());
+		newParams.set("subject", id);
+		newParams.set("folderName", folder);
+		if (!newParams.has("tab")) {
+			newParams.set("tab", "0");
+		}
+		if (!newParams.has("branch") && branch) newParams.set("branch", branch);
+		if (!newParams.has("semester") && semester) newParams.set("semester", semester);
+		router.push(`/subject?${newParams.toString()}`, { scroll: false });
+	};
+
+	const handleSetActiveTab = (index: number) => {
+		const newParams = new URLSearchParams(searchParams.toString());
+		newParams.set("tab", index.toString());
+		router.push(`/subject?${newParams.toString()}`, { scroll: false });
 	};
 
 	const renderTabContent = () => {
@@ -156,25 +179,25 @@ export default function SubjectPage() {
 			);
 		}
 		switch (activeTab) {
-			case 0: // Syllabus
+			case 0:
 				return isPlaceholderOnly(documents.syllabus) ? (
 					<NoContent />
 				) : (
 					<SyllabusTab documents={documents.syllabus} />
 				);
-			case 1: // Notes
+			case 1:
 				return isPlaceholderOnly(documents.notes) ? (
 					<NoContent />
 				) : (
 					<NotesTab documents={documents.notes} />
 				);
-			case 2: // Assignments
+			case 2:
 				return isPlaceholderOnly(documents.assignments) ? (
 					<NoContent />
 				) : (
 					<AssignmentsTab documents={documents.assignments} />
 				);
-			case 3: // Lab
+			case 3:
 				if (isPlaceholderOnly(documents.lab)) {
 					return selectedSubject?.folderName ? (
 						<>
@@ -197,19 +220,19 @@ export default function SubjectPage() {
 						/>
 					);
 				}
-			case 4: // PYQs
+			case 4:
 				return isPlaceholderOnly(documents.pyqs) ? (
 					<NoContent />
 				) : (
 					<PYQsTab documents={documents.pyqs} />
 				);
-			case 5: // Others
+			case 5:
 				return isPlaceholderOnly(documents.others) ? (
 					<NoContent />
 				) : (
 					<OthersTab documents={documents.others} />
 				);
-			case 6: // Videos
+			case 6:
 				return isPlaceholderOnly(documents.videos) ? (
 					<NoContent />
 				) : (
@@ -241,80 +264,9 @@ export default function SubjectPage() {
 					<WelcomeMessage />
 				) : (
 					<>
-						<Head>
-							<title>{`HourZero - ${selectedSubject.id}`}</title>
-							<meta
-								name="description"
-								content={`Get all the study materials for ${selectedSubject.id} at HourZero. Find notes, assignments, previous year questions and more.`}
-							/>
-							<meta
-								property="og:title"
-								content={`${selectedSubject.id} Study Resources || ${selectedSubject.id} Study Material`}
-							/>
-							<meta
-								name="keywords"
-								content={`HourZero, 
-          ipu,IPU,GGSIPU,ggsipu, vips,VIPS,VIPS-TC,cse,CSE
-          hourzero, 
-          subjects, 
-          engineering, 
-          btech, 
-          Btech, 
-          notes,
-          assignments,
-          assignment solutions,
-          PYQ,
-          pyq,
-          previous year questions,
-          previous year papers,
-          pyq solutions,
-          syllabus,
-          playlist,
-          lab,
-          lab files,
-          ${selectedSubject.id}, 
-          ${selectedSubject.id} notes,
-          ${selectedSubject.id} assignments, 
-          ${selectedSubject.id} assignment solutions, 
-          ${selectedSubject.id} PYQ, 
-          ${selectedSubject.id} pyq,
-          ${selectedSubject.id} previous year questions,
-          ${selectedSubject.id} previous year papers,
-          ${selectedSubject.id} pyq solutions, 
-          ${selectedSubject.id} syllabus, 
-          ${selectedSubject.id} playlist,
-          ${selectedSubject.id} lab, 
-          ${selectedSubject.id} lab files,
-          ${selectedSubject.id} lab files codes,
-          ${selectedSubject.id} lab codes,
-          ${selectedSubject.id} videos,
-          ${selectedSubject.id} study material,
-          best study material,
-          best notes,
-          complete notes,
-          complete study material,
-          ${selectedSubject.id} complete notes,
-          ${selectedSubject.id} complete study material,
-          ${selectedSubject.id} best study material,
-          ${selectedSubject.id} best notes,
-          best ${selectedSubject.id} notes,
-          best ${selectedSubject.id} study material,
-          best notes,
-          best study material,
-           IPU,
-        IPU notes,
-        IPU study materials,
-        IPU resources,
-        ipu notes,
-        GGSIPU,
-
-
-          `}
-							/>
-						</Head>
 						<SubjectTabs
 							activeTab={activeTab}
-							setActiveTab={setActiveTab}
+							setActiveTab={handleSetActiveTab}
 							className="w-full">
 							{renderTabContent()}
 						</SubjectTabs>
@@ -322,5 +274,13 @@ export default function SubjectPage() {
 				)}
 			</main>
 		</div>
+	);
+}
+
+export default function SubjectPage() {
+	return (
+		<Suspense fallback={<div className="flex min-h-screen items-center justify-center"><Spinner /></div>}>
+			<SubjectPageContent />
+		</Suspense>
 	);
 }

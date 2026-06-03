@@ -21,37 +21,30 @@ const tabs = [
 	{
 		title: "Syllabus",
 		icon: <LibraryBig size={20} />,
-		content: <SyllabusForm onClose={() => {}} />,
 	},
 	{
 		title: "Notes",
 		icon: <NotebookPen size={20} />,
-		content: <Form heading={"Add Notes"} />,
 	},
 	{
 		title: "Assignments",
 		icon: <BookA size={20} />,
-		content: <Form heading={"Add Assignment"} />,
 	},
 	{
 		title: "Lab File",
 		icon: <FileCode size={20} />,
-		content: <Form heading={"Add Lab File"} />,
 	},
 	{
 		title: "PYQs",
 		icon: <FileQuestion size={20} />,
-		content: <Form heading={"Add PYQ"} />,
 	},
 	{
 		title: "Others",
 		icon: <BookOpen size={20} />,
-		content: <Form heading={"Add Other Reference Material"} />,
 	},
 	{
 		title: "Videos",
 		icon: <TvMinimalPlay size={20} />,
-		content: <UrlForm heading={"Add Video"} />,
 	},
 ];
 
@@ -59,6 +52,27 @@ const SubjectTab: React.FC = () => {
 	const [activeTab, setActiveTab] = useState(0);
 	const router = useRouter();
 	const {subject} = useSubject();
+
+	const renderTabContent = () => {
+		switch (activeTab) {
+			case 0:
+				return <SyllabusForm onClose={() => {}} />;
+			case 1:
+				return <Form heading={"Add Notes"} />;
+			case 2:
+				return <Form heading={"Add Assignment"} />;
+			case 3:
+				return <Form heading={"Add Lab File"} />;
+			case 4:
+				return <Form heading={"Add PYQ"} />;
+			case 5:
+				return <Form heading={"Add Other Reference Material"} />;
+			case 6:
+				return <UrlForm heading={"Add Video"} />;
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<>
@@ -94,7 +108,7 @@ const SubjectTab: React.FC = () => {
 
 				{/* Tab Content */}
 				<div className="p-5 text-white bg-gray-900 rounded-lg shadow-lg mt-4">
-					<div>{tabs[activeTab].content}</div>
+					<div>{renderTabContent()}</div>
 				</div>
 			</div>
 		</>

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
-import { Octokit } from "@octokit/rest";
 import { CodeViewerModal } from "./CodeViewerModal";
 import { useSubject } from "@/context/SubjectContext";
 import { getYearFromSemester } from "@/lib/utils";
 import { Spinner } from "flowbite-react";
 import { useToast } from "@/hooks/use-toast";
-
-const octokit = new Octokit({
-	auth: process.env.NEXT_PUBLIC_PRIVATE_GITHUB_TOKEN,
-});
 
 interface GitHubFile {
 	type: string;
@@ -56,17 +51,18 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 	) => {
 		try {
 			// Always try to fetch using the path first
-			const response = await octokit.repos.getContent({
-				owner: "Pulkito4",
-				repo: "hour-zero-codes",
-				path: path,
-			});
+			const response = await fetch(`/api/github/contents?path=${encodeURIComponent(path)}`);
+			if (!response.ok) {
+				throw new Error("Failed to fetch file content via API");
+			}
+
+			const data = await response.json();
 
 			// Handle response based on the type of data received
-			if ("content" in response.data) {
+			if (data.content) {
 				// Single file response
 				const content = Buffer.from(
-					response.data.content,
+					data.content,
 					"base64"
 				).toString();
 				setSelectedFile({ content, name: filename });
@@ -103,14 +99,14 @@ export const LabCodeTab: React.FC<LabCodesTabProps> = ({ folderName }) => {
 		}
 
 		try {
-			const response = await octokit.repos.getContent({
-				owner: "Pulkito4",
-				repo: "hour-zero-codes",
-				path: currentPath,
-			});
+			const response = await fetch(`/api/github/contents?path=${encodeURIComponent(currentPath)}`);
+			if (!response.ok) {
+				throw new Error("Failed to fetch lab codes");
+			}
+			const data = await response.json();
 
-			if (Array.isArray(response.data)) {
-				setLabCodes(response.data as GitHubFile[]);
+			if (Array.isArray(data)) {
+				setLabCodes(data as GitHubFile[]);
 			}
 		} catch (err) {
 			console.error("Error fetching lab codes:", err);

@@ -23,26 +23,17 @@ const sanitizePath = (value: string): string => {
 };
 
 export const SubjectProvider = ({ children }: { children: ReactNode }) => {
-	const [branch, setBranchState] = useState<string>(() => {
-		if (typeof window !== "undefined") {
-			return localStorage.getItem("branch") || "";
-		}
-		return "";
-	});
+	const [branch, setBranchState] = useState<string>("");
+	const [semester, setSemesterState] = useState<number>(0);
+	const [subject, setSubjectState] = useState<string>("");
+	const [isMounted, setIsMounted] = useState(false);
 
-	const [semester, setSemesterState] = useState<number>(() => {
-		if (typeof window !== "undefined") {
-			return Number(localStorage.getItem("semester")) || 0;
-		}
-		return 0;
-	});
-
-	const [subject, setSubjectState] = useState<string>(() => {
-		if (typeof window !== "undefined") {
-			return localStorage.getItem("selectedSubject") || "";
-		}
-		return "";
-	});
+	useEffect(() => {
+		setBranchState(localStorage.getItem("branch") || "");
+		setSemesterState(Number(localStorage.getItem("semester")) || 0);
+		setSubjectState(localStorage.getItem("selectedSubject") || "");
+		setIsMounted(true);
+	}, []);
 
 	const setBranch = (value: string) => {
 		const sanitizedValue = sanitizePath(value);
@@ -66,9 +57,11 @@ export const SubjectProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	useEffect(() => {
-		localStorage.setItem("branch", branch);
-		localStorage.setItem("semester", semester.toString());
-	}, [branch, semester]);
+		if (isMounted) {
+			localStorage.setItem("branch", branch);
+			localStorage.setItem("semester", semester.toString());
+		}
+	}, [branch, semester, isMounted]);
 
 	return (
 		<SubjectContext.Provider
